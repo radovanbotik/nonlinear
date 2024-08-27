@@ -25,9 +25,9 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
         blurDataURL={image}
         quality={100}
       />
-      <div className="absolute bg-black/75 w-full left-0 h-1/4 bottom-0 z-10 text-white flex flex-col gap-1.5 p-3 //opacity-0 //translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="absolute bg-black/75 w-full left-0 h-1/4 bottom-0 z-10 text-white flex flex-col gap-1.5 p-3 opacity-0 translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
         <div className="text-xl font-medium">{title}</div>
-        <div className="">
+        <div className="isolate">
           <Artists artists={artists} />
         </div>
         <div></div>
