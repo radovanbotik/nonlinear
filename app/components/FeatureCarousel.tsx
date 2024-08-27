@@ -2,14 +2,41 @@
 
 import { ReactNode, useRef, useState } from "react";
 import { SwiperRef } from "swiper/react";
-import CarouselTest from "./Carousel";
+import Carousel from "./Carousel";
 
 import { cn } from "../lib/helpers";
 
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { FeaturedSlideData } from "../genres/[slug]/featured/page";
+import Image from "next/image";
+import Artists from "./Artists";
 
-export default function CarouselWith({ children }: { children: ReactNode[] }) {
+function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center bg-indigo-400 overflow-hidden group">
+      <Image
+        src={image}
+        alt={`Image of ${title}`}
+        className="drop-shadow-2xl shadow-2xl"
+        width={300}
+        height={300}
+        placeholder="blur"
+        blurDataURL={image}
+        quality={100}
+      />
+      <div className="absolute bg-black/75 w-full left-0 h-1/4 bottom-0 z-10 text-white flex flex-col gap-1.5 p-3 opacity-0 translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
+        <div className="text-xl font-medium">{title}</div>
+        <div className="">
+          <Artists artists={artists} />
+        </div>
+        <div></div>
+      </div>
+    </div>
+  );
+}
+
+export default function FeatureCarousel({ featured }: { featured: FeaturedSlideData[] }) {
   const swiperInstance = useRef<SwiperRef>(null);
 
   function slidePrev() {
@@ -31,9 +58,11 @@ export default function CarouselWith({ children }: { children: ReactNode[] }) {
 
   return (
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden ">
-      <CarouselTest ref={swiperInstance} setCurrentIndex={setCurrentIndex}>
-        {children}
-      </CarouselTest>
+      <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex}>
+        {featured.map(feature => (
+          <Feature {...feature} />
+        ))}
+      </Carousel>
 
       <button
         className="flex items-center justify-center bg-transparent border-r-[25px] border-r-white/50  w-[50px] h-[40px] rounded-full absolute top-1/2 -left-[25px] -translate-y-1/2 -translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition"
