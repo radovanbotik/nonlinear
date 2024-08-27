@@ -1,113 +1,207 @@
-import Image from "next/image";
+import Post1 from "./components/Posts/Post1";
+import Post3 from "./components/Posts/Post3";
+import { Container } from "./components/Container";
 
-export default function Home() {
+import { sanityFetch, client } from "@/sanity/client";
+import { SanityDocument, PortableText } from "next-sanity";
+
+const HEADLINE = `*[_type=='news_article']{
+  article,
+  author->{'name':author_name,'slug':slug.current},
+  _createdAt,
+  _id,
+  'image':image.asset->url,
+  'slug':slug.current,
+  subtitle,
+  title
+}|order(_createdAt desc)[0]`;
+
+const TOP_STORIES = `*[_type=='news_article']{
+  article,
+  author->{'name':author_name,'slug':slug.current},
+  _createdAt,
+  _id,
+  'image':image.asset->url,
+  'slug':slug.current,
+   title
+}|order(_createdAt desc)[1...6]`;
+
+const MORE_STORIES = `*[_type=='news_article']{
+  article,
+  author->{'name':author_name,'slug':slug.current},
+  _createdAt,
+  _id,
+  'image':image.asset->url,
+  'slug':slug.current,
+  subtitle,
+  title
+}|order(_createdAt desc)`;
+
+const FIRST = `*[_type=='review'][0]{
+  article,'release_date':release->release_date,
+  author->{'name':author_name,'slug':slug.current},
+  _id,
+  'image':release->image.asset->url,
+  'label':release->{...label->{name,'href':slug.current}},
+  'release_title':release->title,
+  'slug':slug.current,
+   title
+}
+`;
+const FIVE = `*[_type=='review'][0...5]{
+  article,'release_date':release->release_date,
+  author->{'name':author_name,'slug':slug.current},
+  _createdAt,
+  _id,
+  'image':release->image.asset->url,
+  'label':release->{...label->{name,'href':slug.current}},
+  'release_title':release->title,
+  'slug':slug.current,
+   title
+}|order(_createdAt desc)
+`;
+
+export default async function Home() {
+  const headline = await sanityFetch<SanityDocument[]>({ query: HEADLINE });
+  const top_stories = await sanityFetch<SanityDocument[]>({ query: TOP_STORIES });
+  const more_stories = await sanityFetch<SanityDocument[]>({ query: MORE_STORIES });
+  const main = await sanityFetch<SanityDocument[]>({ query: FIRST });
+  const five = await sanityFetch<SanityDocument[]>({ query: FIVE });
+
+  console.log(headline);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <main className="py-10 space-y-10">
+      <Container size="md">
+        <div className="flex flex-col  lg:flex-row justify-between gap-10  py-5  //divide-black">
+          <Container size="sm" className="mx-0 @container container">
+            <Post3
+              author={headline.author}
+              drophead={headline.subtitle}
+              headline={headline.title}
+              image={headline.image}
+              release_date={headline._createdAt}
+              imageAlt={"image is capturing something"}
+              slug={`/articles/${headline.slug}`}
             />
-          </a>
+          </Container>
+          <Container size="xs" className="mx-0 @container container ">
+            <div className="mb-2.5">
+              <span className="font-bold tracking-wide text-sm uppercase text-black/40">latest news</span>
+            </div>
+            <ol className="[counter-reset:li] relative divide-y-2">
+              {top_stories.map(review => (
+                <li
+                  key={review._id}
+                  className="w-fit gap-5 [&:not(:first-of-type)]:pt-2.5 [&:not(:last-of-type)]:pb-2.5 flex items-start  before:translate-y-1 relative isolate before:z-10 before:shrink-0 before:flex before:h-5 before:w-5 before:justify-center before:items-center before:rounded-full dark:before:bg-[#5200a7] before:bg-black before:text-center before:text-[10px] before:text-[#d0ff4b] before:font-bold before:content-[counter(li)] before:[counter-increment:li] last:mb-0 last:border-b-0 last:pb-0"
+                >
+                  <Post1
+                    author={review.author}
+                    className="max-w-sm"
+                    headline={review.title}
+                    image={review.image}
+                    imageStyles="w-24 aspect-square @md:aspect-[5/4] @md:w-32"
+                    isReversed={true}
+                    release_date={review._createdAt}
+                    slug={`/articles/${review.slug}`}
+                  />
+                </li>
+              ))}
+            </ol>
+            {/* </div> */}
+          </Container>
         </div>
-      </div>
+      </Container>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      <Container size="md">
+        <div className="flex flex-col  lg:flex-row justify-between gap-10  py-5  //divide-black">
+          <Container size="md" className="mx-0 @container container">
+            <ul>
+              {more_stories.map(story => (
+                <li key={story._id} className="[&:not(:first-of-type)]:pt-2.5 [&:not(:last-of-type)]:pb-2.5">
+                  <Post1
+                    author={story.author}
+                    badge="music"
+                    drophead={story.subtitle}
+                    headline={story.title}
+                    image={story.image}
+                    isReversed={true}
+                    release_date={story._createdAt}
+                    slug={`/articles/${story.slug}`}
+                  />
+                </li>
+              ))}
+            </ul>
+          </Container>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+          <Container size="xs" className="mx-0 @container container relative">
+            <div
+              className={"isolate px-5 py-5  w-full rounded-xl  bg-violet-700 //bg-[#d0ff4b] space-y-2.5 sticky top-0"}
+            >
+              <div className="ml-10">
+                <span className="font-bold tracking-wide text-sm uppercase text-black/40">best rated</span>
+              </div>
+              <ol className="[counter-reset:li] relative divide-y-2 text-white">
+                {top_stories.slice(0, 5).map((story, i) => {
+                  return (
+                    <li
+                      key={i}
+                      className="py-5 first:pt-0 items-start //before:mt-2.5 //before:translate-y-1.5 w-fit gap-2.5 flex before:translate-y-1 before:shrink-0 before:flex before:p-3 before:h-5 before:w-5 before:justify-center before:items-center before:rounded-full dark:before:bg-[#5200a7] before:bg-black before:text-center before:text-xs before:text-white before:font-bold before:content-[counter(li)] before:[counter-increment:li] last:mb-0 last:border-b-0 last:pb-0"
+                    >
+                      <Post1
+                        author={story.author}
+                        headline={story.title}
+                        key={story._id}
+                        release_date={story._createdAt}
+                        slug={`/reviews/${story.slug}`}
+                      />
+                    </li>
+                  );
+                })}
+              </ol>
+            </div>
+          </Container>
+        </div>
+      </Container>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+      {/* <Container size="md" className="@container pb-10 relative //bg-stone-50 //border-x-2">
+        <div className="flex flex-col-reverse @4xl:flex-row justify-between gap-20 items-start //py-5 //@6xl:divide-x-2">
+          <div className="w-fit h-full //mx-auto //@6xl:mx-0 flex-[1.6] flex flex-col //divide-y-[1px] ">
+            <span className="relative text-black uppercase //mt-10 text-xl">Interplanetary Criminal</span>
+            <div className="divide-y-[1px] //mx-auto ">
+              <Story3 data={post} index={1} />
+              <Story3 data={post} index={2} />
+              <Story3 data={post} index={3} />
+            </div>
+          </div>
+          <div className="flex-[1.6] w-full h-full //mx-auto //@6xl:mx-0 //flex //items-end //justify-end ">
+            <Spotlight artist={artist} />
+          </div>
+        </div>
+      </Container> */}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {/* <Container size="md" className="@container pb-10 relative //bg-stone-50 //border-x-2">
+        <div className="relative flex flex-col @4xl:flex-row justify-between gap-20  items-start py-5 ">
+          <div className="flex-[1.6] divide-y-[1px]">
+            <Story1 data={post} />
+            <Story1 data={post} />
+            <Story1 data={post} />
+            <Story1 data={post} />
+            <Story1 data={post} />
+            <Story1 data={post} />
+          </div>
+          <div className="w-full flex-[1.6] sticky top-24 flex ">
+            <iframe
+              className="rounded-sm w-full //@lg:max-w-2xl min-w-[320px] py-5 "
+              src="https://open.spotify.com/embed/playlist/5ozgkq3ChOQ7p723QNUnsz?utm_source=generator&theme=0"
+              width="100%"
+              height="600"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </Container> */}
     </main>
   );
 }
