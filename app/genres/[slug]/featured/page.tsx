@@ -32,7 +32,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <main>
-      <div className=" aspect-video">{result && <CarouselWith featured={result} />}</div>
+      <section>{result && <CarouselWith featured={result} />}</section>
     </main>
   );
 }

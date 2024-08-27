@@ -57,7 +57,7 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
   const [currentIndex, setCurrentIndex] = useState(swiperInstance.current?.swiper.activeIndex);
 
   return (
-    <div className="relative w-full h-full flex flex-col isolate group overflow-hidden ">
+    <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  aspect-video">
       <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex}>
         {featured.map(feature => (
           <Feature {...feature} />
