@@ -83,7 +83,7 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
       </button>
 
       <ul className="list-none flex w-full items-center space-x-1  py-1">
-        {swiperInstance.current?.swiper.slides.map((_, i, arr) => (
+        {featured.map((_, i, arr) => (
           <li
             key={i}
             className="apperance-none leading-[0] flex-1 w-full  cursor-pointer py-1"
