@@ -63,6 +63,7 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
           delay: 2500,
           disableOnInteraction: true,
         }}
+        loop={true}
         ref={swiperInstance}
         setCurrentIndex={setCurrentIndex}
         className="shadow-xl"

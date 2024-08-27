@@ -17,8 +17,6 @@ const Carousel = forwardRef<
   return (
     <>
       <Swiper
-        slidesPerView={1}
-        loop={true}
         onSlideChange={self => {
           setCurrentIndex(self.realIndex);
         }}
