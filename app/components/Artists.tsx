@@ -14,9 +14,9 @@ export default function Artists({
   });
 
   return (
-    <ul className={cn("inline-flex", className)}>
+    <ul className={cn("inline-flex //flex-wrap", className)}>
       {uniqueArr.map((a, i, arr) => (
-        <li key={a.slug} className="group/artists">
+        <li key={a.slug} className="group/artists shrink-0">
           <Link href={`/artists/${a.slug}`} className="group-hover/artists:underline underline-inherit">
             {a.name}
           </Link>

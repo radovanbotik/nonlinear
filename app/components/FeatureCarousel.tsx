@@ -14,11 +14,11 @@ import Artists from "./Artists";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div className="relative w-full h-full flex items-center justify-center bg-indigo-400 overflow-hidden group">
+    <div className="relative w-full h-full flex items-center justify-center bg-indigo-400 overflow-hidden group ">
       <Image
         src={image}
         alt={`Image of ${title}`}
-        className="drop-shadow-2xl shadow-2xl"
+        className="drop-shadow-xl shadow-xl"
         width={300}
         height={300}
         placeholder="blur"
@@ -58,7 +58,7 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
 
   return (
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  aspect-video">
-      <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex}>
+      <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex} className="shadow-xl">
         {featured.map(feature => (
           <Feature {...feature} key={feature._id} />
         ))}
@@ -82,7 +82,7 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
         </div>
       </button>
 
-      <ul className="list-none flex w-full items-center space-x-1  py-1">
+      <ul className="list-none flex w-full items-center space-x-1  py-2">
         {featured.map((_, i, arr) => (
           <li
             key={i}

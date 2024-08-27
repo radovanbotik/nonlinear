@@ -19,15 +19,15 @@ export default function RootLayout({
   ];
 
   return (
-    <div className="bg-black py-4">
+    <div className="bg-gray-700 py-4">
       <Container size="md">
         <div className="flex gap-5">
-          <div className="w-2/12 bg-white/20"></div>
+          <div className="w-2/12 bg-gray-500"></div>
           <div className="w-7/12">
             <SectionHeadingWithTabs responsive={false} tabs={tabs} title={slug} />
             {children}
           </div>
-          <div className="w-3/12 bg-white/20"></div>
+          <div className="w-3/12 bg-gray-500"></div>
         </div>
       </Container>
     </div>
