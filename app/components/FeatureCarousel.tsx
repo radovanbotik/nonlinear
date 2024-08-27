@@ -25,7 +25,7 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
         blurDataURL={image}
         quality={100}
       />
-      <div className="absolute bg-black/75 w-full left-0 h-1/4 bottom-0 z-10 text-white flex flex-col gap-1.5 p-3 opacity-0 translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
+      <div className="absolute bg-black/75 w-full left-0 h-1/4 bottom-0 z-10 text-white flex flex-col gap-1.5 p-3 //opacity-0 //translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
         <div className="text-xl font-medium">{title}</div>
         <div className="">
           <Artists artists={artists} />
@@ -60,7 +60,7 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  aspect-video">
       <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex}>
         {featured.map(feature => (
-          <Feature {...feature} />
+          <Feature {...feature} key={feature._id} />
         ))}
       </Carousel>
 
@@ -88,7 +88,6 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
             key={i}
             className="apperance-none leading-[0] flex-1 w-full  cursor-pointer py-1"
             onClick={() => {
-              console.log("clicking to:", i);
               slideTo(i);
             }}
           >
