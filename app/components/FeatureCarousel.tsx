@@ -58,7 +58,15 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
 
   return (
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  aspect-video">
-      <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex} className="shadow-xl">
+      <Carousel
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: true,
+        }}
+        ref={swiperInstance}
+        setCurrentIndex={setCurrentIndex}
+        className="shadow-xl"
+      >
         {featured.map(feature => (
           <Feature {...feature} key={feature._id} />
         ))}
