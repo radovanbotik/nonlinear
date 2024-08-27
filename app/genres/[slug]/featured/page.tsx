@@ -64,10 +64,33 @@ export default async function Page({ params }: { params: { slug: string } }) {
     },
   ];
 
+  const latest40 = [
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+    ...latest,
+  ];
+
   return (
     <main className="space-y-5">
       <section>{featured && <FeatureCarousel featured={featured} />}</section>
-      <section>{latest && <LatestReleasesCarousel slides={latestData} />}</section>
+      <section>{latest && <LatestReleasesCarousel slides={latest40} />}</section>
     </main>
   );
 }

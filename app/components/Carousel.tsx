@@ -4,10 +4,11 @@ import React, { forwardRef, ReactNode, useEffect, useRef, useState } from "react
 import { Swiper, SwiperSlide, SwiperRef, SwiperProps } from "swiper/react";
 
 import "swiper/css";
+import "swiper/css/grid";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import { Grid, Pagination, Navigation, Autoplay } from "swiper/modules";
 import { cn } from "../lib/helpers";
 
 const Carousel = forwardRef<
@@ -20,14 +21,15 @@ const Carousel = forwardRef<
         onSlideChange={self => {
           setCurrentIndex(self.realIndex);
         }}
-        modules={[Pagination, Navigation, Autoplay]}
+        modules={[Pagination, Navigation, Autoplay, Grid]}
         className={cn("w-full h-full", className)}
         ref={ref}
         {...props}
       >
-        {children.map((child, i, arr) => {
+        {children}
+        {/* {children.map((child, i, arr) => {
           return <SwiperSlide key={i}>{child}</SwiperSlide>;
-        })}
+        })} */}
       </Swiper>
     </>
   );

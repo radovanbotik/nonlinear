@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useRef, useState } from "react";
-import { SwiperRef } from "swiper/react";
+import { SwiperRef, SwiperSlide } from "swiper/react";
 import Carousel from "./Carousel";
 
 import { cn } from "../lib/helpers";
@@ -17,51 +17,43 @@ import Image from "next/image";
 import Artists from "./Artists";
 import Link from "next/link";
 
-function Grid({ id, slides }: { id: number; slides: FeaturedSlideData[] }) {
+function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5  gap-2 ">
-      {slides.map((slide, i) => (
-        <li key={slide._id + i} className="relative shadow-xl">
-          <div className="relative">
-            <Image
-              src={slide.image}
-              alt={`Image of ${slide.title}`}
-              className="block"
-              width={200}
-              height={200}
-              placeholder="blur"
-              blurDataURL={slide.image}
-              quality={100}
-            />
-            <Link className="inset-0 absolute" href={`/releases/${slide.slug}`}></Link>
-          </div>
+    <div key={_id} className="relative shadow-xl">
+      <div className="relative">
+        <Image
+          src={image}
+          alt={`Image of ${title}`}
+          className="block"
+          width={200}
+          height={200}
+          placeholder="blur"
+          blurDataURL={image}
+          quality={100}
+        />
+        <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
+      </div>
 
-          <div className="bg-gray-600 p-2 space-y-1 isolate">
-            <div className="overflow-hidden leading-none">
-              <Link className="font-bold text-white text-sm/4" href={`/releases/${slide.slug}`}>
-                {slide.title}
-              </Link>
-            </div>
-            <div className="overflow-hidden leading-none">
-              <Artists artists={slide.artists} className="text-xs text-neutral-400" />
-            </div>
-            <div className="overflow-hidden leading-none">
-              <Link className="text-xs text-neutral-400" href={`/label/${slide.label.href}`}>
-                {slide.label.name}
-              </Link>
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul>
+      <div className="bg-gray-600 p-2 space-y-1 isolate">
+        <div className="overflow-hidden leading-none">
+          <Link className="font-bold text-white text-sm/4" href={`/releases/${slug}`}>
+            {title}
+          </Link>
+        </div>
+        <div className="overflow-hidden leading-none">
+          <Artists artists={artists} className="text-xs text-neutral-400" />
+        </div>
+        <div className="overflow-hidden leading-none">
+          <Link className="text-xs text-neutral-400" href={`/label/${label.href}`}>
+            {label.name}
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
 
-export default function LatestReleasesCarousel({
-  slides,
-}: {
-  slides: { id: number; releases: FeaturedSlideData[] }[];
-}) {
+export default function LatestReleasesCarousel({ slides }: { slides: FeaturedSlideData[] }) {
   const swiperInstance = useRef<SwiperRef>(null);
 
   function slidePrev() {
@@ -101,9 +93,22 @@ export default function LatestReleasesCarousel({
           </button>
         </div>
       </div>
-      <Carousel ref={swiperInstance} setCurrentIndex={setCurrentIndex} className="shadow-xl">
+      <Carousel
+        slidesPerView={5}
+        slidesPerGroup={5}
+        grid={{
+          rows: 2,
+          fill: "row",
+        }}
+        spaceBetween={8}
+        ref={swiperInstance}
+        setCurrentIndex={setCurrentIndex}
+        className="shadow-xl"
+      >
         {slides.map((slide, i) => (
-          <Grid id={slide.id} key={slide.id + i} slides={slide.releases} />
+          <SwiperSlide key={slide._id} className="flex justify-center items-center">
+            <Feature {...slide} />
+          </SwiperSlide>
         ))}
       </Carousel>
 

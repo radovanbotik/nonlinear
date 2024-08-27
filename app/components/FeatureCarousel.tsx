@@ -1,7 +1,7 @@
 "use client";
 
 import { ReactNode, useRef, useState } from "react";
-import { SwiperRef } from "swiper/react";
+import { SwiperRef, SwiperSlide } from "swiper/react";
 import Carousel from "./Carousel";
 
 import { cn } from "../lib/helpers";
@@ -69,7 +69,9 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
         className="shadow-xl"
       >
         {featured.map(feature => (
-          <Feature {...feature} key={feature._id} />
+          <SwiperSlide key={feature._id}>
+            <Feature {...feature} />
+          </SwiperSlide>
         ))}
       </Carousel>
 
