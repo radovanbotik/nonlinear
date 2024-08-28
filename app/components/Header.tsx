@@ -70,7 +70,7 @@ export default function Example() {
 
   return (
     <header className="//bg-[#d0ff4b] bg-black text-white">
-      <Container size="md">
+      <Container size="xl">
         <nav aria-label="Global" className="mx-auto flex items-center //justify-between //p-6 //lg:px-8 h-12">
           <div className="flex items-center gap-x-7">
             <Link href="/" className="-m-1.5 //p-1.5">

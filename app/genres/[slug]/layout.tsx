@@ -20,7 +20,7 @@ export default function RootLayout({
 
   return (
     <div className="bg-gray-700 py-4">
-      <Container size="md">
+      <Container size="xl">
         <div className="flex gap-5">
           <div className="w-2/12 bg-gray-500"></div>
           <div className="w-7/12">

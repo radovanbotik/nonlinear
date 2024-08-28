@@ -11,26 +11,43 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import { FeaturedSlideData } from "../genres/[slug]/featured/page";
 import Image from "next/image";
 import Artists from "./Artists";
+import Link from "next/link";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div className="relative w-full h-full flex items-center justify-center bg-indigo-400 overflow-hidden group transition ease-in-out">
-      <Image
-        src={image}
-        alt={`Image of ${title}`}
-        className="drop-shadow-xl shadow-xl"
-        width={300}
-        height={300}
-        placeholder="blur"
-        blurDataURL={image}
-        quality={100}
-      />
-      <div className="absolute bg-black/75 w-full left-0 h-1/4 bottom-0 z-10 text-white flex flex-col gap-1.5 p-3 opacity-0 translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
-        <div className="text-xl font-medium">{title}</div>
-        <div className="isolate">
-          <Artists artists={artists} />
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden group transition ease-in-out">
+      <div className=" cursor-grab absolute inset-0 bg-teal-600 //active:bg-teal-500 isolate after:-z-10 after:absolute after:bg-gradient-to-t from-gray-900/40 via-transparent to-gray-900/10 after:inset-0 after:w-full after:h-full after:pointer-events-none "></div>
+      <div className="relative">
+        <Image
+          src={image}
+          alt={`Image of ${title}`}
+          className="drop-shadow-xl shadow-xl "
+          width={300}
+          height={300}
+          placeholder="blur"
+          blurDataURL={image}
+          quality={100}
+        />
+        <Link href={`/releases/${slug}`} className="absolute inset-0"></Link>
+      </div>
+      <div className="isolate absolute bg-gray-900 z-20  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 w-full left-0 h-1/4 min-h-28 bottom-0  text-gray-50 flex flex-col gap-2 p-3 opacity-0 translate-y-full transition group-hover:translate-y-0 group-hover:opacity-100">
+        <div>
+          <Link href={`/releases/${slug}`} className="hover:underline text-xl font-medium leading-none">
+            {title}
+          </Link>
         </div>
-        <div></div>
+        <div className="flex flex-wrap items-baseline mb-1">
+          <Artists artists={artists} className="isolate text-sm leading-none" />
+          <span className=" leading-none">&nbsp;&nbsp;</span>
+          <Link href={`/labels/${label.href}`} className="text-xs  leading-none text-gray-400">
+            {label.name}
+          </Link>
+        </div>
+        <div>
+          <button className="min-w-20 bg-teal-700 hover:bg-teal-600 rounded-sm">
+            <span className="inline-block text-xs font-bold my-2 mx-3">Add to basket</span>
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -56,7 +73,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
           el: `#${ID}`,
           type: "bullets",
           bulletClass:
-            "py-1 cursor-pointer bg-gray-500 flex-1 w-full h-0.5 hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
+            "relative py-0.5 cursor-pointer bg-gray-500 flex-1 w-full hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
           bulletActiveClass: "!bg-gray-300 active",
           clickable: true,
         }}
@@ -85,10 +102,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         className="shadow-xl"
       >
         {featured.map(feature => (
-          <SwiperSlide
-            key={feature._id}
-            className="relative after:absolute after:bg-gradient-to-t from-gray-900/30 via-transparent to-gray-900/10 after:inset-0 after:w-full after:h-full after:pointer-events-none  after:z-20"
-          >
+          <SwiperSlide key={feature._id} className="relative">
             <Feature {...feature} />
           </SwiperSlide>
         ))}
