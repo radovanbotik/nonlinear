@@ -87,7 +87,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         {featured.map(feature => (
           <SwiperSlide
             key={feature._id}
-            className="relative after:absolute after:bg-gradient-to-t from-gray-900/30 via-transparent to-gray-900/10 after:inset-0 after:w-full after:h-full  after:z-20"
+            className="relative after:absolute after:bg-gradient-to-t from-gray-900/30 via-transparent to-gray-900/10 after:inset-0 after:w-full after:h-full after:pointer-events-none  after:z-20"
           >
             <Feature {...feature} />
           </SwiperSlide>
