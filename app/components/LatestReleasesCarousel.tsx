@@ -112,23 +112,19 @@ export default function LatestReleasesCarousel({
         }}
         onSlideNextTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.add("hue-rotate-180");
-          activeBullet?.classList.add("scale-[1.01]");
+          activeBullet?.classList.add("hue-rotate-180", "scale-[1.01]");
         }}
         onSlideNextTransitionEnd={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.remove("scale-[1.01]");
-          activeBullet?.classList.remove("hue-rotate-180");
+          activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
         onSlidePrevTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.add("hue-rotate-180");
-          activeBullet?.classList.add("scale-[1.01]");
+          activeBullet?.classList.add("hue-rotate-180", "scale-[1.01]");
         }}
         onSlidePrevTransitionEnd={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.remove("scale-[1.01]");
-          activeBullet?.classList.remove("hue-rotate-180");
+          activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
         slidesPerView={5}
         slidesPerGroup={5}

@@ -14,7 +14,7 @@ import Artists from "./Artists";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div className="relative w-full h-full flex items-center justify-center bg-indigo-400 overflow-hidden group ">
+    <div className="relative w-full h-full flex items-center justify-center bg-indigo-400 overflow-hidden group transition ease-in-out">
       <Image
         src={image}
         alt={`Image of ${title}`}
@@ -66,30 +66,29 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         }}
         onSlideNextTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.add("hue-rotate-180");
-          activeBullet?.classList.add("scale-[1.01]");
+          activeBullet?.classList.add("hue-rotate-180", "scale-[1.01]");
         }}
         onSlideNextTransitionEnd={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.remove("scale-[1.01]");
-          activeBullet?.classList.remove("hue-rotate-180");
+          activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
         onSlidePrevTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.add("hue-rotate-180");
-          activeBullet?.classList.add("scale-[1.01]");
+          activeBullet?.classList.add("hue-rotate-180", "scale-[1.01]");
         }}
         onSlidePrevTransitionEnd={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
-          activeBullet?.classList.remove("scale-[1.01]");
-          activeBullet?.classList.remove("hue-rotate-180");
+          activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
         loop={true}
         ref={swiperInstance}
         className="shadow-xl"
       >
         {featured.map(feature => (
-          <SwiperSlide key={feature._id}>
+          <SwiperSlide
+            key={feature._id}
+            className="relative after:absolute after:bg-gradient-to-t from-gray-900/30 via-transparent to-gray-900/10 after:inset-0 after:w-full after:h-full  after:z-20"
+          >
             <Feature {...feature} />
           </SwiperSlide>
         ))}
