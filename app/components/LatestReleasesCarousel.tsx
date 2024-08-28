@@ -104,7 +104,7 @@ export default function LatestReleasesCarousel({
           clickable: true,
         }}
         onSlideChange={self => {
-          self.realIndex <= 5 ? setIsPrevControlDisabled(true) : setIsPrevControlDisabled(false);
+          self.realIndex < 5 ? setIsPrevControlDisabled(true) : setIsPrevControlDisabled(false);
           self.realIndex >= self.slides.length / 2 - 5
             ? setIsNextControlDisabled(true)
             : setIsNextControlDisabled(false);
