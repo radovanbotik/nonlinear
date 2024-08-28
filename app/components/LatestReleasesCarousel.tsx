@@ -1,16 +1,13 @@
 "use client";
 
-import { ReactNode, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { SwiperRef, SwiperSlide } from "swiper/react";
-import Carousel from "./Carousel";
+import { Grid, Pagination } from "swiper/modules";
 
-import { cn } from "../lib/helpers";
+import Carousel from "./Carousel";
 
 import { RiArrowLeftSFill } from "react-icons/ri";
 import { RiArrowRightSFill } from "react-icons/ri";
-
-import { RiArrowLeftSLine } from "react-icons/ri";
-import { RiArrowRightSLine } from "react-icons/ri";
 
 import { FeaturedSlideData } from "../genres/[slug]/featured/page";
 import Image from "next/image";
@@ -19,8 +16,8 @@ import Link from "next/link";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div key={_id} className="relative shadow-xl">
-      <div className="relative">
+    <div key={_id} className="relative shadow-lg bg-gray-700">
+      <div className="relative transition-transform duration-75 ease-in-out hover:scale-[0.99] ">
         <Image
           src={image}
           alt={`Image of ${title}`}
@@ -34,7 +31,7 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
         <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
       </div>
 
-      <div className="bg-gray-600 p-2 space-y-1 isolate">
+      <div className="bg-gray-600 p-2 space-y-0.5 isolate">
         <div className="overflow-hidden leading-none">
           <Link className="font-bold text-white text-sm/4" href={`/releases/${slug}`}>
             {title}
@@ -52,9 +49,20 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
     </div>
   );
 }
-
-export default function LatestReleasesCarousel({ slides }: { slides: FeaturedSlideData[] }) {
+export default function LatestReleasesCarousel({
+  id,
+  slides,
+  title,
+}: {
+  id: string;
+  slides: FeaturedSlideData[];
+  title: string;
+}) {
+  //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
+  const ID = id;
   const swiperInstance = useRef<SwiperRef>(null);
+  const [isPrevControlDisabled, setIsPrevControlDisabled] = useState(true);
+  const [isNextControlDisabled, setIsNextControlDisabled] = useState(false);
 
   function slidePrev() {
     swiperInstance.current?.swiper.slidePrev();
@@ -62,38 +70,66 @@ export default function LatestReleasesCarousel({ slides }: { slides: FeaturedSli
   function slideNext() {
     swiperInstance.current?.swiper.slideNext();
   }
-  function slideTo(index: number) {
-    swiperInstance.current?.swiper.slideToLoop(index);
-  }
-
-  function isCurrent(releaseIndex: number, slideIndex: number | undefined) {
-    if (typeof slideIndex === "undefined") return false;
-    return releaseIndex === slideIndex;
-  }
-
-  const [currentIndex, setCurrentIndex] = useState(swiperInstance.current?.swiper.activeIndex);
 
   return (
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  //aspect-video">
       <div className="pb-3 flex items-center">
-        <div className="inline-block leading-none text-xl tracking-tight font-medium text-white">Latest Releases</div>
+        <div className="inline-block leading-none text-xl tracking-tight font-medium text-white">{title}</div>
         <div className="isolate inline-flex text-white space-x-1 ml-auto">
           <button
             onClick={() => slidePrev()}
-            className="bg-gray-500 leading-none rounded-sm p-0.5 group/prevbutton hover:bg-gray-400"
+            disabled={isPrevControlDisabled}
+            className="bg-gray-500 disabled:bg-gray-600 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-400 active:bg-gray-600  transition ease-in-out"
           >
-            <RiArrowLeftSFill className="w-4 h-4 text-gray-300 group-hover/prevbutton:text-white" />
+            <RiArrowLeftSFill className="w-5 h-5 text-gray-300 group-hover/button:text-gray-50 group-active/button:text-gray-100 group-active/button:scale-90  transition  ease-in-out translate-x-0   group-active/button:-translate-x-px" />
           </button>
 
           <button
             onClick={() => slideNext()}
-            className="bg-gray-500 leading-none rounded-sm p-0.5 group/prevbutton hover:bg-gray-400"
+            disabled={isNextControlDisabled}
+            className="bg-gray-500 disabled:bg-gray-600 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-400 active:bg-gray-600  transition ease-in-out"
           >
-            <RiArrowRightSFill className="w-4 h-4 text-gray-300 group-hover/prevbutton:text-white" />
+            <RiArrowRightSFill className="w-5 h-5 text-gray-300  group-hover/button:text-gray-50 group-active/button:text-gray-100  group-active/button:scale-90 transition ease-in-out -translate-x-0   group-active/button:translate-x-px" />
           </button>
         </div>
       </div>
       <Carousel
+        modules={[Grid, Pagination]}
+        pagination={{
+          el: `#${ID}`,
+          type: "bullets",
+          bulletClass:
+            "py-0.5 cursor-pointer bg-gray-500 flex-1 w-full h-0.5 transition hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
+          bulletActiveClass: "!bg-gray-300",
+          clickable: true,
+        }}
+        onSlideChange={self => {
+          self.realIndex <= 5 ? setIsPrevControlDisabled(true) : setIsPrevControlDisabled(false);
+          self.realIndex >= self.slides.length / 2 - 5
+            ? setIsNextControlDisabled(true)
+            : setIsNextControlDisabled(false);
+          console.log(self.realIndex);
+        }}
+        onSlideNextTransitionStart={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.add("hue-rotate-180");
+          activeBullet?.classList.add("scale-[1.01]");
+        }}
+        onSlideNextTransitionEnd={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.remove("scale-[1.01]");
+          activeBullet?.classList.remove("hue-rotate-180");
+        }}
+        onSlidePrevTransitionStart={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.add("hue-rotate-180");
+          activeBullet?.classList.add("scale-[1.01]");
+        }}
+        onSlidePrevTransitionEnd={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.remove("scale-[1.01]");
+          activeBullet?.classList.remove("hue-rotate-180");
+        }}
         slidesPerView={5}
         slidesPerGroup={5}
         grid={{
@@ -102,34 +138,16 @@ export default function LatestReleasesCarousel({ slides }: { slides: FeaturedSli
         }}
         spaceBetween={8}
         ref={swiperInstance}
-        setCurrentIndex={setCurrentIndex}
         className="shadow-xl"
       >
         {slides.map((slide, i) => (
-          <SwiperSlide key={slide._id} className="flex justify-center items-center">
+          <SwiperSlide key={slide._id + i} className="flex justify-center items-center">
             <Feature {...slide} />
           </SwiperSlide>
         ))}
       </Carousel>
 
-      <ul className="list-none flex w-full items-center space-x-1  py-2">
-        {slides.map((_, i, arr) => (
-          <li
-            key={i}
-            className="apperance-none leading-[0] flex-1 w-full  cursor-pointer py-1"
-            onClick={() => {
-              slideTo(i);
-            }}
-          >
-            <button
-              className={cn(
-                "m-0 p-0 w-full bg-teal-600 h-1",
-                isCurrent(i, currentIndex) ? "bg-teal-400" : "bg-teal-600"
-              )}
-            ></button>
-          </li>
-        ))}
-      </ul>
+      <div id={ID} className="mt-2 w-full flex gap-1 py-1"></div>
     </div>
   );
 }

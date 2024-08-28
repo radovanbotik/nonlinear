@@ -1,10 +1,10 @@
 "use client";
 
-import { ReactNode, useRef, useState } from "react";
+import { useRef } from "react";
 import { SwiperRef, SwiperSlide } from "swiper/react";
-import Carousel from "./Carousel";
+import { Autoplay, Pagination } from "swiper/modules";
 
-import { cn } from "../lib/helpers";
+import Carousel from "./Carousel";
 
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { RiArrowRightSLine } from "react-icons/ri";
@@ -36,7 +36,9 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
   );
 }
 
-export default function FeatureCarousel({ featured }: { featured: FeaturedSlideData[] }) {
+export default function FeatureCarousel({ id, featured }: { id: string; featured: FeaturedSlideData[] }) {
+  //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
+  const ID = id;
   const swiperInstance = useRef<SwiperRef>(null);
 
   function slidePrev() {
@@ -45,27 +47,45 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
   function slideNext() {
     swiperInstance.current?.swiper.slideNext();
   }
-  function slideTo(index: number) {
-    swiperInstance.current?.swiper.slideToLoop(index);
-  }
-
-  function isCurrent(releaseIndex: number, slideIndex: number | undefined) {
-    if (typeof slideIndex === "undefined") return false;
-    return releaseIndex === slideIndex;
-  }
-
-  const [currentIndex, setCurrentIndex] = useState(swiperInstance.current?.swiper.activeIndex);
 
   return (
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  aspect-video">
       <Carousel
+        modules={[Autoplay, Pagination]}
+        pagination={{
+          el: `#${ID}`,
+          type: "bullets",
+          bulletClass:
+            "py-1 cursor-pointer bg-gray-500 flex-1 w-full h-0.5 hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
+          bulletActiveClass: "!bg-gray-300 active",
+          clickable: true,
+        }}
         autoplay={{
           delay: 2500,
           disableOnInteraction: true,
         }}
+        onSlideNextTransitionStart={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.add("hue-rotate-180");
+          activeBullet?.classList.add("scale-[1.01]");
+        }}
+        onSlideNextTransitionEnd={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.remove("scale-[1.01]");
+          activeBullet?.classList.remove("hue-rotate-180");
+        }}
+        onSlidePrevTransitionStart={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.add("hue-rotate-180");
+          activeBullet?.classList.add("scale-[1.01]");
+        }}
+        onSlidePrevTransitionEnd={self => {
+          const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
+          activeBullet?.classList.remove("scale-[1.01]");
+          activeBullet?.classList.remove("hue-rotate-180");
+        }}
         loop={true}
         ref={swiperInstance}
-        setCurrentIndex={setCurrentIndex}
         className="shadow-xl"
       >
         {featured.map(feature => (
@@ -76,41 +96,24 @@ export default function FeatureCarousel({ featured }: { featured: FeaturedSlideD
       </Carousel>
 
       <button
-        className="flex items-center justify-center bg-transparent border-r-[25px] border-r-white/50  w-[50px] h-[40px] rounded-full absolute top-1/2 -left-[25px] -translate-y-1/2 -translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition"
+        className="group/button flex items-center justify-center bg-transparent border-r-[25px] disabled:border-r-gray-200/50 disabled:pointer-events-none  border-r-gray-200/75  hover/button:border-r-gray-200/90 active:border-r-gray-200/75 w-[50px] h-[40px] rounded-full absolute top-1/2 -left-[25px] -translate-y-1/2 -translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
         onClick={() => slidePrev()}
       >
         <div className="z-20 absolute top-1/2 -translate-y-1/2 left-[24px] ">
-          <RiArrowLeftSLine className="h-5 w-5 text-black" />
+          <RiArrowLeftSLine className="h-5 w-5 text-gray-600 group-disabled/button:text-gray-500 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:-translate-x-px" />
         </div>
       </button>
 
       <button
-        className="flex items-center justify-center bg-transparent border-l-[25px] border-l-white/50  w-[50px] h-[40px] rounded-full absolute top-1/2 -right-[25px] -translate-y-1/2 translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 transition"
+        className="group/button flex items-center justify-center bg-transparent border-l-[25px] disabled:border-r-gray-200/50 disabled:pointer-events-none  border-r-gray-200/75 hover/button:border-l-gray-200/90 active:border-l-gray-200/75  w-[50px] h-[40px] rounded-full absolute top-1/2 -right-[25px] -translate-y-1/2 translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
         onClick={() => slideNext()}
       >
         <div className="z-20 absolute top-1/2 -translate-y-1/2 right-[24px] ">
-          <RiArrowRightSLine className="h-5 w-5 text-black" />
+          <RiArrowRightSLine className="h-5 w-5 text-gray-600 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:translate-x-px" />
         </div>
       </button>
 
-      <ul className="list-none flex w-full items-center space-x-1  py-2">
-        {featured.map((_, i, arr) => (
-          <li
-            key={i}
-            className="apperance-none leading-[0] flex-1 w-full  cursor-pointer py-1"
-            onClick={() => {
-              slideTo(i);
-            }}
-          >
-            <button
-              className={cn(
-                "m-0 p-0 w-full bg-teal-600 h-1",
-                isCurrent(i, currentIndex) ? "bg-teal-400" : "bg-teal-600"
-              )}
-            ></button>
-          </li>
-        ))}
-      </ul>
+      <div id={ID} className="mt-2 w-full flex gap-1 py-1"></div>
     </div>
   );
 }

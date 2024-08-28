@@ -51,4 +51,14 @@ body {
   /* body {
     @apply text-sm @6xl:text-base;
   } */
+  /* .shitfuck {
+    padding: 2px 0;
+    cursor: pointer;
+    background-color: green;
+    height: 2px;
+    width: 100%;
+  }
+  .shitfuck2 {
+    background-color: red;
+  } */
 }

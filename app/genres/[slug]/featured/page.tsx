@@ -38,7 +38,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
     'slug':slug.current,
      title,
   }
-  [2...4]
+  [0...40]
   |order(release_date desc)
 `;
 
@@ -89,8 +89,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <main className="space-y-5">
-      <section>{featured && <FeatureCarousel featured={featured} />}</section>
-      <section>{latest && <LatestReleasesCarousel slides={latest40} />}</section>
+      <section>{featured && <FeatureCarousel id="FEATURE_CAROUSEL" featured={featured} />}</section>
+      <section>
+        {latest && <LatestReleasesCarousel id="LATEST_RELEASES_CAROUSEL" slides={latest40} title="Latest Releases" />}
+      </section>
+      <section>
+        {latest && <LatestReleasesCarousel id="STAFF_PICKS_CAROUSEL" slides={latest40} title="Staff Picks" />}
+      </section>
     </main>
   );
 }
