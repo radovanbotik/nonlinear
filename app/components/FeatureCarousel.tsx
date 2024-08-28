@@ -37,15 +37,15 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
           </Link>
         </div>
         <div className="flex flex-wrap items-baseline mb-1">
-          <Artists artists={artists} className="isolate text-sm leading-none" />
+          <Artists artists={artists} className="isolate text-sm leading-none tracking-tight" />
           <span className=" leading-none">&nbsp;&nbsp;</span>
-          <Link href={`/labels/${label.href}`} className="text-xs  leading-none text-gray-400">
+          <Link href={`/labels/${label.href}`} className="text-xs  leading-none text-gray-400 ">
             {label.name}
           </Link>
         </div>
         <div>
           <button className="min-w-20 bg-teal-700 hover:bg-teal-600 rounded-sm">
-            <span className="inline-block text-xs font-bold my-2 mx-3">Add to basket</span>
+            <span className="inline-block text-xs font-bold my-2 mx-3 ">Add to basket</span>
           </button>
         </div>
       </div>

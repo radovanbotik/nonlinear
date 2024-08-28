@@ -21,7 +21,7 @@ export default function SectionHeadingWithTabs({
 
   return (
     <div className="pb-5 sm:pb-2">
-      <div className="text-3xl font-medium capitalize text-white">{title}</div>
+      <div className="text-3xl font-medium capitalize text-gray-50">{title}</div>
       <div className="mt-1 sm:mt-2">
         {responsive && (
           <div className="sm:hidden">
@@ -48,13 +48,20 @@ export default function SectionHeadingWithTabs({
                 href={tab.href}
                 aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap border-b-2 px-1 pb-px text-basefont-medium",
+                  "whitespace-nowrap border-b-2 px-1 pb-px text-basefont-medium tracking-tight group",
                   isCurrent(pathname, tab.href)
-                    ? "border-teal-300 text-teal-400"
-                    : "border-transparent text-white //hover:border-teal-300 hover:text-white/80"
+                    ? "border-teal-400 text-teal-400"
+                    : "border-transparent text-gray-100  hover:text-gray-300"
                 )}
               >
-                {tab.name}
+                <span>{tab.name}</span>
+
+                {/* <div
+                  className={cn(
+                    isCurrent(pathname, tab.href) && "bg-red-500",
+                    "w-full h-0.5 group-active:translate-x-[calc(100%_+_24px)] transition duration-500 ease-in-out"
+                  )}
+                ></div> */}
               </Link>
             ))}
           </nav>

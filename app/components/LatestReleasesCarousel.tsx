@@ -38,10 +38,10 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
           </Link>
         </div>
         <div className="overflow-hidden leading-none">
-          <Artists artists={artists} className="text-xs text-neutral-400" />
+          <Artists artists={artists} className="text-xs text-neutral-400 tracking-tight" />
         </div>
         <div className="overflow-hidden leading-none">
-          <Link className="text-xs text-neutral-400" href={`/label/${label.href}`}>
+          <Link className="text-xs text-neutral-400 tracking-tight" href={`/label/${label.href}`}>
             {label.name}
           </Link>
         </div>
