@@ -3,6 +3,7 @@ import StackedList from "@/app/components/StackedList";
 
 export type ReleaseData = {
   artists: { name: string; slug: string }[];
+  tempos: number[];
   catalog_number: string;
   _id: string;
   image: string;
@@ -18,6 +19,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const QUERY = `
   *[_type == 'release']['${slug}' in singles[]->style]{
     'artists':singles[]->artists[]->{name,'slug':slug.current},
+    'tempos': singles[]->BPM,
     catalog_number,
     _id,
     'image':image.asset->url,
