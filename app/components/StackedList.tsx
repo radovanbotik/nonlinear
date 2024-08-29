@@ -11,11 +11,11 @@ import getMinMaxBPM from "../helpers/getMinMaxBPM";
 
 export default function StackedList({ data }: { data: ReleaseData[] }) {
   return (
-    <ul role="list" className="space-y-1 ">
+    <ul role="list" className="space-y-1 sm:gap-x-1 md:grid grid-cols-2 lg:block">
       {data.map(release => (
         <li
           key={release._id}
-          className="relative group grid grid-cols-[max-content_max-content_max-content_1fr_1fr_1fr_max-content] gap-3  bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm "
+          className="relative group grid grid-cols-[max-content_1fr_max-content] lg:grid-cols-[max-content_max-content_max-content_1fr_1fr_1fr_max-content] gap-3  bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm "
         >
           <div className="relative">
             <Link href={`/releases/${release.slug}`}>
@@ -31,25 +31,29 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
             </Link>
           </div>
 
-          <button className="relative leading-0 group/button ">
-            <RiPlayFill className="text-gray-300 w-4 h-4" />
-            <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-          </button>
+          <div className="my-auto leading-[0] hidden lg:block">
+            <button className="relative leading-0 group/button ">
+              <RiPlayFill className="text-gray-300 w-4 h-4" />
+              <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+            </button>
+          </div>
 
-          <button className="relative leading-0 group/button ">
-            <RiPlayListAddFill className="text-gray-300 w-4 h-4" />
-            <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-          </button>
+          <div className="my-auto leading-[0]  hidden lg:block">
+            <button className="hidden lg:inline-block relative leading-0 group/button ">
+              <RiPlayListAddFill className="text-gray-300 w-4 h-4" />
+              <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+            </button>
+          </div>
 
           <div className="flex flex-col pt-0.5">
             <div className="text-xs font-medium  text-gray-50 ">
               <Link href={`/releases/${release.slug}`}>{release.title}</Link>
             </div>
-            <div className=" flex text-xs leading-none text-teal-300 mt-1 ">
-              <Artists artists={release.artists} className="truncate tracking-tight" />
+            <div className=" flex text-xs leading-none text-teal-300 mt-1 overflow-hidden">
+              <Artists artists={release.artists} className="text-clip tracking-tight" />
             </div>
           </div>
-          <div className="flex flex-col pt-0.5 bg-clip-padding backdrop-filter ">
+          <div className="hidden lg:flex flex-col pt-0.5 bg-clip-padding backdrop-filter ">
             <div className="text-xs font-medium  text-gray-300 ">{getMinMaxBPM(release.tempos)}</div>
             <div className=" flex text-xs leading-none text-gray-400 mt-1 ">
               <div className="truncate tracking-tight">
@@ -57,7 +61,7 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col pt-0.5">
+          <div className="hidden lg:flex flex-col pt-0.5">
             <div className="text-xs font-medium  text-gray-300 ">
               {formatDate(release.release_date, {
                 day: "2-digit",
@@ -71,7 +75,7 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-center pt-0.5">
+          <div className="hidden lg:flex flex-col justify-center pt-0.5">
             <div className="text-xs font-medium  text-gray-300 pr-3">
               <button className="px-3 py-1 rounded-sm bg-teal-800 group-hover:bg-teal-600 active:!bg-teal-500">
                 download
@@ -80,6 +84,15 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
             {/* <div className=" flex text-xs leading-none text-gray-400 mt-1 ">
               <div className="truncate tracking-tight">{release.catalog_number}</div>
             </div> */}
+          </div>
+
+          <div className="my-auto min-w-4 leading-[0] flex flex-col lg:hidden">
+            <div className="text-xs font-medium  text-gray-300 pr-3">
+              <button className="relative leading-0 group/button ">
+                <RiPlayFill className="text-gray-300 w-4 h-4" />
+                <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+              </button>
+            </div>
           </div>
 
           {/* <div className="flex items-center justify-between gap-x-4  sm:flex-none">
