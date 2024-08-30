@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { SwiperRef, SwiperSlide } from "swiper/react";
-import { Grid, Pagination } from "swiper/modules";
+import { Grid, Pagination, Navigation } from "swiper/modules";
 
 import Carousel from "./Carousel";
 
@@ -98,7 +98,8 @@ export default function LatestReleasesCarousel({
         <div className="inline-block leading-none text-xl tracking-tight font-medium text-white">{title}</div>
         <div className="isolate inline-flex text-white space-x-1 ml-auto">
           <button
-            onClick={() => slidePrev()}
+            id={`buttonPrev-${ID}`}
+            // onClick={() => slidePrev()}
             disabled={isPrevControlDisabled}
             className="bg-gray-500 disabled:bg-gray-600 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-400 active:bg-gray-600  transition ease-in-out"
           >
@@ -106,7 +107,8 @@ export default function LatestReleasesCarousel({
           </button>
 
           <button
-            onClick={() => slideNext()}
+            id={`buttonNext-${ID}`}
+            // onClick={() => slideNext()}
             disabled={isNextControlDisabled}
             className="bg-gray-500 disabled:bg-gray-600 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-400 active:bg-gray-600  transition ease-in-out"
           >
@@ -115,7 +117,11 @@ export default function LatestReleasesCarousel({
         </div>
       </div>
       <Carousel
-        modules={[Grid, Pagination]}
+        modules={[Grid, Navigation, Pagination]}
+        navigation={{
+          prevEl: `#buttonPrev-${ID}`,
+          nextEl: `#buttonNext-${ID}`,
+        }}
         pagination={{
           el: `#${ID}`,
           type: "bullets",
@@ -124,13 +130,8 @@ export default function LatestReleasesCarousel({
           bulletActiveClass: "!bg-gray-300",
           clickable: true,
         }}
-        onSlideChange={self => {
-          self.realIndex < 5 ? setIsPrevControlDisabled(true) : setIsPrevControlDisabled(false);
-          self.realIndex >= self.slides.length / 2 - 5
-            ? setIsNextControlDisabled(true)
-            : setIsNextControlDisabled(false);
-          console.log(self.realIndex);
-        }}
+        onReachBeginning={() => setIsPrevControlDisabled(true)}
+        onReachEnd={() => setIsNextControlDisabled(false)}
         onSlideNextTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
           activeBullet?.classList.add("hue-rotate-180", "scale-[1.01]");
@@ -154,10 +155,10 @@ export default function LatestReleasesCarousel({
           fill: "row",
         }}
         breakpoints={{
-          320: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4 },
-          640: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4 },
-          976: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8 },
-          1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8 },
+          320: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+          640: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+          976: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+          1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
         }}
         spaceBetween={8}
         ref={swiperInstance}

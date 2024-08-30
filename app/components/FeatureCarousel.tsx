@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { SwiperRef, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 import Carousel from "./Carousel";
 
@@ -58,17 +58,17 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
   const ID = id;
   const swiperInstance = useRef<SwiperRef>(null);
 
-  function slidePrev() {
-    swiperInstance.current?.swiper.slidePrev();
-  }
-  function slideNext() {
-    swiperInstance.current?.swiper.slideNext();
-  }
+  // function slidePrev() {
+  //   swiperInstance.current?.swiper.slidePrev();
+  // }
+  // function slideNext() {
+  //   swiperInstance.current?.swiper.slideNext();
+  // }
 
   return (
     <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  aspect-video">
       <Carousel
-        modules={[Autoplay, Pagination]}
+        modules={[Autoplay, Navigation, Pagination]}
         pagination={{
           el: `#${ID}`,
           type: "bullets",
@@ -76,6 +76,10 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
             "relative py-0.5 cursor-pointer bg-gray-500 flex-1 w-full hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
           bulletActiveClass: "!bg-gray-300 active",
           clickable: true,
+        }}
+        navigation={{
+          prevEl: `#buttonPrev-${ID}`,
+          nextEl: `#buttonNext-${ID}`,
         }}
         autoplay={{
           delay: 2500,
@@ -110,7 +114,8 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
 
       <button
         className="group/button flex items-center justify-center bg-transparent border-r-[25px] disabled:border-r-gray-200/50 disabled:pointer-events-none  border-r-gray-200/75  hover/button:border-r-gray-200/90 active:border-r-gray-200/75 w-[50px] h-[40px] rounded-full absolute top-1/2 -left-[25px] -translate-y-1/2 -translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
-        onClick={() => slidePrev()}
+        id={`buttonPrev-${ID}`}
+        // onClick={() => slidePrev()}
       >
         <div className="z-20 absolute top-1/2 -translate-y-1/2 left-[24px] ">
           <RiArrowLeftSLine className="h-5 w-5 text-gray-600 group-disabled/button:text-gray-500 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:-translate-x-px" />
@@ -119,7 +124,9 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
 
       <button
         className="group/button flex items-center justify-center bg-transparent border-l-[25px] disabled:border-r-gray-200/50 disabled:pointer-events-none  border-r-gray-200/75 hover/button:border-l-gray-200/90 active:border-l-gray-200/75  w-[50px] h-[40px] rounded-full absolute top-1/2 -right-[25px] -translate-y-1/2 translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
-        onClick={() => slideNext()}
+        id={`buttonNext-${ID}`}
+
+        // onClick={() => slideNext()}
       >
         <div className="z-20 absolute top-1/2 -translate-y-1/2 right-[24px] ">
           <RiArrowRightSLine className="h-5 w-5 text-gray-600 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:translate-x-px" />
