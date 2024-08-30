@@ -56,6 +56,7 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
 export default function FeatureCarousel({ id, featured }: { id: string; featured: FeaturedSlideData[] }) {
   //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
   const ID = id;
+  const speed = 300;
   const swiperInstance = useRef<SwiperRef>(null);
 
   return (
@@ -65,8 +66,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         pagination={{
           el: `#${ID}`,
           type: "bullets",
-          bulletClass:
-            "relative py-0.5 cursor-pointer bg-gray-500 flex-1 w-full hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
+          bulletClass: `relative py-0.5 cursor-pointer bg-gray-500 flex-1 w-full hover:bg-gray-400 transition ease-in-out duration-${speed} shadow-lg`,
           bulletActiveClass: "!bg-gray-300 active",
           clickable: true,
         }}
@@ -78,6 +78,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
           delay: 2500,
           disableOnInteraction: true,
         }}
+        speed={speed}
         onSlideNextTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
           activeBullet?.classList.add("hue-rotate-180", "scale-[1.01]");

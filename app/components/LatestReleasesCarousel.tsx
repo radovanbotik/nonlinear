@@ -33,12 +33,12 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
         />
         <div className="absolute bottom-0 left-0 translate-y-full flex w-full bg-gray-950 opacity-0  group-hover/parent:translate-y-0 group-hover/parent:opacity-100 transition">
           <div className="w-full flex justify-evenly">
-            <button className="relative inline-block  mx-auto group/button ">
+            <button className="relative inline-block  //mx-auto group/button ">
               <RiPlayFill className="text-gray-300 w-4 h-4" />
               <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
             </button>
 
-            <button className="relative inline-block  mx-auto group/button ">
+            <button className="relative inline-block  //mx-auto group/button ">
               <RiPlayListAddFill className="text-gray-300 w-4 h-4" />
               <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
             </button>
@@ -81,6 +81,7 @@ export default function LatestReleasesCarousel({
 }) {
   //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
   const ID = id;
+  const speed = 300;
   const swiperInstance = useRef<SwiperRef>(null);
   const [isPrevControlDisabled, setIsPrevControlDisabled] = useState(true);
   const [isNextControlDisabled, setIsNextControlDisabled] = useState(false);
@@ -99,20 +100,18 @@ export default function LatestReleasesCarousel({
         <div className="isolate inline-flex text-white space-x-1 ml-auto">
           <button
             id={`buttonPrev-${ID}`}
-            // onClick={() => slidePrev()}
             disabled={isPrevControlDisabled}
-            className="bg-gray-500 disabled:bg-gray-600 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-400 active:bg-gray-600  transition ease-in-out"
+            className="bg-gray-600 disabled:bg-gray-700 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-500 active:bg-gray-600  transition duration-300 ease-in-out"
           >
-            <RiArrowLeftSFill className="w-5 h-5 text-gray-300 group-hover/button:text-gray-50 group-active/button:text-gray-100 group-active/button:scale-90  transition  ease-in-out translate-x-0   group-active/button:-translate-x-px" />
+            <RiArrowLeftSFill className="w-5 h-5 text-gray-300 group-hover/button:text-gray-50 group-active/button:text-gray-100 group-active/button:scale-90  transition  ease-in-out translate-x-0 duration-300   " />
           </button>
 
           <button
             id={`buttonNext-${ID}`}
-            // onClick={() => slideNext()}
             disabled={isNextControlDisabled}
-            className="bg-gray-500 disabled:bg-gray-600 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-400 active:bg-gray-600  transition ease-in-out"
+            className="bg-gray-600 disabled:bg-gray-700 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-500 active:bg-gray-600  transition duration-300 ease-in-out"
           >
-            <RiArrowRightSFill className="w-5 h-5 text-gray-300  group-hover/button:text-gray-50 group-active/button:text-gray-100  group-active/button:scale-90 transition ease-in-out -translate-x-0   group-active/button:translate-x-px" />
+            <RiArrowRightSFill className="w-5 h-5 text-gray-300  group-hover/button:text-gray-50 group-active/button:text-gray-100  group-active/button:scale-90 transition ease-in-out -translate-x-0  duration-300  " />
           </button>
         </div>
       </div>
@@ -122,11 +121,11 @@ export default function LatestReleasesCarousel({
           prevEl: `#buttonPrev-${ID}`,
           nextEl: `#buttonNext-${ID}`,
         }}
+        speed={speed}
         pagination={{
           el: `#${ID}`,
           type: "bullets",
-          bulletClass:
-            "py-0.5 cursor-pointer bg-gray-500 flex-1 w-full h-0.5 transition hover:bg-gray-400 transition ease-in-out duration-300 shadow-lg",
+          bulletClass: `py-0.5 cursor-pointer bg-gray-500 flex-1 w-full h-0.5 transition hover:bg-gray-400 transition ease-in-out duration-${speed} shadow-lg`,
           bulletActiveClass: "!bg-gray-300",
           clickable: true,
         }}
@@ -148,19 +147,19 @@ export default function LatestReleasesCarousel({
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
           activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
-        slidesPerView={5}
-        slidesPerGroup={5}
+        slidesPerView={2}
+        slidesPerGroup={2}
+        spaceBetween={4}
         grid={{
           rows: 2,
           fill: "row",
         }}
         breakpoints={{
-          320: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-          640: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-          976: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+          640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+          768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+          1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
           1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
         }}
-        spaceBetween={8}
         ref={swiperInstance}
         className="shadow-xl"
       >
