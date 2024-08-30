@@ -8,6 +8,8 @@ import Carousel from "./Carousel";
 
 import { RiArrowLeftSFill } from "react-icons/ri";
 import { RiArrowRightSFill } from "react-icons/ri";
+import { RiPlayFill } from "react-icons/ri";
+import { RiPlayListAddFill } from "react-icons/ri";
 
 import { FeaturedSlideData } from "../genres/[slug]/featured/page";
 import Image from "next/image";
@@ -16,8 +18,9 @@ import Link from "next/link";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div key={_id} className="relative shadow-lg bg-gray-700">
-      <div className="relative transition-transform duration-75 ease-in-out hover:scale-[0.99] ">
+    <div key={_id} className="relative group/parent shadow-lg bg-gray-700">
+      <div className="relative overflow-hidden transition-transform duration-75 ease-in-out group/image">
+        <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
         <Image
           src={image}
           alt={`Image of ${title}`}
@@ -28,10 +31,28 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
           blurDataURL={image}
           quality={100}
         />
-        <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
+        <div className="absolute bottom-0 left-0 translate-y-full flex w-full bg-gray-950 opacity-0  group-hover/parent:translate-y-0 group-hover/parent:opacity-100 transition">
+          <div className="w-full flex justify-evenly">
+            <button className="relative inline-block  mx-auto group/button ">
+              <RiPlayFill className="text-gray-300 w-4 h-4" />
+              <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+            </button>
+
+            <button className="relative inline-block  mx-auto group/button ">
+              <RiPlayListAddFill className="text-gray-300 w-4 h-4" />
+              <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+            </button>
+          </div>
+
+          <div className="w-full">
+            <button className="w-full px-3 text-xs py-1.5 text-gray-300  bg-teal-800 hover:bg-teal-600 hover:text-gray-50 active:!bg-teal-500 transition">
+              download
+            </button>
+          </div>
+        </div>
       </div>
 
-      <div className="bg-gray-600 p-2 space-y-0.5 isolate">
+      <div className="bg-gray-700 p-2 space-y-0.5 isolate">
         <div className="overflow-hidden leading-none">
           <Link className="font-bold text-white text-sm/4" href={`/releases/${slug}`}>
             {title}
@@ -131,6 +152,12 @@ export default function LatestReleasesCarousel({
         grid={{
           rows: 2,
           fill: "row",
+        }}
+        breakpoints={{
+          320: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4 },
+          640: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4 },
+          976: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8 },
+          1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8 },
         }}
         spaceBetween={8}
         ref={swiperInstance}

@@ -1,6 +1,7 @@
 import { client } from "@/sanity/client";
 import StackedList from "@/app/components/StackedList";
 import SelectFilter from "@/app/components/SelectFilter";
+import RadioFilter from "@/app/components/RadioFilter";
 
 export type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -71,6 +72,28 @@ export default async function Page({ params }: { params: { slug: string } }) {
       },
     ],
   };
+  const filterOrder = {
+    name: "order_by",
+    title: "Order by",
+    options: [
+      {
+        value: "date",
+        label: "Newest To Oldest",
+      },
+      {
+        value: "-date",
+        label: "Oldest To Newest",
+      },
+      {
+        value: "name",
+        label: "Title A - Z",
+      },
+      {
+        value: "-name",
+        label: "Title Z - A",
+      },
+    ],
+  };
 
   return (
     <main className="space-y-5 ">
@@ -79,7 +102,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <SelectFilter name={filterBPM.name} options={filterBPM.options} title={filterBPM.title} />
           <SelectFilter name={filterLabel.name} options={filterLabel.options} title={filterLabel.title} />
           <div className="ml-auto">
-            <span className="text-gray-200 text-xs">Sort by:</span>
+            <RadioFilter name={filterOrder.name} options={filterOrder.options} title={filterOrder.title} />
           </div>
         </div>
       </section>

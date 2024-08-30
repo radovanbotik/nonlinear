@@ -40,10 +40,11 @@ export default function SelectFilter({
     <Popover className="relative inline-block text-left ">
       {({ open }) => (
         <>
-          <div className="bg-gray-700/60 hover:bg-gray-700/70  bg-clip-padding backdrop-filter backdrop-blur-sm rounded-sm ">
+          <div className="bg-gray-700/30 hover:bg-gray-700/70  bg-clip-padding backdrop-filter backdrop-blur-sm rounded-sm ">
             <PopoverButton
               className={cn(
-                "group px-3  py-1 inline-flex    items-center justify-center text-sm font-medium text-gray-400 hover:text-gray-300"
+                "group px-3  py-1 inline-flex    items-center justify-center text-sm font-medium text-gray-400 hover:text-gray-300 transition",
+                filter.length > 0 && "text-teal-500 hover:text-teal-400"
                 // open && "shadow-none outline-none border-0 ring-0 after:content-none before:content-none"
               )}
             >
@@ -57,7 +58,8 @@ export default function SelectFilter({
                 aria-hidden="true"
                 className={cn(
                   "-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-300 transition -rotate-90",
-                  open && "rotate-0"
+                  open && "rotate-0",
+                  filter.length > 0 && "text-teal-400 group-hover:text-teal-300"
                 )}
               />
             </PopoverButton>
@@ -81,7 +83,10 @@ export default function SelectFilter({
                       handleSearch(name, option.value);
                     }}
                   />
-                  <label htmlFor={option.id} className="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-50">
+                  <label
+                    htmlFor={option.id}
+                    className={cn("ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-50")}
+                  >
                     {option.label}
                   </label>
                 </div>
