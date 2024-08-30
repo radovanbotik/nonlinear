@@ -69,9 +69,9 @@ export default function Example() {
   // const [isSearching,setIsSearching] = useState(false)
 
   return (
-    <header className="//bg-[#d0ff4b] bg-black text-white">
+    <header className=" bg-gray-950 text-gray-50 border-b-[1px] border-b-gray-300">
       <Container size="xl">
-        <nav aria-label="Global" className="mx-auto flex items-center //justify-between //p-6 //lg:px-8 h-12">
+        <nav aria-label="Global" className="mx-auto flex items-center //justify-between //p-6 //lg:px-8 h-16">
           <div className="flex items-center gap-x-7">
             <Link href="/" className="-m-1.5 //p-1.5">
               <span className="sr-only">Your Company</span>
@@ -91,7 +91,7 @@ export default function Example() {
           <div className="hidden lg:flex ml-auto">
             <button className="flex items-center gap-2 text-sm //font-semibold //leading-6 //text-gray-900">
               <span aria-hidden="true">
-                <RiUser3Line className="h- w-4" />
+                <RiUser3Line className="h-6 w-6 sm:h-4 sm:w-4" />
               </span>
               <span>My account</span>
             </button>
@@ -104,7 +104,7 @@ export default function Example() {
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 //text-gray-700"
             >
               <span className="sr-only">Open main menu</span>
-              <RiMenuFill aria-hidden="true" className="h-4 w-4" />
+              <RiMenuFill aria-hidden="true" className="h-6 w-6 sm:h-4 sm:w-4" />
               {/* <Bars3Icon aria-hidden="true" className="h-6 w-6" /> */}
             </button>
           </div>

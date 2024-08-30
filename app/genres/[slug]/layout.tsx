@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Container } from "../../components/Container";
 import SectionHeadingWithTabs from "../../components/SectionHeadingWithTabs";
+import VerticalNavigation from "@/app/components/VerticalNavigation";
 
 export default function RootLayout({
   children,
@@ -19,10 +20,12 @@ export default function RootLayout({
   ];
 
   return (
-    <div className="bg-gray-800 py-4">
+    <div className="bg-gray-800 py-7">
       <Container size="xl">
-        <div className="flex gap-5">
-          <div className="w-2/12 bg-gray-700"></div>
+        <div className="flex gap-7">
+          <div className="w-2/12 bg-gray-700">
+            <VerticalNavigation />
+          </div>
           <div className="w-7/12">
             <SectionHeadingWithTabs responsive={false} tabs={tabs} title={slug} />
             {children}

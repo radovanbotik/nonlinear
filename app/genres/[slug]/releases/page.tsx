@@ -96,7 +96,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   };
 
   return (
-    <main className="space-y-5 ">
+    <main className="space-y-5 min-h-dvh">
       <section>
         <div className="gap-2 py-2.5 flex w-full items-center">
           <SelectFilter name={filterBPM.name} options={filterBPM.options} title={filterBPM.title} />

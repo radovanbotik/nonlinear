@@ -4,6 +4,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "../lib/helpers";
+import ensure from "../helpers/ensure";
 
 export default function RadioFilter({
   name,

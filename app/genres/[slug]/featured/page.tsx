@@ -88,7 +88,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   ];
 
   return (
-    <main className="space-y-5">
+    <main className="space-y-5 min-h-dvh">
       <section>{featured && <FeatureCarousel id="FEATURE_CAROUSEL" featured={featured} />}</section>
       <section>
         {latest && <LatestReleasesCarousel id="LATEST_RELEASES_CAROUSEL" slides={latest40} title="Latest Releases" />}

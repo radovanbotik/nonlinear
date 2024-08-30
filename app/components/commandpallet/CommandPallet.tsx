@@ -32,7 +32,7 @@ export default function Example() {
   return (
     <>
       <button className=" ml-auto lg:ml-7" onClick={() => setOpen(true)}>
-        <RiSearchLine className="h-4 w-4" />
+        <RiSearchLine className="h-6 w-6 sm:h-4 sm:w-4" />
       </button>
 
       <Dialog
