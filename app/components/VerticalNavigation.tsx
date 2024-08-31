@@ -16,7 +16,7 @@ export default function VerticalNavigation({
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Sidebar" className="flex flex-1 flex-col">
+    <div aria-label="Sidebar" className="flex flex-1 flex-col">
       <ul role="list" className="//-mx-2 divide-y-2 divide-gray-800 //space-y-1">
         {navigation.map(item => (
           <li
@@ -50,6 +50,6 @@ export default function VerticalNavigation({
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 }
