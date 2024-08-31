@@ -94,7 +94,7 @@ export default function LatestReleasesCarousel({
   }
 
   return (
-    <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  //aspect-video">
+    <div className="relative shrink w-full h-full flex flex-col isolate group overflow-hidden  //aspect-video">
       <div className="pb-3 flex items-center">
         <div className="inline-block leading-none text-xl tracking-tight font-medium text-white">{title}</div>
         <div className="isolate inline-flex text-white space-x-1 ml-auto">
@@ -125,7 +125,7 @@ export default function LatestReleasesCarousel({
         pagination={{
           el: `#${ID}`,
           type: "bullets",
-          bulletClass: `py-0.5 cursor-pointer bg-gray-500 flex-1 w-full h-0.5 transition hover:bg-gray-400 transition ease-in-out duration-${speed} shadow-lg`,
+          bulletClass: `py-0.5 cursor-pointer bg-gray-500 flex-1 shrink w-full h-0.5 transition hover:bg-gray-400 transition ease-in-out duration-${speed} shadow-lg`,
           bulletActiveClass: "!bg-gray-300",
           clickable: true,
         }}

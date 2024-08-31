@@ -15,9 +15,9 @@ import Link from "next/link";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden group transition ease-in-out">
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden group transition ease-in-out ">
       <div className=" cursor-grab absolute inset-0 bg-teal-600 //active:bg-teal-500 isolate after:-z-10 after:absolute after:bg-gradient-to-t from-gray-900/40 via-transparent to-gray-900/10 after:inset-0 after:w-full after:h-full after:pointer-events-none "></div>
-      <div className="relative">
+      <div className="relative  max-w-full">
         <Image
           src={image}
           alt={`Image of ${title}`}
@@ -60,13 +60,13 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
   const swiperInstance = useRef<SwiperRef>(null);
 
   return (
-    <div className="relative w-full h-full flex flex-col isolate group overflow-hidden  //aspect-square lg:aspect-video">
+    <div className="relative shrink w-full h-full flex flex-col  group overflow-hidden  lg:aspect-video">
       <Carousel
         modules={[Autoplay, Navigation, Pagination]}
         pagination={{
           el: `#${ID}`,
           type: "bullets",
-          bulletClass: `relative py-0.5 cursor-pointer bg-gray-500 flex-1 w-full hover:bg-gray-400 transition ease-in-out duration-${speed} shadow-lg`,
+          bulletClass: `relative py-0.5 cursor-pointer bg-gray-500 flex-1 shrink w-full hover:bg-gray-400 transition ease-in-out duration-${speed} shadow-lg`,
           bulletActiveClass: "!bg-gray-300 active",
           clickable: true,
         }}
@@ -78,6 +78,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
           delay: 2500,
           disableOnInteraction: true,
         }}
+        slidesPerView={1}
         speed={speed}
         onSlideNextTransitionStart={self => {
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
@@ -100,7 +101,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         className="shadow-xl"
       >
         {featured.map(feature => (
-          <SwiperSlide key={feature._id} className="relative">
+          <SwiperSlide key={feature._id} className="w-fit">
             <Feature {...feature} />
           </SwiperSlide>
         ))}
@@ -124,7 +125,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         </div>
       </button>
 
-      <div id={ID} className="mt-2 w-full flex gap-1 py-1"></div>
+      <div id={ID} className="mt-2 w-fit flex gap-1 py-1"></div>
     </div>
   );
 }

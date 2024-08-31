@@ -97,7 +97,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <main className="space-y-5 min-h-dvh">
-      <section>
+      <section className="w-full">
         <div className="gap-2 py-2.5 flex w-full items-center">
           <SelectFilter name={filterBPM.name} options={filterBPM.options} title={filterBPM.title} />
           <SelectFilter name={filterLabel.name} options={filterLabel.options} title={filterLabel.title} />
@@ -106,7 +106,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
-      <section>
+      <section className="w-full">
         <StackedList data={data} />
       </section>
     </main>

@@ -14,7 +14,7 @@ import { cn } from "../lib/helpers";
 const Carousel = forwardRef<SwiperRef | null, SwiperProps & { children: ReactNode[]; className?: string }>(
   function Carousel({ children, className, ...props }, ref) {
     return (
-      <Swiper className={cn("w-full h-full", className)} ref={ref} {...props}>
+      <Swiper className={cn("!w-full !h-full !max-w-full", className)} ref={ref} {...props}>
         {children}
       </Swiper>
     );
