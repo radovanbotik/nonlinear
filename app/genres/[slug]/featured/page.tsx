@@ -91,10 +91,48 @@ export default async function Page({ params }: { params: { slug: string } }) {
     <main className="space-y-5 min-h-dvh">
       <section>{featured && <FeatureCarousel id="FEATURE_CAROUSEL" featured={featured} />}</section>
       <section>
-        {latest && <LatestReleasesCarousel id="LATEST_RELEASES_CAROUSEL" slides={latest40} title="Latest Releases" />}
+        {latest && (
+          <LatestReleasesCarousel
+            id="LATEST_RELEASES_CAROUSEL"
+            slides={latest40}
+            title="Latest Releases"
+            slidesPerView={2}
+            slidesPerGroup={2}
+            spaceBetween={4}
+            grid={{
+              rows: 2,
+              fill: "row",
+            }}
+            breakpoints={{
+              640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+              768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+              1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+              1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+            }}
+          />
+        )}
       </section>
       <section>
-        {latest && <LatestReleasesCarousel id="STAFF_PICKS_CAROUSEL" slides={latest40} title="Staff Picks" />}
+        {latest && (
+          <LatestReleasesCarousel
+            slidesPerView={2}
+            slidesPerGroup={2}
+            spaceBetween={4}
+            grid={{
+              rows: 2,
+              fill: "row",
+            }}
+            breakpoints={{
+              640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+              768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+              1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+              1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+            }}
+            id="STAFF_PICKS_CAROUSEL"
+            slides={latest40}
+            title="Staff Picks"
+          />
+        )}
       </section>
     </main>
   );

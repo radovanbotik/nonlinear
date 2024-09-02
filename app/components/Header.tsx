@@ -64,7 +64,7 @@ const navigations = [
   // { name: "Reports", href: "#", current: false },
 ];
 
-export default function Example() {
+export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   // const [isSearching,setIsSearching] = useState(false)
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { SwiperRef, SwiperSlide } from "swiper/react";
+import { SwiperProps, SwiperRef, SwiperSlide } from "swiper/react";
 import { Grid, Pagination, Navigation } from "swiper/modules";
 
 import Carousel from "./Carousel";
@@ -18,15 +18,15 @@ import Link from "next/link";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
-    <div key={_id} className="relative group/parent shadow-lg bg-gray-700">
+    <div key={_id} className="relative group/parent //shadow-lg bg-gray-700 max-w-64 lg:max-w-40">
       <div className="relative overflow-hidden transition-transform duration-75 ease-in-out group/image">
         <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
         <Image
           src={image}
           alt={`Image of ${title}`}
           className="block"
-          width={200}
-          height={200}
+          width={260}
+          height={260}
           placeholder="blur"
           blurDataURL={image}
           quality={100}
@@ -74,24 +74,18 @@ export default function LatestReleasesCarousel({
   id,
   slides,
   title,
+  ...props
 }: {
   id: string;
   slides: FeaturedSlideData[];
   title: string;
-}) {
+} & SwiperProps) {
   //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
   const ID = id;
   const speed = 300;
   const swiperInstance = useRef<SwiperRef>(null);
   const [isPrevControlDisabled, setIsPrevControlDisabled] = useState(true);
   const [isNextControlDisabled, setIsNextControlDisabled] = useState(false);
-
-  function slidePrev() {
-    swiperInstance.current?.swiper.slidePrev();
-  }
-  function slideNext() {
-    swiperInstance.current?.swiper.slideNext();
-  }
 
   return (
     <div className="relative shrink w-full h-full flex flex-col isolate group overflow-hidden  //aspect-video">
@@ -147,24 +141,12 @@ export default function LatestReleasesCarousel({
           const activeBullet = self.pagination.bullets.find(bullet => bullet.classList.contains("active"));
           activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
-        slidesPerView={2}
-        slidesPerGroup={2}
-        spaceBetween={4}
-        grid={{
-          rows: 2,
-          fill: "row",
-        }}
-        breakpoints={{
-          640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-          768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-          1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-          1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-        }}
         ref={swiperInstance}
-        className="shadow-xl"
+        className="//shadow-xl"
+        {...props}
       >
         {slides.map((slide, i) => (
-          <SwiperSlide key={slide._id + i} className="flex justify-center items-center">
+          <SwiperSlide key={slide._id + i} className="flex justify-center items-center ">
             <Feature {...slide} />
           </SwiperSlide>
         ))}
