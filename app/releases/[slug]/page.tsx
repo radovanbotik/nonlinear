@@ -247,8 +247,9 @@ export default async function Review({ params }: { params: { slug: string } }) {
               <tr>
                 <th scope="col" className="sm:pl-0 w-10 py-2"></th>
                 <th scope="col" className="hidden w-8 px-1 py-2  lg:table-cell"></th>
-                <th scope="col" className="hidden w-4 px-1 py-2  lg:table-cell"></th>
-                <th scope="col" className="hidden w-4 px-1 py-2  lg:table-cell"></th>
+                <th scope="col" className="hidden w-4 px-1.5 py-2  lg:table-cell"></th>
+                <th scope="col" className="hidden w-4 px-1.5 py-2  lg:table-cell"></th>
+                <th scope="col" className="hidden w-4 px-1.5 py-2  lg:table-cell"></th>
                 <th scope="col" className="py-2 px-2.5 ">
                   <div className="text-left text-xs font-normal text-gray-300">Title / Artists</div>
                 </th>
@@ -288,16 +289,22 @@ export default async function Review({ params }: { params: { slug: string } }) {
                   <td className="hidden w-8 px-1  lg:table-cell ">
                     <div className="text-xs  text-gray-400  text-center">{i + 1}</div>
                   </td>
-                  <td className="hidden w-4  px-1  lg:table-cell ">
+                  <td className="hidden w-4  px-1.5  lg:table-cell ">
                     <button className="relative leading-0 group/button block">
                       <RiPlayFill className="text-gray-300 w-4 h-4" />
                       <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
                     </button>
                   </td>
-                  <td className="hidden w-4 px-1  lg:table-cell ">
+                  <td className="hidden w-4 px-1.5  lg:table-cell ">
                     <button className=" relative leading-0 group/button block">
                       <RiPlayListAddFill className="text-gray-300 w-4 h-4" />
                       <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+                    </button>
+                  </td>
+                  <td className="hidden w-4 px-1.5  lg:table-cell ">
+                    <button className="relative leading-0 group/button block">
+                      <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+                      <RiAddLargeFill className="text-gray-300 w-4 h-4" />
                     </button>
                   </td>
                   <td className=" max-w-0  px-2.5 sm:w-auto sm:max-w-none  ">

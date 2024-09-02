@@ -4,6 +4,7 @@ import MediaObject from "./MediaObject";
 
 import { RiPlayFill } from "react-icons/ri";
 import { RiPlayListAddFill } from "react-icons/ri";
+import { RiAddLargeFill } from "react-icons/ri";
 
 export default function Chart({
   tracks,
@@ -22,7 +23,7 @@ export default function Chart({
   return (
     <div aria-label="Sidebar" className="flex flex-1 flex-col px-3 py-4 divide-y divide-gray-400">
       <div className="flex items-center w-full pb-3">
-        <div className="flex-1 flex items-center gap-2 text-gray-50">
+        <div className="flex-1 flex items-center gap-3 text-gray-50">
           <button className="relative flex items-center group/button p-1">
             <div className="group-hover/button:opacity-100 bg-transparent inset-0 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_2px_#f7fafc]"></div>
             <div className="bg-gray-500 inset-0 absolute rounded-full"></div>
@@ -31,6 +32,10 @@ export default function Chart({
           <button className="group/button relative">
             <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
             <RiPlayListAddFill className="w-4 h-4" />
+          </button>
+          <button className="group/button relative">
+            <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
+            <RiAddLargeFill className="w-4 h-4" />
           </button>
         </div>
         <div className="flex-1 text-teal-400 justify-self-center w-full ">

@@ -48,20 +48,13 @@ export default function SectionHeadingWithTabs({
                 href={tab.href}
                 aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap border-b-[1px]  pb-px text-basefont-medium tracking-tight group",
+                  "whitespace-nowrap border-b-[1px]  pb-px text-base font-medium tracking-tight group",
                   isCurrent(pathname, tab.href)
                     ? "border-teal-400 text-teal-400"
                     : "border-transparent text-gray-100  hover:text-gray-300"
                 )}
               >
                 <span>{tab.name}</span>
-
-                {/* <div
-                  className={cn(
-                    isCurrent(pathname, tab.href) && "bg-red-500",
-                    "w-full h-0.5 group-active:translate-x-[calc(100%_+_24px)] transition duration-500 ease-in-out"
-                  )}
-                ></div> */}
               </Link>
             ))}
           </nav>

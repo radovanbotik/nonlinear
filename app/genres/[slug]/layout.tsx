@@ -64,7 +64,7 @@ export default async function Layout({
       <SectionHeadingWithTabs responsive={false} tabs={tabs} title={slug} />
       <div className="gap-x-6 flex relative">
         <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0">{children}</div>
-        <aside className="block w-1/3 bg-gray-700">
+        <aside className="block w-1/3 bg-gray-700/50">
           <Chart tracks={data} heading="NL Top10" />
         </aside>
       </div>
