@@ -23,12 +23,8 @@ import { RiPlayCircleFill } from "react-icons/ri";
 
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 
-// *[_type=='review' && 'jungle' in *[_type == "release"][0].singles[]->.style]{
-//   release->{title}
-//   }
-
 function Artists({ artists, className }: { artists: { name: string; slug: string }[]; className?: string }) {
-  const uniqueArr = [];
+  const uniqueArr: { name: string; slug: string }[] = [];
   artists.map(artist => {
     if (!uniqueArr.find(object => object.name === artist.name && object.slug === artist.slug)) uniqueArr.push(artist);
   });
@@ -125,8 +121,6 @@ export default async function Review({ params }: { params: { slug: string } }) {
       all_artists_releases.push(object);
     });
   });
-
-  console.log(all_artists_releases);
 
   const categories = [
     {

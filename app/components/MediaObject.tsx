@@ -1,48 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
 import Artists from "./Artists";
+import { ReactNode } from "react";
 
 export default function MediaObject({
-  artists,
+  children,
   image,
   title,
-  slug,
+  href,
 }: {
-  artists: { name: string; slug: string }[];
+  children: ReactNode;
   image: string;
-  slug: string;
+  href: string;
   title: string;
 }) {
   return (
-    <div className="flex ">
+    <div className="flex relative items-center group hover:bg-gray-600 py-2 px-2 overflow-hidden">
       <div className="mr-4 flex-shrink-0 relative  max-w-full">
         <Image
           src={image}
           alt={`Image of ${title}`}
-          className="drop-shadow-xl shadow-xl "
-          width={40}
-          height={40}
+          width={48}
+          height={48}
           placeholder="blur"
           blurDataURL={image}
           quality={100}
         />
-        <Link href={`/releases/${slug}`} className="absolute inset-0"></Link>
-        {/* <svg
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 200 200"
-          preserveAspectRatio="none"
-          aria-hidden="true"
-          className="h-10 w-10 border border-gray-300 bg-white text-gray-300"
-        >
-          <path d="M0 0l200 200M0 200L200 0" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-        </svg> */}
+        {href && <Link href={`/releases/${href}`} className="absolute inset-0"></Link>}
       </div>
       <div className="truncate">
-        <div className="text-sm font-medium text-gray-50">{title}</div>
-        <div className="//mt-1 text-xs  tracking-tight text-teal-400">
-          <Artists artists={artists} />
-        </div>
+        {href ? (
+          <Link href={`/releases/${href}`} className="block text-sm font-medium text-gray-50">
+            {title}
+          </Link>
+        ) : (
+          <div className="text-sm font-medium text-gray-50">{title}</div>
+        )}
+        {children}
       </div>
     </div>
   );

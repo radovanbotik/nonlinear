@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="//dark">
-      <body className={`${roboto.className}  //bg-black //bg-[#d0ff4b] dark:bg-black`}>
+      <body className={`${inter.className}  //bg-black //bg-[#d0ff4b] dark:bg-black`}>
         <Header />
         {children}
         {/* <Footer /> */}

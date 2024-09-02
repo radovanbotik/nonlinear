@@ -20,7 +20,7 @@ export default function SectionHeadingWithTabs({
   const pathname = usePathname();
 
   return (
-    <div className="pb-5 sm:pb-2">
+    <div className="pb-5 sm:pb-3">
       <div className="text-3xl font-medium capitalize text-gray-50">{title}</div>
       <div className="mt-1 sm:mt-3">
         {responsive && (
@@ -48,7 +48,7 @@ export default function SectionHeadingWithTabs({
                 href={tab.href}
                 aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap border-b-2  pb-px text-basefont-medium tracking-tight group",
+                  "whitespace-nowrap border-b-[1px]  pb-px text-basefont-medium tracking-tight group",
                   isCurrent(pathname, tab.href)
                     ? "border-teal-400 text-teal-400"
                     : "border-transparent text-gray-100  hover:text-gray-300"

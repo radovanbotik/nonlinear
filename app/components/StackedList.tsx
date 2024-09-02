@@ -47,7 +47,7 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
               </button>
             </div>
 
-            <div className="flex flex-col pt-0.5">
+            <div className="flex flex-col py-0.5">
               <div className="text-xs font-medium  text-gray-50 ">
                 <Link href={`/releases/${release.slug}`}>{release.title}</Link>
               </div>
@@ -55,7 +55,7 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
                 <Artists artists={release.artists} className="text-clip tracking-tight" />
               </div>
             </div>
-            <div className="hidden lg:flex flex-col pt-0.5 bg-clip-padding backdrop-filter ">
+            <div className="hidden lg:flex flex-col py-0.5 ">
               <div className="text-xs font-medium  text-gray-300 ">{getMinMaxBPM(release.tempos)}</div>
               <div className=" flex text-xs leading-none text-gray-400 mt-1 ">
                 <div className="truncate tracking-tight">
@@ -63,7 +63,7 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
                 </div>
               </div>
             </div>
-            <div className="hidden lg:flex flex-col pt-0.5">
+            <div className="hidden lg:flex flex-col py-0.5">
               <div className="text-xs font-medium  text-gray-300 ">
                 {formatDate(release.release_date, {
                   day: "2-digit",
@@ -77,7 +77,7 @@ export default function StackedList({ data }: { data: ReleaseData[] }) {
                 </div>
               </div>
             </div>
-            <div className="hidden lg:flex flex-col justify-center pt-0.5">
+            <div className="hidden lg:flex flex-col justify-center py-0.5">
               <div className="text-xs font-medium  text-gray-300 pr-3">
                 <button className="px-3 py-1.5 rounded-sm bg-teal-800 group-hover:bg-teal-600 active:!bg-teal-500">
                   download

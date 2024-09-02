@@ -121,22 +121,19 @@ export default async function Layout({
   return (
     <div className="bg-gray-800 py-7">
       <Container size="xl">
-        <div className="flex w-full justify-between gap-x-8">
-          <aside className="block w-2/12 bg-gray-700">
+        <div className="flex w-full justify-between gap-x-6">
+          <aside className="block w-2/12  bg-gray-700">
             <VerticalNavigation navigation={navigation} />
           </aside>
           <div className="flex-1 max-w-full max-h-full min-h-0 min-w-0">
             <SectionHeadingWithTabs responsive={false} tabs={tabs} title={slug} />
-            <div className="gap-x-8 flex relative">
+            <div className="gap-x-6 flex relative">
               <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0">{children}</div>
               <aside className="block w-1/3 bg-gray-700">
-                <Chart tracks={data} heading="Top10" />
+                <Chart tracks={data} heading="NL Top10" />
               </aside>
             </div>
           </div>
-          {/* <aside className="block w-3/12 bg-gray-700">
-            <Chart tracks={data} heading="Top10" />
-          </aside> */}
         </div>
       </Container>
     </div>

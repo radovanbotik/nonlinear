@@ -69,7 +69,7 @@ export default function Example() {
   // const [isSearching,setIsSearching] = useState(false)
 
   return (
-    <header className=" bg-gray-900 text-gray-50 border-b-[1px] border-b-gray-500">
+    <header className=" bg-gray-950 text-gray-50 border-b-[1px] border-b-gray-700">
       <Container size="xl">
         <nav aria-label="Global" className="mx-auto flex items-center //justify-between //p-6 //lg:px-8 h-14">
           <div className="flex items-center gap-x-7">
