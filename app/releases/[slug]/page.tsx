@@ -133,7 +133,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
 
   return (
     <div className="relative flex flex-col lg:flex-row lg:gap-10 ">
-      <div className="mx-auto w-full //lg:w-2/3 //max-w-[600px] //lg:max-w-none">
+      <div className="mx-auto w-full">
         {/* DESCRIPTION */}
         <div className="flex flex-col  sm:flex-row gap-3 lg:gap-4">
           <Image
@@ -367,109 +367,6 @@ export default async function Review({ params }: { params: { slug: string } }) {
           />
         </div>
       </div>
-
-      {/* <div className="w-full lg:w-1/3 max-w-[600px] mx-auto space-y-1 //flex flex-col justify-between //bg-white">
-          <div className="//flex //h-screen w-full justify-center  //pt-24 //px-4">
-            <TabGroup defaultIndex={2}>
-              <TabList className="flex gap-2">
-                {categories.map(({ name }) => (
-                  <Tab
-                    key={name}
-                    className="rounded-md py-1 px-3 text-sm/6 //font-semibold //text-white focus:outline-none data-[selected]:bg-black/10 data-[hover]:bg-black/5 data-[selected]:data-[hover]:bg-black/10 data-[focus]:outline-1 data-[focus]:outline-white"
-                  >
-                    {name}
-                  </Tab>
-                ))}
-                <Tab className="rounded-md py-1 px-3 text-sm/6 //font-semibold //text-white focus:outline-none data-[selected]:bg-black/10 data-[hover]:bg-black/5 data-[selected]:data-[hover]:bg-black/10 data-[focus]:outline-1 data-[focus]:outline-white">
-                  Merch
-                </Tab>
-              </TabList>
-              <TabPanels className="mt-3">
-                {categories.map(({ name, releases }) => (
-                  <TabPanel key={name} className="rounded-xl  //bg-black/5 p-3">
-                    <ul>
-                      {releases.map((release, i) => (
-                        <li
-                          key={release._id}
-                          className="relative isolate rounded-md p-3 //overflow-hidden group //bg-black/5 text-sm/6 items-center transition //hover:bg-white/5 flex gap-4 hover:bg-black/20"
-                        >
-                          <div>{i + 1}</div>
-                          <Image
-                            src={release.image}
-                            alt={`Image of ${release.title}`}
-                            className="//px-4 lg:px-0 inline-block"
-                            // sizes="(max-width: 768px) 100vw, (max-width: 1180px) 700px, 550px"
-                            width={40}
-                            height={40}
-                            placeholder="blur"
-                            blurDataURL={release.image}
-                            quality={100}
-                          />
-                          <div className="inline-flex items-center //w-full //gap-x-6">
-                            <div>
-                              <div className="flex items-start gap-x-3">
-                                <p className="text-sm font-semibold leading-6 text-gray-900">{release.title}</p>
-                              </div>
-                              <div className="//mt-px flex items-center gap-x-2 text-xs leading-5 text-gray-500">
-                                <div className="truncate">
-                                  <Artists artists={release.artists} />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-
-                          <Popover className="relative ml-auto">
-                            <PopoverButton className="px-3 py-1 bg-black text-white font-bold">Purchase</PopoverButton>
-                            <PopoverPanel anchor="left" className="flex flex-col bg-white space-y-2 p-4">
-                              <a href="/analytics">Analytics</a>
-                              <a href="/engagement">Engagement</a>
-                              <a href="/security">Security</a>
-                              <a href="/integrations">Integrations</a>
-                            </PopoverPanel>
-                          </Popover>
-                        </li>
-                      ))}
-                    </ul>
-                  </TabPanel>
-                ))}
-                <TabPanel className="rounded-xl p-3">
-                  <div className="p-3">
-                    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white col-span-2">
-                      <div className="aspect-h-4 aspect-w-3 bg-gray-200 sm:aspect-none group-hover:opacity-75 ">
-                        <Image
-                          src={result.image}
-                          alt={`Image of ${result.title}`}
-                          className="h-full w-full object-cover object-center sm:h-full sm:w-full"
-                          // sizes="(max-width: 768px) 100vw, (max-width: 1180px) 700px, 550px"
-                          width={240}
-                          height={240}
-                          placeholder="blur"
-                          blurDataURL={result.image}
-                          quality={100}
-                        />
-                      </div>
-                      <div className="flex flex-1 flex-col space-y-2 p-4">
-                        <h3 className="text-sm font-medium text-gray-900">
-                          <a href={"a"}>
-                            <span aria-hidden="true" className="absolute inset-0" />
-                            Long T-shirt
-                          </a>
-                        </h3>
-                        <p className="text-sm text-gray-500 line-clamp-2">
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur totam quod ea dicta sunt
-                          amet possimus id autem ducimus vero.
-                        </p>
-                        <div className="flex flex-1 flex-col justify-end">
-                          <p className="text-base font-medium text-gray-900">$32</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabPanel>
-              </TabPanels>
-            </TabGroup>
-          </div>
-        </div> */}
     </div>
   );
 }
