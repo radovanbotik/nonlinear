@@ -136,7 +136,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
     <div className="relative flex flex-col lg:flex-row lg:gap-10 ">
       <div className="mx-auto w-full">
         {/* DESCRIPTION */}
-        <div className="flex flex-col  sm:flex-row gap-3 lg:gap-4">
+        <div className="flex flex-col  sm:flex-row gap-3 lg:gap-4 mb-4">
           <Image
             src={result.image}
             alt={`Image of ${result.title}`}
@@ -244,7 +244,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
         {/* TRACKLIST */}
         <ReleaseTable data={result} />
         {/* DISCOGRAPHY */}
-        <div className="mt-8 space-y-2 relative">
+        <div className="space-y-2 relative mt-8">
           <LatestReleasesCarousel
             slides={label.releases}
             title={`More From This Label`}

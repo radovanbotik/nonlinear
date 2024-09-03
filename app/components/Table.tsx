@@ -20,7 +20,7 @@ export default function Table<T>({ data, columns }: Props<T>) {
         scope="col"
         key={`headCell-${index}`}
         className={cn(
-          "hidden px-1.5 text-left text-sm text-gray-400  font-normal py-1   lg:table-cell last-of-type:text-right last-of-type:pr-3",
+          "hidden [&:not(:first-of-type)]:pl-1.5 pr-1.5 text-left text-xs text-gray-400  font-normal py-1   lg:table-cell last-of-type:text-right last-of-type:pr-4",
           column.width ?? ""
         )}
       >
@@ -51,7 +51,7 @@ export default function Table<T>({ data, columns }: Props<T>) {
               <td
                 key={`cell-${index2}`}
                 className={cn(
-                  "hidden [&:not(:first-of-type)]:px-1.5 text-sm  lg:table-cell last-of-type:text-right last-of-type:pr-3",
+                  "hidden [&:not(:first-of-type)]:pl-1.5 pr-1.5 text-sm  lg:table-cell last-of-type:text-right last-of-type:pr-4",
                   column.width ?? ""
                 )}
               >

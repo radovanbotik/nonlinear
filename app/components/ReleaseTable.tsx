@@ -73,7 +73,7 @@ export default function ReleaseTable({ data }: { data: ReleaseData }) {
                 blurDataURL={record.image.src}
                 quality={100}
               />
-              <Link className="absolute inset-0" href={`/releases/${record.image.slug}`} />
+              <Link className="absolute inset-0" href={`/singles/${record.image.slug}`} />
             </div>
           );
         },
@@ -133,7 +133,7 @@ export default function ReleaseTable({ data }: { data: ReleaseData }) {
           return (
             <>
               <div>
-                <Link href={`/releases/${record.titleArtists.slug}`} className="block text-xs font-bold text-gray-50 ">
+                <Link href={`/singles/${record.titleArtists.slug}`} className="block text-xs font-bold text-gray-50 ">
                   {record.titleArtists.title}
                 </Link>
                 <div className="text-xs  truncate text-teal-400 hidden lg:block">
@@ -163,7 +163,7 @@ export default function ReleaseTable({ data }: { data: ReleaseData }) {
         title: "Label",
         render: (_, record) => {
           return (
-            <Link className="text-xs text-gray-400" href={record.label.href}>
+            <Link className="text-xs text-gray-400" href={`/labels/${record.label.href}`}>
               {record.label.name}
             </Link>
           );

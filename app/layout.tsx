@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { client } from "@/sanity/client";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import type { Metadata } from "next";
+import logowhite from "../public/logowhite.png";
 
 import VerticalNavigation from "@/app/components/VerticalNavigation";
 
@@ -17,7 +17,7 @@ import { RiDownload2Fill } from "react-icons/ri";
 
 import { RiListUnordered } from "react-icons/ri";
 import { Container } from "./components/Container";
-import Header from "./components/Header";
+import Navigation from "./components/Navigation";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -46,22 +46,6 @@ export default async function Layout({
   params: { slug: string };
 }>) {
   const { slug } = params;
-
-  const QUERY = `
-  *[_type == 'release']['${slug}' in singles[]->style]{
-    'artists':singles[]->artists[]->{name,'slug':slug.current},
-    'tempos': singles[]->BPM,
-    catalog_number,
-    _id,
-    'image':image.asset->url,
-    'label':{...label->{name,'href':slug.current}},
-    release_date,
-    'slug':slug.current,
-     title,
-  }
-  [0..10]
-  |order(release_date desc)
-`;
 
   const navigation = [
     {
@@ -120,10 +104,51 @@ export default async function Layout({
     },
   ];
 
+  const navbar = {
+    logo: { src: logowhite, alt: "this is nonlinear" },
+    profileNavigation: [
+      { href: "/account/settings", title: "Account Settings" },
+      { href: "/logout", title: "Log Out" },
+    ],
+    siteNavigation: [
+      { href: "/", title: "Home" },
+      {
+        title: "Genres",
+        children: [
+          {
+            href: "/genres/jungle/featured",
+            title: "Jungle",
+          },
+          {
+            href: "/genres/house/featured",
+            title: "House",
+          },
+          {
+            href: "/genres/drum-and-bass/featured",
+            title: "Drum & Bass",
+          },
+          {
+            href: "/genres/techno/featured",
+            title: "Techno",
+          },
+          {
+            href: "/genres/dubstep/featured",
+            title: "Dubstep",
+          },
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="en" className="//dark">
-      <body className={`${inter.className}  dark:bg-black`}>
-        <Header />
+      <body className={`${inter.className}   dark:bg-black`}>
+        {/* <Header /> */}
+        <Navigation
+          logo={navbar.logo}
+          profileNavigation={navbar.profileNavigation}
+          siteNavigation={navbar.siteNavigation}
+        />
         <div className="bg-gray-800 py-7">
           <Container size="xl">
             <div className="flex w-full justify-between gap-x-6">
