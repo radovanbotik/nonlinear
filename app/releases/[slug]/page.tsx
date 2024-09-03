@@ -118,19 +118,6 @@ export default async function Review({ params }: { params: { slug: string } }) {
     });
   });
 
-  const categories = [
-    {
-      name: "Label",
-      releases: label.releases,
-    },
-    {
-      name: "Artist",
-      releases: all_artists_releases,
-    },
-  ];
-
-  console.log(result);
-
   return (
     <div className="relative flex flex-col lg:flex-row lg:gap-10 ">
       <div className="mx-auto w-full">
