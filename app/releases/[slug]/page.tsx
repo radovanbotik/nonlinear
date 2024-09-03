@@ -6,7 +6,6 @@ import { sanityFetch, client } from "@/sanity/client";
 import { SanityDocument, PortableText } from "next-sanity";
 
 import { formatDate } from "@/app/helpers/formatDate";
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 
 import { RiFacebookFill } from "react-icons/ri";
 import { RiTwitterXFill } from "react-icons/ri";
@@ -18,6 +17,29 @@ import { RiAddLargeFill } from "react-icons/ri";
 
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import LatestReleasesCarousel from "@/app/components/LatestReleasesCarousel";
+import ReleaseTable from "@/app/components/ReleaseTable";
+
+type ReleaseData = {
+  artists: { name: string; slug: string }[];
+  tempos: number[];
+  catalog_number: string;
+  _id: string;
+  image: string;
+  label: { name: string; href: string };
+  release_date: string;
+  slug: string;
+  title: string;
+  singles: {
+    artists: { name: string; slug: string }[];
+    BPM: number;
+    duration: number;
+    _id: string;
+    key: string;
+    slug: string;
+    style: string;
+    title: string;
+  }[];
+};
 
 function Artists({ artists, className }: { artists: { name: string; slug: string }[]; className?: string }) {
   const uniqueArr: { name: string; slug: string }[] = [];
@@ -44,7 +66,6 @@ export default async function Review({ params }: { params: { slug: string } }) {
   const RELEASE_QUERY = `*[_type=='release' && slug.current=='${slug}'][0]{
     'artists':singles[]->artists[]->{name,'slug':slug.current},
     catalog_number,
-    format,
     _id,
     'image':image.asset->url,
     'label':{...label->{name,'href':slug.current}},
@@ -58,22 +79,13 @@ export default async function Review({ params }: { params: { slug: string } }) {
        BPM,
        key,
        duration,
+       'slug':slug.current,
        style,
       'artists':artists[]->{name,'slug':slug.current}},
     title
   }`;
 
-  const result = await sanityFetch<
-    SanityDocument[] & {
-      image: string;
-      artists: { name: string; slug: string }[];
-      label: { href: string; name: string };
-      release_date: string;
-      release_title: string;
-      styles: { style: string }[];
-      title: string;
-    }
-  >({ query: RELEASE_QUERY });
+  const result = await sanityFetch<SanityDocument[] & ReleaseData>({ query: RELEASE_QUERY });
 
   const ARTIST_QUERY = `*[_type=='artist' && slug.current=='${result.artists[0].slug}'][0]{
     releases[]->
@@ -117,6 +129,8 @@ export default async function Review({ params }: { params: { slug: string } }) {
       all_artists_releases.push(object);
     });
   });
+
+  console.log(artist_releases);
 
   return (
     <div className="relative flex flex-col lg:flex-row lg:gap-10 ">
@@ -228,135 +242,20 @@ export default async function Review({ params }: { params: { slug: string } }) {
           </div>
         </div>
         {/* TRACKLIST */}
-        <div className="mt-3">
-          <table className="//table-fixed min-w-full border-t border-gray-700   border-spacing-y-1  border-separate ">
-            <thead>
-              <tr>
-                <th scope="col" className="sm:pl-0 w-10 py-2"></th>
-                <th scope="col" className="hidden w-8 px-1 py-2  lg:table-cell"></th>
-                <th scope="col" className="hidden w-4 px-1.5 py-2  lg:table-cell"></th>
-                <th scope="col" className="hidden w-4 px-1.5 py-2  lg:table-cell"></th>
-                <th scope="col" className="hidden w-4 px-1.5 py-2  lg:table-cell"></th>
-                <th scope="col" className="py-2 px-2.5 ">
-                  <div className="text-left text-xs font-normal text-gray-300">Title / Artists</div>
-                </th>
-                <th scope="col" className="hidden px-2.5 py-2 lg:table-cell">
-                  <div className="text-left text-xs font-normal text-gray-300">Label</div>
-                </th>
-                <th scope="col" className="hidden px-2.5 py-2  sm:table-cell">
-                  <div className="text-left text-xs font-normal text-gray-300">Genre</div>
-                </th>
-                <th scope="col" className="px-2.5 py-2">
-                  <div className="text-left text-xs font-normal text-gray-300">Key / BPM</div>
-                </th>
-                <th scope="col" className="relative py-2 pl-3 pr-4 sm:pr-0">
-                  <span className="sr-only">Purchase</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.singles.map((single, i, arr) => (
-                <tr
-                  key={single._id}
-                  className="group/track bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm tab"
-                >
-                  <td className=" w-10 //pr-2.5 //sm:w-auto //sm:max-w-none relative sm:pl-0 py-0">
-                    <Image
-                      src={result.image}
-                      alt={`Image of ${result.title}`}
-                      className="lg:px-0 block min-w-[40px]"
-                      width={40}
-                      height={40}
-                      placeholder="blur"
-                      blurDataURL={result.image}
-                      quality={100}
-                    />
-                    <Link className="absolute inset-0" href={`/singles/${single.title}`} />
-                  </td>
-                  <td className="hidden w-8 px-1  lg:table-cell ">
-                    <div className="text-xs  text-gray-400  text-center">{i + 1}</div>
-                  </td>
-                  <td className="hidden w-4  px-1.5  lg:table-cell ">
-                    <button className="relative leading-0 group/button block">
-                      <RiPlayFill className="text-gray-300 w-4 h-4" />
-                      <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-                    </button>
-                  </td>
-                  <td className="hidden w-4 px-1.5  lg:table-cell ">
-                    <button className=" relative leading-0 group/button block">
-                      <RiPlayListAddFill className="text-gray-300 w-4 h-4" />
-                      <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-                    </button>
-                  </td>
-                  <td className="hidden w-4 px-1.5  lg:table-cell ">
-                    <button className="relative leading-0 group/button block">
-                      <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-                      <RiAddLargeFill className="text-gray-300 w-4 h-4" />
-                    </button>
-                  </td>
-                  <td className=" max-w-0  px-2.5 sm:w-auto sm:max-w-none  ">
-                    <div>
-                      <Link href={`/singles/${single.title}`} className="block text-xs font-bold text-gray-50 ">
-                        {single.title}
-                      </Link>
-                      <div className="text-xs  truncate text-teal-400 hidden lg:block">
-                        <Artists artists={single.artists}></Artists>
-                      </div>
-                    </div>
-                    <dl className="font-normal lg:hidden">
-                      <dt className="sr-only">Artists</dt>
-                      <dd className="mt-1 text-xs  truncate text-teal-400">
-                        <Artists artists={single.artists}></Artists>
-                      </dd>
-                      <dt className="sr-only sm:hidden">Style</dt>
-                    </dl>
-                  </td>
-                  <td className="hidden px-2.5  w-32  lg:table-cell  truncate">
-                    <Link className="text-xs text-gray-400" href={result.label.href}>
-                      {result.label.name}
-                    </Link>
-                  </td>
-                  <td className="hidden px-2.5  sm:table-cell capitalize ">
-                    <Link className="text-xs text-gray-400" href={`/singles/${single.title}`}>
-                      {single.style}
-                    </Link>
-                  </td>
-                  <td className="px-2.5 ">
-                    <span className=" whitespace-nowrap   text-xs text-gray-400 ">{single.key}</span>
-                    <span className="text-gray-400">&nbsp;&#47;&nbsp;</span>
-                    <span className=" whitespace-nowrap   text-xs text-gray-400 ">{single.BPM} BPM</span>
-                  </td>
-                  <td className="pl-3 pr-4 text-right //sm:pr-0 ">
-                    <Popover className="relative ml-auto">
-                      <PopoverButton className="px-3 py-1 bg-gray-950 group-hover/track:bg-gray-900 text-xs  text-gray-50 font-bold">
-                        Purchase
-                      </PopoverButton>
-                      <PopoverPanel anchor="left" className="flex flex-col bg-gray-100 space-y-2 p-4">
-                        <a href="/analytics">Analytics</a>
-                        <a href="/engagement">Engagement</a>
-                        <a href="/security">Security</a>
-                        <a href="/integrations">Integrations</a>
-                      </PopoverPanel>
-                    </Popover>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <ReleaseTable data={result} />
         {/* DISCOGRAPHY */}
         <div className="mt-8 space-y-2 relative">
           <LatestReleasesCarousel
-            slides={artist.releases}
+            slides={label.releases}
             title={`More From This Label`}
             id="artist-carousel"
             slidesPerView={2}
             spaceBetween={4}
             breakpoints={{
               640: { slidesPerView: 2, spaceBetween: 4 },
-              768: { slidesPerView: 3, spaceBetween: 4 },
-              1024: { slidesPerView: 4, spaceBetween: 8 },
-              1240: { slidesPerView: 5, spaceBetween: 8 },
+              768: { slidesPerView: 4, spaceBetween: 4 },
+              1024: { slidesPerView: 5, spaceBetween: 8 },
+              1240: { slidesPerView: 7, spaceBetween: 8 },
             }}
           />
         </div>

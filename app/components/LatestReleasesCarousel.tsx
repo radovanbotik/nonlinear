@@ -24,7 +24,7 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
         <Image
           src={image}
           alt={`Image of ${title}`}
-          className="block"
+          className="block h-full w-full"
           width={260}
           height={260}
           placeholder="blur"

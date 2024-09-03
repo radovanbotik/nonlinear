@@ -20,7 +20,7 @@ export default function Table<T>({ data, columns }: Props<T>) {
         scope="col"
         key={`headCell-${index}`}
         className={cn(
-          "hidden px-1.5 text-left text-sm text-gray-400  font-normal py-2  lg:table-cell last-of-type:text-right last-of-type:pr-3",
+          "hidden px-1.5 text-left text-sm text-gray-400  font-normal py-1   lg:table-cell last-of-type:text-right last-of-type:pr-3",
           column.width ?? ""
         )}
       >
@@ -37,7 +37,6 @@ export default function Table<T>({ data, columns }: Props<T>) {
     </tr>
   ) : (
     data?.map((row, index) => {
-      console.log(row);
       return (
         <tr
           key={`row-${index}`}
@@ -52,7 +51,7 @@ export default function Table<T>({ data, columns }: Props<T>) {
               <td
                 key={`cell-${index2}`}
                 className={cn(
-                  "hidden [&:not(:first-of-type)]:px-1.5   lg:table-cell last-of-type:text-right last-of-type:pr-3",
+                  "hidden [&:not(:first-of-type)]:px-1.5 text-sm  lg:table-cell last-of-type:text-right last-of-type:pr-3",
                   column.width ?? ""
                 )}
               >
