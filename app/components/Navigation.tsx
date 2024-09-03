@@ -53,7 +53,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     }
     if (path.children) {
       return (
-        <Popover className="relative isolate z-50 bg-red-900">
+        <Popover className="//relative isolate z-50 ">
           <PopoverButton className="inline-flex items-center gap-x-1 rounded-md px-3 py-2 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300">
             <span>{path.title}</span>
             <ChevronDownIcon aria-hidden="true" className="h-5 w-5" />
@@ -61,50 +61,25 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
 
           <PopoverPanel
             transition
-            className="//max-w-screen-2xl  w-max absolute inset-x-0 top-12 -z-10 //bg-gray-950/50 bg-red-500  //bg-clip-padding //backdrop-filter //backdrop-blur-sm pt-0 shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:-translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+            className="//max-w-screen-2xl   w-full //w-max absolute inset-x-0 top-14 -z-10 translate-y-px //bg-white bg-gray-950 //bg-clip-padding //backdrop-filter //backdrop-blur-sm pt-2 shadow-lg ring-1 ring-gray-900/5 transition //data-[closed]:-translate-y-px data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
           >
-            <div className="mx-auto max-w-7xl grid gap-x-8 grid-cols-4  //divide-y-2 w-max">
+            <div className="mx-auto //max-w-7xl grid gap-x-10 grid-cols-4 px-8 //w-max">
               {path.children.map(item => (
                 <div
                   key={item.href}
-                  className="group relative flex gap-x-6 //rounded-lg px-3 py-4 text-gray-50 text-sm bg-pink-400 hover:text-teal-400 border-b"
+                  className="group relative flex  items-center    text-gray-50 text-base font-medium  hover:text-teal-400 border-b-gray-600 [&:not(:nth-last-child(-n+4))]:border-b-[1px]"
                 >
-                  {/* <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                  <item.icon aria-hidden="true" className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" />
-                </div> */}
                   <div>
-                    <Link href={item.href} className="font-semibold ">
+                    <Link href={item.href} className="py-3  block">
                       {item.title}
-                      <span className="absolute inset-0" />
                     </Link>
-                    {/* <p className="mt-1 text-gray-600">{item.description}</p> */}
                   </div>
                 </div>
               ))}
-              {/* <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-            {callsToAction.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-              >
-                <item.icon aria-hidden="true" className="h-5 w-5 flex-none text-gray-400" />
-                {item.name}
-              </a>
-            ))}
-          </div> */}
             </div>
           </PopoverPanel>
         </Popover>
       );
-      //   path.children.map(childPath => {
-      //     return (
-
-      //       <Link href={childPath.href} key={childPath.href}>
-      //         {childPath.title}
-      //       </Link>
-      //     );
-      //   });
     }
   });
 

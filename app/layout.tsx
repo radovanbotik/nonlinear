@@ -135,6 +135,34 @@ export default async function Layout({
             href: "/genres/dubstep/featured",
             title: "Dubstep",
           },
+          {
+            href: "/genres/deep-house/featured",
+            title: "Deep House",
+          },
+          {
+            href: "/genres/ambient/featured",
+            title: "Ambient",
+          },
+          {
+            href: "/genres/trap/featured",
+            title: "Trap",
+          },
+          {
+            href: "/genres/hiphop/featured",
+            title: "Hip Hop",
+          },
+          {
+            href: "/genres/bass/featured",
+            title: "Bass",
+          },
+          {
+            href: "/genres/footwork/featured",
+            title: "Footwork",
+          },
+          {
+            href: "/genres/trance/featured",
+            title: "Trance",
+          },
         ],
       },
     ],
