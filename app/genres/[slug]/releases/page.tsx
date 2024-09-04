@@ -1,17 +1,14 @@
 import { client } from "@/sanity/client";
 import SelectFilter from "@/app/components/SelectFilter";
 import RadioFilter from "@/app/components/RadioFilter";
-import { RiArrowLeftSLine } from "react-icons/ri";
-import { RiArrowRightSLine } from "react-icons/ri";
 import Link from "next/link";
 import ResultsPerPage from "@/app/components/ResultsPerPage";
 import ReleasesTable from "@/app/components/ReleasesTable";
 import Pagination from "@/app/components/Pagination";
 
-export type ReleaseData = {
+export type TReleaseData = {
   artists: { name: string; slug: string }[];
   tempos: number[];
-  catalog_number: string;
   _id: string;
   image: string;
   label: { name: string; href: string };
@@ -32,7 +29,6 @@ export default async function Page({
   const QUERY = `
   *[_type == 'release']['${slug}' in singles[]->style]{
     'artists':singles[]->artists[]->{name,'slug':slug.current},
-    catalog_number,
     _id,
     'image':image.asset->url,
     'label':{...label->{name,'href':slug.current}},
@@ -46,7 +42,7 @@ export default async function Page({
 `;
 
   const data = await client.fetch<
-    ReleaseData[] & {
+    TReleaseData[] & {
       artist: { name: string; slug: string }[];
       catalog_number: string;
       _id: string;

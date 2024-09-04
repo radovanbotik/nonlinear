@@ -5,17 +5,6 @@ import ResultsPerPage from "@/app/components/ResultsPerPage";
 import Pagination from "@/app/components/Pagination";
 import TracksTable from "@/app/components/TracksTable";
 
-export type ReleaseData = {
-  artists: { name: string; slug: string }[];
-  tempos: number[];
-  _id: string;
-  image: string;
-  label: { name: string; href: string };
-  release_date: string;
-  slug: string;
-  title: string;
-};
-
 export type TTracksData = {
   artists: { name: string; slug: string }[];
   key: string;
@@ -32,7 +21,7 @@ export type TTracksData = {
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
-  const Q = `
+  const QUERY = `
  *[_type == 'release']['${slug}' in singles[]->style ]{
     'singles':singles[]->{
     artists[]->{name,'slug':slug.current},
@@ -50,7 +39,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   |order(release_date desc)
 `;
 
-  const result2 = await client.fetch<TTracksData[]>(Q);
+  const result2 = await client.fetch<TTracksData[]>(QUERY);
 
   const filterLabel = {
     name: "label",

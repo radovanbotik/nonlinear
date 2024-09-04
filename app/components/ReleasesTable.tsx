@@ -6,26 +6,13 @@ import { RiPlayFill } from "react-icons/ri";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { RiAddLargeFill } from "react-icons/ri";
 
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-
 import Artists from "@/app/components/Artists";
 import getMinMaxBPM from "@/app/helpers/getMinMaxBPM";
 import { formatDate } from "@/app/helpers/formatDate";
 import { ReactElement } from "react";
 import Link from "next/link";
 import ButtonWithDropdown from "./ButtonWithDropdown";
-
-export type ReleaseData = {
-  artists: { name: string; slug: string }[];
-  tempos: number[];
-  catalog_number: string;
-  _id: string;
-  image: string;
-  label: { name: string; href: string };
-  release_date: string;
-  slug: string;
-  title: string;
-};
+import { TReleaseData } from "../genres/[slug]/releases/page";
 
 interface ColumnProps<T> {
   key: string;
@@ -46,7 +33,7 @@ type SortedData = {
   actionButton: string;
 };
 
-export default function ReleasesTable({ data }: { data: ReleaseData[] }) {
+export default function ReleasesTable({ data }: { data: TReleaseData[] }) {
   const tableData: { columns: Array<ColumnProps<SortedData>>; data: SortedData[] } = {
     columns: [
       {
@@ -183,7 +170,6 @@ export default function ReleasesTable({ data }: { data: ReleaseData[] }) {
     ],
     data: data.map(result => ({
       image: { src: result.image, slug: result.slug },
-      // count: data.findIndex(obj => obj._id === result._id) + 1,
       play: "future-action",
       addToQue: "future-action",
       addToPlaylist: "future-action",
