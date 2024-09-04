@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { cn } from "../lib/helpers";
 import { ReactElement } from "react";
+import Link from "next/link";
 
 function isCurrent(href: string, pathname: string) {
   return href === pathname;
@@ -27,7 +28,7 @@ export default function VerticalNavigation({
             <div
               className={cn("absolute w-1 h-full bg-teal-400 ", isCurrent(item.href, pathname) ? "block" : "hidden")}
             ></div>
-            <a
+            <Link
               href={item.href}
               className={cn(
                 "group flex items-center gap-x-3 //rounded-md py-3 px-5",
@@ -47,7 +48,7 @@ export default function VerticalNavigation({
                   {item.count}
                 </span>
               ) : null}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

@@ -99,7 +99,7 @@ export default async function Layout({
       { href: "/logout", title: "Log Out" },
     ],
     siteNavigation: [
-      { href: "/", title: "Home" },
+      // { href: "/", title: "Home" },
       {
         title: "Genres",
         children: [

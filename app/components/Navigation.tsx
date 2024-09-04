@@ -9,14 +9,7 @@ import {
 } from "@headlessui/react";
 
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
-import {
-  ArrowPathIcon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
@@ -38,6 +31,9 @@ type TNavigation = {
   user?: {};
 };
 
+//RIGHT NOW IT DOES NOT CLOSE ON MOUSE HOVER OUT OR CLICK OUTSIDE
+//HACKY SOLUTION RENDER INVISIBLE BUTTON ATTACH A REF TO BUTTON AND MAKE IT CLICK ON MOUSELEAVE
+
 export default function Navigation({ logo, siteNavigation, profileNavigation, user }: TNavigation) {
   const siteNavigationLinks = siteNavigation.map(path => {
     if (path.href && !path.children) {
@@ -54,7 +50,10 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     if (path.children) {
       return (
         <Popover key={path.title} className="//relative isolate z-50">
-          <PopoverButton className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300">
+          <PopoverButton
+            className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300"
+            // onMouseEnter={e => console.log(e)}
+          >
             <span>{path.title}</span>
             <ChevronDownIcon aria-hidden="true" className="h-5 w-5" />
           </PopoverButton>
@@ -67,13 +66,11 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
               {path.children.map(item => (
                 <div
                   key={item.href}
-                  className="group relative flex  items-center    text-gray-50 text-base font-medium  hover:text-teal-400 border-b-gray-600 [&:not(:nth-last-child(-n+4))]:border-b-[1px]"
+                  className="group relative flex  items-center  w-full  text-gray-50 text-base font-medium  hover:text-teal-400 border-b-gray-600 [&:not(:nth-last-child(-n+4))]:border-b-[1px]"
                 >
-                  <div>
-                    <Link href={item.href} className="py-3  block">
-                      {item.title}
-                    </Link>
-                  </div>
+                  <PopoverButton as={Link} href={item.href} className="py-3 block w-full">
+                    {item.title}
+                  </PopoverButton>
                 </div>
               ))}
             </div>

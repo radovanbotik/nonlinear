@@ -32,7 +32,7 @@ export default function SectionHeadingWithTabs({
               id="current-tab"
               name="current-tab"
               defaultValue={tabs.find(tab => isCurrent(pathname, tab.href))?.name}
-              className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+              className="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base //focus:border-indigo-500 focus:outline-none //focus:ring-indigo-500 sm:text-sm"
             >
               {tabs.map(tab => (
                 <option key={tab.name}>{tab.name}</option>
@@ -48,10 +48,10 @@ export default function SectionHeadingWithTabs({
                 href={tab.href}
                 aria-current={isCurrent(pathname, tab.href) ? "page" : undefined}
                 className={cn(
-                  "whitespace-nowrap border-b-[1px]  pb-px text-base font-medium tracking-tight group",
+                  "whitespace-nowrap border-b-[1px] text-gray-300  pb-px text-base font-medium tracking-tight group",
                   isCurrent(pathname, tab.href)
-                    ? "border-teal-400 text-teal-400"
-                    : "border-transparent text-gray-100  hover:text-gray-300"
+                    ? "border-teal-400 //text-teal-400"
+                    : "border-transparent   hover:text-gray-300"
                 )}
               >
                 <span>{tab.name}</span>

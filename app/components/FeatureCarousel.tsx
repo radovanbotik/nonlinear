@@ -14,6 +14,7 @@ import Artists from "./Artists";
 import Link from "next/link";
 import ButtonWithDropdown from "./ButtonWithDropdown";
 import Controls from "./Controls";
+import { cn } from "../lib/helpers";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
@@ -64,14 +65,29 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
   );
 }
 
-export default function FeatureCarousel({ id, featured }: { id: string; featured: FeaturedSlideData[] }) {
+export default function FeatureCarousel({
+  id,
+  className,
+  featured,
+  title,
+}: {
+  id: string;
+  className?: string;
+  featured: FeaturedSlideData[];
+  title?: string;
+}) {
   //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
   const ID = id;
   const speed = 300;
   const swiperInstance = useRef<SwiperRef>(null);
 
   return (
-    <div className="relative shrink w-full h-full flex flex-col  group overflow-hidden  lg:aspect-video">
+    <div className={cn("relative shrink w-full h-full flex flex-col  group overflow-hidden aspect-video ", className)}>
+      {title && (
+        <div className="pb-3 flex items-center">
+          <div className="inline-block leading-none text-xl tracking-tight font-medium text-white">{title}</div>
+        </div>
+      )}
       <Carousel
         modules={[Autoplay, Navigation, Pagination]}
         pagination={{
@@ -109,7 +125,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
         }}
         loop={true}
         ref={swiperInstance}
-        className="shadow-xl"
+        className="//shadow-xl"
       >
         {featured.map(feature => (
           <SwiperSlide key={feature._id} className="w-fit">
