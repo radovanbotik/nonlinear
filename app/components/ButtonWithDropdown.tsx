@@ -1,3 +1,4 @@
+"use client";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import { RiArrowDropDownFill } from "react-icons/ri";
@@ -35,39 +36,45 @@ export default function ButtonWithDropdown({
       >
         {title}
       </button>
-      <Menu as="div" className="relative -ml-px block ">
-        <MenuButton
-          className={cn(
-            "relative inline-flex items-center rounded-r-md bg-white px-1 py-1 max-h-6 text-gray-400 //ring-1 //ring-inset //ring-gray-300 //hover:bg-gray-50 focus:z-50 text-sm",
-            iconStyles
-          )}
-        >
-          <span className="sr-only">Open options</span>
-          <RiArrowDropDownFill aria-hidden="true" className="h-5 w-5" />
-        </MenuButton>
-        <MenuItems
-          transition
-          className={cn(
-            "absolute text-left right-0 z-50 -mr-1 mt-2 w-56 origin-top-right //rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in",
-            dropdownPaperStyles
-          )}
-        >
-          <div className="py-1">
-            {dropdownOptions.map(option => (
-              <MenuItem key={option.title}>
-                <Link
-                  href={option.href}
-                  className={cn(
-                    "block px-4 py-2 text-sm text-gray-700 //data-[focus]:bg-gray-100 data-[focus]:text-teal-400",
-                    dropdownLinkStyles
-                  )}
-                >
-                  {option.title}
-                </Link>
-              </MenuItem>
-            ))}
-          </div>
-        </MenuItems>
+      <Menu as="div" className="relative -ml-px block">
+        {({ close }) => (
+          <>
+            <MenuButton
+              className={cn(
+                "relative inline-flex items-center rounded-r-md bg-white px-1 py-1 max-h-6 text-gray-400 //ring-1 //ring-inset //ring-gray-300 //hover:bg-gray-50 focus:z-50 text-sm",
+                iconStyles
+              )}
+            >
+              <span className="sr-only">Open options</span>
+              <RiArrowDropDownFill aria-hidden="true" className="h-5 w-5" />
+            </MenuButton>
+            <MenuItems
+              transition
+              anchor="bottom"
+              onMouseLeave={close}
+              className={cn(
+                "absolute text-left right-0 z-50 -mr-1 mt-2 w-56 origin-top-right //rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in",
+                dropdownPaperStyles
+              )}
+            >
+              <div className="py-1">
+                {dropdownOptions.map(option => (
+                  <MenuItem key={option.title}>
+                    <Link
+                      href={option.href}
+                      className={cn(
+                        "block px-4 py-2 text-sm text-gray-700 //data-[focus]:bg-gray-100 data-[focus]:text-teal-400",
+                        dropdownLinkStyles
+                      )}
+                    >
+                      {option.title}
+                    </Link>
+                  </MenuItem>
+                ))}
+              </div>
+            </MenuItems>
+          </>
+        )}
       </Menu>
     </div>
   );

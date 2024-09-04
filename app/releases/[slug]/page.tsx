@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { cn } from "@/app/lib/helpers";
 import Image from "next/image";
 
 import { sanityFetch, client } from "@/sanity/client";
@@ -15,10 +14,10 @@ import { RiPlayFill } from "react-icons/ri";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { RiAddLargeFill } from "react-icons/ri";
 
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import LatestReleasesCarousel from "@/app/components/LatestReleasesCarousel";
 import ReleaseTable from "@/app/components/ReleaseTable";
 import ButtonWithDropdown from "@/app/components/ButtonWithDropdown";
+import Artists from "@/app/components/Artists";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -42,25 +41,22 @@ type ReleaseData = {
   }[];
 };
 
-function Artists({ artists, className }: { artists: { name: string; slug: string }[]; className?: string }) {
-  const uniqueArr: { name: string; slug: string }[] = [];
-  artists.map(artist => {
-    if (!uniqueArr.find(object => object.name === artist.name && object.slug === artist.slug)) uniqueArr.push(artist);
-  });
-
-  return (
-    <ul className={cn("inline-flex", className)}>
-      {uniqueArr.map((a, i, arr) => (
-        <li key={a.slug} className="group/artists">
-          <Link href={`/artists/${a.slug}`} className="group-hover/artists:underline underline-inherit">
-            {a.name}
-          </Link>
-          {i < arr.length - 1 && <span>,&nbsp;</span>}
-        </li>
-      ))}
-    </ul>
-  );
-}
+type TLabelData = {
+  _id: string;
+  title: string;
+  image: string;
+  label: { name: string; href: string };
+  artists: { name: string; slug: string }[];
+  slug: string;
+};
+type TArtistData = {
+  _id: string;
+  title: string;
+  image: string;
+  label: { name: string; href: string };
+  artists: { name: string; slug: string }[];
+  slug: string;
+};
 
 export default async function Review({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -88,21 +84,13 @@ export default async function Review({ params }: { params: { slug: string } }) {
 
   const result = await sanityFetch<SanityDocument[] & ReleaseData>({ query: RELEASE_QUERY });
 
-  const ARTIST_QUERY = `*[_type=='artist' && slug.current=='${result.artists[0].slug}'][0]{
-    releases[]->
-    {
-    ...,
-    'artists':singles[]->artists[]->{name,'slug':slug.current},
-    'image':image.asset->url,
-    'slug':slug.current,
-    }
-  }`;
-
   const ARTIST_RELEASES_QUERY = `*[_type=='single' ]['${result.artists[0].slug}' in artists[]->slug.current]
   {
   'releases':*[_type=='release' && references(^._id)]
   {
-    ...,
+    _id,
+    title,
+    label,
     'artists':singles[]->artists[]->{name,'slug':slug.current},
     'image':image.asset->url,
     'slug':slug.current,
@@ -111,27 +99,19 @@ export default async function Review({ params }: { params: { slug: string } }) {
 
   const LABEL_QUERY = `*[_type=='label' && slug.current=='${result.label.href}'][0]
   {
-  'releases':*[_type=='release' && references(^._id)]{
-    ...,
+  'releases':*[_type=='release' && references(^._id)]
+  {
+    _id,
+    title,
+    label,
     'artists':singles[]->artists[]->{name,'slug':slug.current},
     'image':image.asset->url,
     'slug':slug.current,
     }[0...10]
-  }`;
+  }.releases`;
 
-  const artist = await sanityFetch<SanityDocument[]>({ query: ARTIST_QUERY });
-  const artist_releases = await sanityFetch<SanityDocument[]>({ query: ARTIST_RELEASES_QUERY });
-  const label = await sanityFetch<SanityDocument[]>({ query: LABEL_QUERY });
-
-  const all_artists_releases: any[] = [];
-
-  artist_releases.map(array => {
-    array.map(object => {
-      all_artists_releases.push(object);
-    });
-  });
-
-  console.log(artist_releases);
+  const artist_releases = await sanityFetch<TArtistData[]>({ query: ARTIST_RELEASES_QUERY });
+  const label = await sanityFetch<TLabelData[]>({ query: LABEL_QUERY });
 
   return (
     <div className="relative isolate flex flex-col lg:flex-row lg:gap-10 ">
@@ -240,10 +220,10 @@ export default async function Review({ params }: { params: { slug: string } }) {
         </div>
         {/* TRACKLIST */}
         <ReleaseTable data={result} />
-        {/* DISCOGRAPHY */}
+        {/* FROM LABEL */}
         <div className="space-y-2 relative mt-12">
           <LatestReleasesCarousel
-            slides={label.releases}
+            slides={label}
             title={`More From This Label`}
             id="artist-carousel"
             slidesPerView={2}

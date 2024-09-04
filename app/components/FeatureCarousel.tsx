@@ -12,6 +12,8 @@ import { FeaturedSlideData } from "../genres/[slug]/featured/page";
 import Image from "next/image";
 import Artists from "./Artists";
 import Link from "next/link";
+import ButtonWithDropdown from "./ButtonWithDropdown";
+import Controls from "./Controls";
 
 function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
   return (
@@ -43,10 +45,19 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
             {label.name}
           </Link>
         </div>
-        <div>
-          <button className="min-w-20 bg-teal-700 hover:bg-teal-600 rounded-sm">
-            <span className="inline-block text-xs font-bold my-2 mx-3 ">Add to basket</span>
-          </button>
+        <div className="flex items-center gap-3">
+          <Controls />
+          <ButtonWithDropdown
+            title="$2.49"
+            dropdownOptions={[
+              { title: "option1", href: "#1" },
+              { title: "option2", href: "#2" },
+            ]}
+            buttonStyles="bg-teal-600 text-gray-100 border-0 ring-0 hover:bg-teal-500"
+            iconStyles="bg-teal-700 text-gray-100 border-0 ring-0"
+            dropdownPaperStyles="bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm"
+            dropdownLinkStyles="text-gray-300"
+          />
         </div>
       </div>
     </div>
@@ -117,7 +128,7 @@ export default function FeatureCarousel({ id, featured }: { id: string; featured
       </button>
 
       <button
-        className="group/button flex items-center justify-center bg-transparent border-l-[25px] disabled:border-r-gray-200/50 disabled:pointer-events-none  border-r-gray-200/75 hover/button:border-l-gray-200/90 active:border-l-gray-200/75  w-[50px] h-[40px] rounded-full absolute top-1/2 -right-[25px] -translate-y-1/2 translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
+        className="group/button flex items-center justify-center bg-transparent border-l-[25px] disabled:border-l-gray-200/50 disabled:pointer-events-none  border-l-gray-200/75 hover/button:border-l-gray-200/90 active:border-l-gray-200/75  w-[50px] h-[40px] rounded-full absolute top-1/2 -right-[25px] -translate-y-1/2 translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
         id={`buttonNext-${ID}`}
       >
         <div className="z-20 absolute top-1/2 -translate-y-1/2 right-[24px] ">

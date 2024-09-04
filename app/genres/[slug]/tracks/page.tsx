@@ -110,7 +110,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const data = result2.flat();
 
   return (
-    <main className="space-y-5 min-h-dvh">
+    <main className="pt-2.5 space-y-5 min-h-dvh">
       <section className="w-full">
         <div className="gap-2 flex w-full items-center">
           <SelectFilter name={filterBPM.name} options={filterBPM.options} title={filterBPM.title} />

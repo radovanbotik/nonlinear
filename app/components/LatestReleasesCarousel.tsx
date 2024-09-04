@@ -11,12 +11,21 @@ import { RiArrowRightSFill } from "react-icons/ri";
 import { RiPlayFill } from "react-icons/ri";
 import { RiPlayListAddFill } from "react-icons/ri";
 
-import { FeaturedSlideData } from "../genres/[slug]/featured/page";
 import Image from "next/image";
 import Artists from "./Artists";
 import Link from "next/link";
+import ButtonWithDropdown from "./ButtonWithDropdown";
 
-function Feature({ artists, _id, image, label, release_date, slug, title }: FeaturedSlideData) {
+type TSlide = {
+  _id: string;
+  title: string;
+  image: string;
+  label: { name: string; href: string };
+  artists: { name: string; slug: string }[];
+  slug: string;
+};
+
+function Feature({ artists, _id, image, label, slug, title }: TSlide) {
   return (
     <div key={_id} className="relative group/parent //shadow-lg bg-gray-700 max-w-64 lg:max-w-40">
       <div className="relative overflow-hidden transition-transform duration-75 ease-in-out group/image">
@@ -31,7 +40,7 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
           blurDataURL={image}
           quality={100}
         />
-        <div className="absolute bottom-0 left-0 translate-y-full flex w-full bg-gray-950 opacity-0  group-hover/parent:translate-y-0 group-hover/parent:opacity-100 transition">
+        <div className="absolute bottom-0 left-0 //translate-y-full flex w-full bg-gray-950 opacity-0  //group-hover/parent:translate-y-0 group-hover/parent:opacity-100 transition">
           <div className="w-full flex justify-evenly">
             <button className="relative inline-block  //mx-auto group/button ">
               <RiPlayFill className="text-gray-300 w-4 h-4" />
@@ -44,11 +53,17 @@ function Feature({ artists, _id, image, label, release_date, slug, title }: Feat
             </button>
           </div>
 
-          <div className="w-full">
-            <button className="w-full px-3 text-xs py-1.5 text-gray-300  bg-teal-800 hover:bg-teal-600 hover:text-gray-50 active:!bg-teal-500 transition">
-              download
-            </button>
-          </div>
+          <ButtonWithDropdown
+            title="$2.49"
+            dropdownOptions={[
+              { title: "option1", href: "#1" },
+              { title: "option2", href: "#2" },
+            ]}
+            buttonStyles="bg-teal-600 text-gray-100 border-0 ring-0 hover:bg-teal-500 rounded-none"
+            iconStyles="bg-teal-700 text-gray-100 border-0 ring-0 rounded-none"
+            dropdownPaperStyles="bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm"
+            dropdownLinkStyles="text-gray-300"
+          />
         </div>
       </div>
 
@@ -77,7 +92,7 @@ export default function LatestReleasesCarousel({
   ...props
 }: {
   id: string;
-  slides: FeaturedSlideData[];
+  slides: TSlide[];
   title: string;
 } & SwiperProps) {
   //THIS HAS TO BE UNIQUE FOR EACH INSTANCE OF SLIDER
