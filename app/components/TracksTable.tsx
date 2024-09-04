@@ -14,18 +14,7 @@ import { formatDate } from "@/app/helpers/formatDate";
 import { ReactElement } from "react";
 import Link from "next/link";
 import ButtonWithDropdown from "./ButtonWithDropdown";
-
-export type ReleaseData = {
-  artists: { name: string; slug: string }[];
-  tempos: number[];
-  catalog_number: string;
-  _id: string;
-  image: string;
-  label: { name: string; href: string };
-  release_date: string;
-  slug: string;
-  title: string;
-};
+import { TTracksData } from "../genres/[slug]/tracks/page";
 
 interface ColumnProps<T> {
   key: string;
@@ -38,7 +27,7 @@ type SortedData = {
   play: string;
   addToQue: string;
   addToPlaylist: string;
-  tempo: number[];
+  tempo: number[] | number;
   image: { src: string; slug: string };
   label: { name: string; href: string };
   release_date: string;
@@ -46,7 +35,7 @@ type SortedData = {
   actionButton: string;
 };
 
-export default function ReleasesTable({ data }: { data: ReleaseData[] }) {
+export default function TracksTable({ data }: { data: TTracksData[] }) {
   const tableData: { columns: Array<ColumnProps<SortedData>>; data: SortedData[] } = {
     columns: [
       {
@@ -190,7 +179,7 @@ export default function ReleasesTable({ data }: { data: ReleaseData[] }) {
       titleArtists: { title: result.title, artists: result.artists, slug: result.slug },
       label: result.label,
       release_date: result.release_date,
-      tempo: result.tempos,
+      tempo: result.tempo,
       actionButton: "future-action",
     })),
   };

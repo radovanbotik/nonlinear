@@ -45,7 +45,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
         <Link
           className="rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300"
           href={path.href}
-          key={path.href}
+          key={path.title}
         >
           {path.title}
         </Link>
@@ -53,7 +53,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     }
     if (path.children) {
       return (
-        <Popover className="//relative isolate z-50 ">
+        <Popover key={path.title} className="relative isolate z-50">
           <PopoverButton className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300">
             <span>{path.title}</span>
             <ChevronDownIcon aria-hidden="true" className="h-5 w-5" />
@@ -90,7 +90,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
           as={Link}
           href={path.href}
           className="block rounded-md px-3 py-5 text-base font-medium text-gray-300 //hover:bg-gray-700 hover:text-white"
-          key={path.href}
+          key={path.title}
         >
           {path.title}
         </DisclosureButton>
@@ -109,7 +109,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
 
   const profileNavigationLinks = profileNavigation.map(path => {
     return (
-      <MenuItem key={path.href}>
+      <MenuItem key={path.title}>
         <Link href={path.href} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
           {path.title}
         </Link>
@@ -122,7 +122,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
         as={Link}
         className="block rounded-md px-3 py-5 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
         href={path.href}
-        key={path.href}
+        key={path.title}
       >
         {path.title}
       </DisclosureButton>

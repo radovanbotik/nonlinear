@@ -1,14 +1,13 @@
 import { client } from "@/sanity/client";
 import SelectFilter from "@/app/components/SelectFilter";
 import RadioFilter from "@/app/components/RadioFilter";
-import ReleasesTable from "@/app/components/ReleasesTable";
 import ResultsPerPage from "@/app/components/ResultsPerPage";
 import Pagination from "@/app/components/Pagination";
+import TracksTable from "@/app/components/TracksTable";
 
 export type ReleaseData = {
   artists: { name: string; slug: string }[];
   tempos: number[];
-  catalog_number: string;
   _id: string;
   image: string;
   label: { name: string; href: string };
@@ -17,42 +16,41 @@ export type ReleaseData = {
   title: string;
 };
 
+export type TTracksData = {
+  artists: { name: string; slug: string }[];
+  key: string;
+  image: string;
+  id: string;
+  slug: string;
+  tempo: number;
+  style: string;
+  label: { name: string; href: string };
+  release_date: string;
+  title: string;
+};
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
-  const QUERY = `
-  *[_type == 'release']['${slug}' in singles[]->style]{
-    'artists':singles[]->artists[]->{name,'slug':slug.current},
-    'tempos': singles[]->BPM,
-    catalog_number,
-    _id,
-    'image':image.asset->url,
-    'label':{...label->{name,'href':slug.current}},
-    release_date,
-    'slug':slug.current,
-     title,
-  }
-  [0..2]
-  |order(release_date desc)
-`;
-
   const Q = `
- *[_type == 'release']['jungle' in singles[]->style ]{
+ *[_type == 'release']['${slug}' in singles[]->style ]{
     'singles':singles[]->{
-    ...,
     artists[]->{name,'slug':slug.current},
-    'tempos':BPM,
-    catalog_number,
+    _id,
+    key,
+    'slug':slug.current,
+    'tempo':BPM,
+    style,
     'image':^.image.asset->url,
     'label':^.label->{name,'href':slug.current},
-    _id,
     'release_date':^.release_date,
+    title,
     }
   }.singles
   |order(release_date desc)
 `;
 
-  const data = await client.fetch<ReleaseData[]>(QUERY);
+  const result2 = await client.fetch<TTracksData[]>(Q);
 
   const filterLabel = {
     name: "label",
@@ -120,6 +118,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
     { value: 125, label: 125 },
   ];
 
+  const data = result2.flat();
+
   return (
     <main className="space-y-5 min-h-dvh">
       <section className="w-full">
@@ -142,7 +142,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
         </div>
       </section>
       <section className="w-full">
-        <ReleasesTable data={data} />
+        <TracksTable data={data} />
       </section>
     </main>
   );
