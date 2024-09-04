@@ -1,9 +1,9 @@
-import { sanityFetch, client } from "@/sanity/client";
-import { SanityDocument, PortableText } from "next-sanity";
+import { client } from "@/sanity/client";
 import Controls from "./components/Controls";
 import Chart from "./components/Chart";
-import LatestReleasesCarousel from "./components/LatestReleasesCarousel";
-import FeatureCarousel from "./components/FeatureCarousel";
+import Carousel from "./components/Carousel";
+import CarouselSlideBig from "./components/CarouselSlideBig";
+import CarouselSlideSmall from "./components/CarouselSlideSmall";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -49,24 +49,33 @@ export default async function Home() {
   );
 
   return (
-    <main className="pt-2.5 space-y-5 min-h-dvh">
+    <main className="min-h-dvh">
       <div className="gap-x-6 flex relative">
-        <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0">
+        <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0 space-y-5">
           <section className="space-x-3 flex">
             <div className="w-2/3">
-              <FeatureCarousel
-                className="aspect-[4/3]"
+              <Carousel
                 id="NEW_FEATURE_CAROUSEL_MAIN_PAGE"
-                featured={data}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: true,
+                }}
+                navigationStyle="inside"
+                slidesPerView={1}
+                loop={true}
                 title="New on NL"
-              />
+              >
+                {[...data].map(release => {
+                  return <CarouselSlideBig key={release._id} {...release} />;
+                })}
+              </Carousel>
             </div>
-            <div className="w-1/3">caoursel vertical</div>
+            <div className="w-1/3"></div>
           </section>
           <section>
-            <LatestReleasesCarousel
+            <Carousel
               id="NEW_RELEASES_CAROUSEL_MAIN_PAGE"
-              slides={[...data, ...data, ...data, ...data]}
+              navigationStyle="outside"
               title="New Releases"
               slidesPerView={2}
               slidesPerGroup={2}
@@ -81,7 +90,11 @@ export default async function Home() {
                 1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
                 1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
               }}
-            />
+            >
+              {[...data].map(release => {
+                return <CarouselSlideSmall key={release._id} {...release} />;
+              })}
+            </Carousel>
           </section>
         </div>
         <aside className="w-1/3 flex flex-col gap-6  justify-start">

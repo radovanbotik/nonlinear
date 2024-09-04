@@ -14,10 +14,11 @@ import { RiPlayFill } from "react-icons/ri";
 import { RiPlayListAddFill } from "react-icons/ri";
 import { RiAddLargeFill } from "react-icons/ri";
 
-import LatestReleasesCarousel from "@/app/components/LatestReleasesCarousel";
 import ReleaseTable from "@/app/components/ReleaseTable";
 import ButtonWithDropdown from "@/app/components/ButtonWithDropdown";
 import Artists from "@/app/components/Artists";
+import WithCarousel from "@/app/components/Carousel";
+import CarouselSlideSmall from "@/app/components/CarouselSlideSmall";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -222,10 +223,10 @@ export default async function Review({ params }: { params: { slug: string } }) {
         <ReleaseTable data={result} />
         {/* FROM LABEL */}
         <div className="space-y-2 relative mt-12">
-          <LatestReleasesCarousel
-            slides={label}
+          <WithCarousel
             title={`More From This Label`}
             id="artist-carousel"
+            navigationStyle="outside"
             slidesPerView={2}
             spaceBetween={4}
             breakpoints={{
@@ -234,7 +235,11 @@ export default async function Review({ params }: { params: { slug: string } }) {
               1024: { slidesPerView: 5, spaceBetween: 8 },
               1240: { slidesPerView: 7, spaceBetween: 8 },
             }}
-          />
+          >
+            {[...label].map(release => {
+              return <CarouselSlideSmall key={release._id} {...release} />;
+            })}
+          </WithCarousel>
         </div>
       </div>
     </div>

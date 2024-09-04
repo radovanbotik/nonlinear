@@ -1,3 +1,4 @@
+"use client";
 import {
   Disclosure,
   DisclosureButton,
@@ -23,6 +24,7 @@ import { RiAddFill } from "react-icons/ri";
 import { RiSubtractFill } from "react-icons/ri";
 import { RiCloseFill } from "react-icons/ri";
 import { Container } from "./Container";
+import { cn } from "../lib/helpers";
 
 type TNavigation = {
   logo: { src: string | StaticImageData; alt: string };
@@ -50,31 +52,35 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     if (path.children) {
       return (
         <Popover key={path.title} className="//relative isolate z-50">
-          <PopoverButton
-            className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300"
-            // onMouseEnter={e => console.log(e)}
-          >
-            <span>{path.title}</span>
-            <ChevronDownIcon aria-hidden="true" className="h-5 w-5" />
-          </PopoverButton>
+          {({ open }) => (
+            <>
+              <PopoverButton
+                className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300"
+                // onMouseEnter={e => console.log(e)}
+              >
+                <span>{path.title}</span>
+                <ChevronDownIcon aria-hidden="true" className={cn("h-5 w-5", open && "-rotate-90")} />
+              </PopoverButton>
 
-          <PopoverPanel
-            transition
-            className="//max-w-screen-2xl   w-full //w-max absolute inset-x-0 top-14 -z-10 translate-y-px //bg-white bg-gray-950 //bg-clip-padding //backdrop-filter //backdrop-blur-sm pt-2 shadow-lg //ring-1 ring-gray-900/5 transition //data-[closed]:-translate-y-px data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
-          >
-            <div className="mx-auto //max-w-7xl grid gap-x-10 grid-cols-4 px-8 //w-max">
-              {path.children.map(item => (
-                <div
-                  key={item.href}
-                  className="group relative flex  items-center  w-full  text-gray-50 text-base font-medium  hover:text-teal-400 border-b-gray-600 [&:not(:nth-last-child(-n+4))]:border-b-[1px]"
-                >
-                  <PopoverButton as={Link} href={item.href} className="py-3 block w-full">
-                    {item.title}
-                  </PopoverButton>
+              <PopoverPanel
+                transition
+                className="//max-w-screen-2xl   w-full //w-max absolute inset-x-0 top-14 -z-10 translate-y-px //bg-white bg-gray-950 //bg-clip-padding //backdrop-filter //backdrop-blur-sm pt-2 shadow-lg //ring-1 ring-gray-900/5 transition //data-[closed]:-translate-y-px data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+              >
+                <div className="mx-auto //max-w-7xl grid gap-x-10 grid-cols-4 px-8 //w-max">
+                  {path.children?.map(item => (
+                    <div
+                      key={item.href}
+                      className="group relative flex  items-center  w-full  text-gray-50 text-base font-medium  hover:text-teal-400 border-b-gray-600 [&:not(:nth-last-child(-n+4))]:border-b-[1px]"
+                    >
+                      <PopoverButton as={Link} href={item.href} className="py-3 block w-full">
+                        {item.title}
+                      </PopoverButton>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </PopoverPanel>
+              </PopoverPanel>
+            </>
+          )}
         </Popover>
       );
     }

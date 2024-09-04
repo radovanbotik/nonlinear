@@ -1,5 +1,6 @@
-import FeatureCarousel from "@/app/components/FeatureCarousel";
-import LatestReleasesCarousel from "@/app/components/LatestReleasesCarousel";
+import CarouselSlideBig from "@/app/components/CarouselSlideBig";
+import CarouselSlideSmall from "@/app/components/CarouselSlideSmall";
+import WithCarousel from "@/app/components/Carousel";
 import { client } from "@/sanity/client";
 
 export type FeaturedSlideData = {
@@ -45,26 +46,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const featured = await client.fetch<FeaturedSlideData[]>(FEATURED_QUERY);
   const latest = await client.fetch<FeaturedSlideData[]>(LATEST_QUERY);
 
-  const latestData = [
-    {
-      id: 1,
-      releases: [...latest, ...latest, ...latest, ...latest, ...latest],
-    },
-    {
-      id: 2,
-      releases: [...latest, ...latest, ...latest, ...latest, ...latest],
-    },
-    {
-      id: 3,
-      releases: [...latest, ...latest, ...latest, ...latest, ...latest],
-    },
-    {
-      id: 4,
-      releases: [...latest, ...latest, ...latest, ...latest, ...latest],
-    },
-  ];
-
-  const latest40 = [
+  const data = [
     ...latest,
     ...latest,
     ...latest,
@@ -89,35 +71,33 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <main className="space-y-5 min-h-dvh">
-      <section>{featured && <FeatureCarousel id="FEATURE_CAROUSEL" featured={featured} />}</section>
       <section>
-        {latest && (
-          <LatestReleasesCarousel
-            id="LATEST_RELEASES_CAROUSEL"
-            slides={latest40}
-            title="Latest Releases"
-            slidesPerView={2}
-            slidesPerGroup={2}
-            spaceBetween={4}
-            grid={{
-              rows: 2,
-              fill: "row",
+        {featured && (
+          <WithCarousel
+            id="FEATURED_FEATURED"
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: true,
             }}
-            breakpoints={{
-              640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-              768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-              1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-              1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-            }}
-          />
+            navigationStyle="inside"
+            slidesPerView={1}
+            loop={true}
+          >
+            {[...featured].map(release => {
+              return <CarouselSlideBig key={release._id} {...release} className="aspect-video" />;
+            })}
+          </WithCarousel>
         )}
       </section>
       <section>
         {latest && (
-          <LatestReleasesCarousel
+          <WithCarousel
+            id="NEW_RELEASES_FEATURED"
+            title="New Releases"
             slidesPerView={2}
             slidesPerGroup={2}
             spaceBetween={4}
+            navigationStyle="outside"
             grid={{
               rows: 2,
               fill: "row",
@@ -128,10 +108,37 @@ export default async function Page({ params }: { params: { slug: string } }) {
               1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
               1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
             }}
-            id="STAFF_PICKS_CAROUSEL"
-            slides={latest40}
-            title="Staff Picks"
-          />
+          >
+            {[...data].map(release => {
+              return <CarouselSlideSmall key={release._id} {...release} />;
+            })}
+          </WithCarousel>
+        )}
+      </section>
+      <section>
+        {latest && (
+          <WithCarousel
+            id="LATEST_RELEASES_FEATURED"
+            title="Latest Releases"
+            slidesPerView={2}
+            slidesPerGroup={2}
+            spaceBetween={4}
+            navigationStyle="outside"
+            grid={{
+              rows: 2,
+              fill: "row",
+            }}
+            breakpoints={{
+              640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+              768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+              1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+              1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+            }}
+          >
+            {[...data].map(release => {
+              return <CarouselSlideSmall key={release._id} {...release} />;
+            })}
+          </WithCarousel>
         )}
       </section>
     </main>
