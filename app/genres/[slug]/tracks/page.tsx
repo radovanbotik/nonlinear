@@ -2,6 +2,8 @@ import { client } from "@/sanity/client";
 import SelectFilter from "@/app/components/SelectFilter";
 import RadioFilter from "@/app/components/RadioFilter";
 import ReleasesTable from "@/app/components/ReleasesTable";
+import ResultsPerPage from "@/app/components/ResultsPerPage";
+import Pagination from "@/app/components/Pagination";
 
 export type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -111,15 +113,32 @@ export default async function Page({ params }: { params: { slug: string } }) {
     ],
   };
 
+  const resultsPerPage = [
+    { value: 25, label: 25 },
+    { value: 50, label: 50 },
+    { value: 100, label: 100 },
+    { value: 125, label: 125 },
+  ];
+
   return (
     <main className="space-y-5 min-h-dvh">
-      <section>
-        <div className="gap-2 py-2.5 flex w-full items-center">
+      <section className="w-full">
+        <div className="gap-2 flex w-full items-center">
           <SelectFilter name={filterBPM.name} options={filterBPM.options} title={filterBPM.title} />
           <SelectFilter name={filterLabel.name} options={filterLabel.options} title={filterLabel.title} />
           <div className="ml-auto">
             <RadioFilter name={filterOrder.name} options={filterOrder.options} title={filterOrder.title} />
           </div>
+        </div>
+      </section>
+      <section>
+        <div className="flex">
+          <div className="flex items-center">
+            <div className="mr-3 text-sm  text-gray-400">Results per page</div>
+            <ResultsPerPage options={resultsPerPage} />
+          </div>
+
+          <Pagination className={"ml-auto"} />
         </div>
       </section>
       <section className="w-full">
