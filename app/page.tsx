@@ -1,7 +1,7 @@
 import { client } from "@/sanity/client";
 import Controls from "./components/Controls";
 import Chart from "./components/Chart";
-import Carousel from "./components/Carousel";
+import Carousel, { TCarousel } from "./components/Carousel";
 import CarouselSlideBig from "./components/CarouselSlideBig";
 import CarouselSlideSmall from "./components/CarouselSlideSmall";
 
@@ -36,6 +36,18 @@ export default async function Home() {
 
   const data = await client.fetch<ReleaseData[]>(QUERY);
 
+  const mainCarouselConfig: Omit<TCarousel, "children"> = {
+    id: "NEW_FEATURE_CAROUSEL_MAIN_PAGE",
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: true,
+    },
+    navigationStyle: "inside",
+    slidesPerView: 1,
+    loop: true,
+    title: "New on NL",
+  };
+
   const chartHeader = (
     <>
       <Controls groupStyles="flex-1" />
@@ -54,17 +66,7 @@ export default async function Home() {
         <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0 space-y-5">
           <section className="space-x-3 flex">
             <div className="w-2/3">
-              <Carousel
-                id="NEW_FEATURE_CAROUSEL_MAIN_PAGE"
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: true,
-                }}
-                navigationStyle="inside"
-                slidesPerView={1}
-                loop={true}
-                title="New on NL"
-              >
+              <Carousel {...mainCarouselConfig}>
                 {[...data].map(release => {
                   return <CarouselSlideBig key={release._id} {...release} />;
                 })}
