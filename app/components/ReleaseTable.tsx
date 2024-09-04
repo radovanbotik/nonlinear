@@ -11,6 +11,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import Artists from "@/app/components/Artists";
 import { ReactElement } from "react";
 import Link from "next/link";
+import ButtonWithDropdown from "./ButtonWithDropdown";
 
 export type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -188,17 +189,17 @@ export default function ReleaseTable({ data }: { data: ReleaseData }) {
         title: "",
         render: (_, record) => {
           return (
-            <Popover className="relative ml-auto">
-              <PopoverButton className="px-3 py-1 bg-gray-950 group-hover/track:text-teal-400 transition text-xs  text-gray-50 font-bold">
-                Purchase
-              </PopoverButton>
-              <PopoverPanel anchor="left" className="flex flex-col bg-gray-100 space-y-2 p-4">
-                <a href="/analytics">Analytics</a>
-                <a href="/engagement">Engagement</a>
-                <a href="/security">Security</a>
-                <a href="/integrations">Integrations</a>
-              </PopoverPanel>
-            </Popover>
+            <ButtonWithDropdown
+              title="$2.49"
+              dropdownOptions={[
+                { title: "option1", href: "#1" },
+                { title: "option2", href: "#2" },
+              ]}
+              buttonStyles="bg-teal-600 text-gray-100 border-0 ring-0 hover:bg-teal-500"
+              iconStyles="bg-teal-700 text-gray-100 border-0 ring-0"
+              dropdownPaperStyles="bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm"
+              dropdownLinkStyles="text-gray-300"
+            />
           );
         },
       },

@@ -2,17 +2,8 @@ import { ReactNode } from "react";
 import { client } from "@/sanity/client";
 import SectionHeadingWithTabs from "../../components/SectionHeadingWithTabs";
 
-import { RiHeart3Line } from "react-icons/ri";
-import { RiHeart3Fill } from "react-icons/ri";
-
-import { RiPlayList2Line } from "react-icons/ri";
-import { RiPlayList2Fill } from "react-icons/ri";
-
-import { RiDownload2Line } from "react-icons/ri";
-import { RiDownload2Fill } from "react-icons/ri";
-
-import { RiListUnordered } from "react-icons/ri";
 import Chart from "@/app/components/Chart";
+import Controls from "@/app/components/Controls";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -59,13 +50,31 @@ export default async function Layout({
     { name: "Charts", href: `/genres/${slug}/charts` },
   ];
 
+  const chartHeader = (
+    <>
+      <Controls groupStyles="flex-1" />
+      <div className="flex-1 justify-self-center w-full ">
+        <div className="-translate-x-1/2 w-fit font-medium tracking-wide ">
+          <span className="text-gray-50">Jungle</span>
+          <span className="text-teal-400 ">Top10</span>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <>
       <SectionHeadingWithTabs responsive={false} tabs={tabs} title={slug} />
       <div className="gap-x-6 flex relative">
         <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0">{children}</div>
-        <aside className="block w-1/3 bg-gray-700/50">
-          <Chart tracks={data} heading="NL Top10" />
+        <aside className="w-1/3 flex flex-col gap-6  justify-start">
+          <Chart chartItems={data} footer={{ title: "VIEW ALL ITEMS", href: "#" }} header={chartHeader} style="basic" />
+          <Chart
+            chartItems={data}
+            footer={{ title: "VIEW ALL ITEMS", href: "#" }}
+            header={"Top 10 Releases"}
+            style="basic"
+          />
         </aside>
       </div>
     </>

@@ -18,6 +18,7 @@ import { RiAddLargeFill } from "react-icons/ri";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import LatestReleasesCarousel from "@/app/components/LatestReleasesCarousel";
 import ReleaseTable from "@/app/components/ReleaseTable";
+import ButtonWithDropdown from "@/app/components/ButtonWithDropdown";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -133,7 +134,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
   console.log(artist_releases);
 
   return (
-    <div className="relative flex flex-col lg:flex-row lg:gap-10 ">
+    <div className="relative isolate flex flex-col lg:flex-row lg:gap-10 ">
       <div className="mx-auto w-full">
         {/* DESCRIPTION */}
         <div className="flex flex-col  sm:flex-row gap-3 lg:gap-4 mb-4">
@@ -182,14 +183,9 @@ export default async function Review({ params }: { params: { slug: string } }) {
                   <Link href={`/labels/${result.label.href}`}>{result.label.name}</Link>
                 </dd>
               </div>
-              {/* CATNO */}
-              {/* <div className="grid grid-cols-3 lg:gap-8 lg:px-0">
-                    <dt className="text-sm  text-gray-400">Catalog:</dt>
-                    <dd className="mt-1 text-sm  text-gray-100 lg:col-span-2 lg:mt-0">{result.catalog_number}</dd>
-                  </div> */}
             </dl>
-            <div className="isolate flex gap-3 items-center py-1">
-              <div className="flex items-center gap-3 text-gray-100 hover:bg-gray-700 transition rounded-full pr-3">
+            <div className="isolate flex gap-4 items-center py-1">
+              <div className="flex items-center  gap-3 text-gray-100 hover:bg-gray-700 transition rounded-full pr-3">
                 <button className="relative flex items-center group/button p-1">
                   <div className="group-hover/button:opacity-100 bg-transparent inset-0 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_2px_#f7fafc]"></div>
                   <div className="bg-gray-500 inset-0 absolute rounded-full"></div>
@@ -204,18 +200,19 @@ export default async function Review({ params }: { params: { slug: string } }) {
                   <RiAddLargeFill className="w-4 h-4" />
                 </button>
               </div>
-              <Popover className="inline-block relative">
-                <PopoverButton className="px-3 text-xs min-w-20 py-1.5 rounded-md overflow-hidden bg-teal-600 hover:bg-teal-500 text-white font-bold">
-                  $3.95
-                </PopoverButton>
-                <PopoverPanel anchor="left" className="flex flex-col bg-white space-y-2 p-4">
-                  <a href="/analytics">Analytics</a>
-                  <a href="/engagement">Engagement</a>
-                  <a href="/security">Security</a>
-                  <a href="/integrations">Integrations</a>
-                </PopoverPanel>
-              </Popover>
-              <div className="isolate inline-flex  gap-x-1.5">
+              <ButtonWithDropdown
+                title="$2.49"
+                dropdownOptions={[
+                  { title: "option1", href: "#1" },
+                  { title: "option2", href: "#2" },
+                ]}
+                buttonStyles="bg-teal-600 text-gray-100 border-0 ring-0 hover:bg-teal-500"
+                iconStyles="bg-teal-700 text-gray-100 border-0 ring-0"
+                dropdownPaperStyles="bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm"
+                dropdownLinkStyles="text-gray-300"
+              />
+
+              <div className="isolate inline-flex  gap-x-2">
                 <button
                   type="button"
                   className="relative inline-flex items-center rounded-md bg-gray-700 px-1.5 py-1.5 text-gray-50  hover:bg-gray-600 focus:z-10 shadow-sm"
@@ -244,7 +241,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
         {/* TRACKLIST */}
         <ReleaseTable data={result} />
         {/* DISCOGRAPHY */}
-        <div className="space-y-2 relative mt-8">
+        <div className="space-y-2 relative mt-12">
           <LatestReleasesCarousel
             slides={label.releases}
             title={`More From This Label`}

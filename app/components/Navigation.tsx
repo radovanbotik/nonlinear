@@ -134,8 +134,9 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
       <Container size="xl">
         <div className="relative flex h-14 items-center justify-between">
           <div className="flex items-center px-2 lg:px-0">
-            <div className="flex-shrink-0">
-              <Image alt={logo.alt} src={logo.src} height={32} className="h-8 w-auto" />
+            <div className="flex-shrink-0 relative">
+              <Image alt={logo.alt} src={logo.src} height={28} className="//h-8 //w-auto" />
+              <Link href={"/"} className="absolute inset-0" />
             </div>
             <div className="hidden lg:ml-6 lg:block">
               <div className="flex space-x-0">
@@ -172,7 +173,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
               <RiCloseFill aria-hidden="true" className="hidden h-6 w-6 group-data-[open]:block" />
             </DisclosureButton>
           </div>
-          {user && (
+          {user ? (
             <>
               <div className="hidden lg:ml-4 lg:block">
                 <div className="flex items-center">
@@ -205,6 +206,20 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
                       {profileNavigationLinks}
                     </MenuItems>
                   </Menu>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="hidden lg:ml-4 lg:block">
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    className="relative inline-flex items-center flex-shrink-0 p-1 text-sm text-gray-50 "
+                  >
+                    <RiUser3Line aria-hidden="true" className="h-4 w-4 inline-block mr-1" />
+                    <span>Login</span>
+                  </button>
                 </div>
               </div>
             </>

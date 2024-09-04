@@ -1,7 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { cn } from "../lib/helpers";
-import { IconType } from "react-icons";
 import { ReactElement } from "react";
 
 function isCurrent(href: string, pathname: string) {
