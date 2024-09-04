@@ -23,7 +23,7 @@ import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
-import { RiMenuFill } from "react-icons/ri";
+import { RiMenuFill, RiShoppingCart2Line } from "react-icons/ri";
 import { RiSearchLine } from "react-icons/ri";
 import { RiUser3Line } from "react-icons/ri";
 import { RiAddFill } from "react-icons/ri";
@@ -43,7 +43,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     if (path.href && !path.children) {
       return (
         <Link
-          className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300"
+          className="rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300"
           href={path.href}
           key={path.href}
         >
@@ -54,14 +54,14 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     if (path.children) {
       return (
         <Popover className="//relative isolate z-50 ">
-          <PopoverButton className="inline-flex items-center gap-x-1 rounded-md px-3 py-2 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300">
+          <PopoverButton className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300">
             <span>{path.title}</span>
             <ChevronDownIcon aria-hidden="true" className="h-5 w-5" />
           </PopoverButton>
 
           <PopoverPanel
             transition
-            className="//max-w-screen-2xl   w-full //w-max absolute inset-x-0 top-14 -z-10 translate-y-px //bg-white bg-gray-950 //bg-clip-padding //backdrop-filter //backdrop-blur-sm pt-2 shadow-lg ring-1 ring-gray-900/5 transition //data-[closed]:-translate-y-px data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
+            className="//max-w-screen-2xl   w-full //w-max absolute inset-x-0 top-14 -z-10 translate-y-px //bg-white bg-gray-950 //bg-clip-padding //backdrop-filter //backdrop-blur-sm pt-2 shadow-lg //ring-1 ring-gray-900/5 transition //data-[closed]:-translate-y-px data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
           >
             <div className="mx-auto //max-w-7xl grid gap-x-10 grid-cols-4 px-8 //w-max">
               {path.children.map(item => (
@@ -89,7 +89,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
         <DisclosureButton
           as={Link}
           href={path.href}
-          className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 //hover:bg-gray-700 hover:text-white"
+          className="block rounded-md px-3 py-5 text-base font-medium text-gray-300 //hover:bg-gray-700 hover:text-white"
           key={path.href}
         >
           {path.title}
@@ -120,7 +120,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     return (
       <DisclosureButton
         as={Link}
-        className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
+        className="block rounded-md px-3 py-5 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
         href={path.href}
         key={path.href}
       >
@@ -152,13 +152,13 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
               </label>
               <div className="relative">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <MagnifyingGlassIcon aria-hidden="true" className="h-5 w-5 text-gray-400" />
+                  <MagnifyingGlassIcon aria-hidden="true" className="h-4 w-4 text-gray-400" />
                 </div>
                 <input
                   id="search"
                   name="search"
                   type="search"
-                  placeholder="Search"
+                  placeholder="Search tracks,releases,artists,labels..."
                   className="block w-full rounded-md border-0 bg-gray-700 py-1.5 pl-10 pr-3 text-gray-300 placeholder:text-gray-400 focus:bg-white focus:text-gray-900 focus:ring-0 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -201,7 +201,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
                     </div>
                     <MenuItems
                       transition
-                      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+                      className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg // ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                     >
                       {profileNavigationLinks}
                     </MenuItems>
@@ -215,10 +215,16 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
                 <div className="flex items-center">
                   <button
                     type="button"
-                    className="relative inline-flex items-center flex-shrink-0 p-1 text-sm text-gray-50 "
+                    className="relative inline-flex items-center flex-shrink-0 p-1 text-sm text-gray-50 hover:text-teal-400 px-2 py-5"
                   >
-                    <RiUser3Line aria-hidden="true" className="h-4 w-4 inline-block mr-1" />
+                    <RiUser3Line aria-hidden="true" className="h-4 w-4 inline-block mr-1.5" />
                     <span>Login</span>
+                  </button>
+                  <button
+                    type="button"
+                    className="relative inline-flex items-center flex-shrink-0 p-1 text-sm text-gray-50 hover:text-teal-400 px-2 py-5"
+                  >
+                    <RiShoppingCart2Line aria-hidden="true" className="h-4 w-4 inline-block mr-1.5" />
                   </button>
                 </div>
               </div>

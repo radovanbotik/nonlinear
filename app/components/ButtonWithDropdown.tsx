@@ -25,7 +25,7 @@ export default function ButtonWithDropdown({
   title,
 }: TButtonWithDropdown) {
   return (
-    <div className="inline-flex rounded-md shadow-sm h-6">
+    <div className="relative inline-flex rounded-md shadow-sm h-6 z-50">
       <button
         type="button"
         className={cn(
@@ -35,10 +35,10 @@ export default function ButtonWithDropdown({
       >
         {title}
       </button>
-      <Menu as="div" className="relative -ml-px block">
+      <Menu as="div" className="relative -ml-px block ">
         <MenuButton
           className={cn(
-            "relative inline-flex items-center rounded-r-md bg-white px-1 py-1 max-h-6 text-gray-400 //ring-1 //ring-inset //ring-gray-300 //hover:bg-gray-50 focus:z-10 text-sm",
+            "relative inline-flex items-center rounded-r-md bg-white px-1 py-1 max-h-6 text-gray-400 //ring-1 //ring-inset //ring-gray-300 //hover:bg-gray-50 focus:z-50 text-sm",
             iconStyles
           )}
         >
@@ -48,7 +48,7 @@ export default function ButtonWithDropdown({
         <MenuItems
           transition
           className={cn(
-            "absolute text-left right-0 z-10 -mr-1 mt-2 w-56 origin-top-right //rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in",
+            "absolute text-left right-0 z-50 -mr-1 mt-2 w-56 origin-top-right //rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in",
             dropdownPaperStyles
           )}
         >

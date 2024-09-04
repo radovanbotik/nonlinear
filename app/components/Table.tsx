@@ -40,7 +40,7 @@ export default function Table<T>({ data, columns }: Props<T>) {
       return (
         <tr
           key={`row-${index}`}
-          className="group/track bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm"
+          className="group/track bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter"
         >
           {columns.map((column, index2) => {
             const value = column.render

@@ -1,7 +1,7 @@
 import { client } from "@/sanity/client";
-import StackedList from "@/app/components/StackedList";
 import SelectFilter from "@/app/components/SelectFilter";
 import RadioFilter from "@/app/components/RadioFilter";
+import ReleasesTable from "@/app/components/ReleasesTable";
 
 export type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -122,8 +122,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </section>
-      <section>
-        <StackedList data={data} />
+      <section className="w-full">
+        <ReleasesTable data={data} />
       </section>
     </main>
   );
