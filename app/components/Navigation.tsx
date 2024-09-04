@@ -53,7 +53,7 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
     }
     if (path.children) {
       return (
-        <Popover key={path.title} className="relative isolate z-50">
+        <Popover key={path.title} className="//relative isolate z-50">
           <PopoverButton className="inline-flex items-center gap-x-1 rounded-md px-3 py-5 text-sm font-medium text-gray-300 //hover:bg-gray-700 hover:text-teal-300">
             <span>{path.title}</span>
             <ChevronDownIcon aria-hidden="true" className="h-5 w-5" />

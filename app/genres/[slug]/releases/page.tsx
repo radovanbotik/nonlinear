@@ -1,7 +1,6 @@
 import { client } from "@/sanity/client";
 import SelectFilter from "@/app/components/SelectFilter";
 import RadioFilter from "@/app/components/RadioFilter";
-import Link from "next/link";
 import ResultsPerPage from "@/app/components/ResultsPerPage";
 import ReleasesTable from "@/app/components/ReleasesTable";
 import Pagination from "@/app/components/Pagination";
