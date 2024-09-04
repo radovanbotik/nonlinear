@@ -55,7 +55,7 @@ export default async function Layout({
       <Controls groupStyles="flex-1" />
       <div className="flex-1 justify-self-center w-full ">
         <div className="-translate-x-1/2 w-fit font-medium tracking-wide ">
-          <span className="text-gray-50 text-lg">Jungle</span>
+          <span className="text-gray-50 text-lg capitalize">{slug}</span>
           <span className="text-teal-400 text-lg">Top10</span>
         </div>
       </div>

@@ -1,7 +1,18 @@
+import { client } from "@/sanity/client";
 import Pagination from "@/app/components/Pagination";
 import RadioFilter from "@/app/components/RadioFilter";
 import ResultsPerPage from "@/app/components/ResultsPerPage";
 import SelectFilter from "@/app/components/SelectFilter";
+import ChartGrid from "@/app/components/ChartGrid";
+
+type TChart = {
+  author: string;
+  _createdAt: string;
+  _id: string;
+  image: string;
+  slug: string;
+  title: string;
+};
 
 export default async function Page({
   params,
@@ -11,6 +22,17 @@ export default async function Page({
   searchParams: { bpm: string; label: string; order: string; per_page: string };
 }) {
   const { slug } = params;
+
+  const QUERY = ` *[_type == 'chart']['${slug}' in singles[]->style ]
+  {
+  author,
+  _createdAt,
+  _id,
+  'image':image.asset->url,
+  'slug':slug.current,
+   title,
+}
+  `;
 
   const resultsPerPage = [
     { value: 25, label: 25 },
@@ -77,6 +99,10 @@ export default async function Page({
     ],
   };
 
+  const data = await client.fetch<TChart[]>(QUERY);
+
+  console.log(data);
+
   return (
     <main className="pt-2.5 space-y-5 min-h-dvh">
       <section className="w-full">
@@ -98,7 +124,9 @@ export default async function Page({
           <Pagination className={"ml-auto"} />
         </div>
       </section>
-      <section className="w-full">Content</section>
+      <section className="w-full">
+        <ChartGrid data={data} />
+      </section>
     </main>
   );
 }
