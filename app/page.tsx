@@ -36,7 +36,7 @@ export default async function Home() {
 
   const data = await client.fetch<ReleaseData[]>(QUERY);
 
-  const mainCarouselConfig: Omit<TCarousel, "children"> = {
+  const primaryCarouselConfig: Omit<TCarousel, "children"> = {
     id: "NEW_FEATURE_CAROUSEL_MAIN_PAGE",
     autoplay: {
       delay: 2500,
@@ -46,6 +46,25 @@ export default async function Home() {
     slidesPerView: 1,
     loop: true,
     title: "New on NL",
+  };
+
+  const SecondaryCarouselConfig: Omit<TCarousel, "children"> = {
+    id: "NEW_RELEASES_CAROUSEL_MAIN_PAGE",
+    navigationStyle: "outside",
+    title: "New Releases",
+    slidesPerView: 2,
+    slidesPerGroup: 2,
+    spaceBetween: 4,
+    grid: {
+      rows: 2,
+      fill: "row",
+    },
+    breakpoints: {
+      640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+      768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+      1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+      1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+    },
   };
 
   const chartHeader = (
@@ -66,7 +85,7 @@ export default async function Home() {
         <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0 space-y-5">
           <section className="space-x-3 flex">
             <div className="w-2/3">
-              <Carousel {...mainCarouselConfig}>
+              <Carousel {...primaryCarouselConfig}>
                 {[...data].map(release => {
                   return <CarouselSlideBig key={release._id} {...release} />;
                 })}
@@ -75,24 +94,7 @@ export default async function Home() {
             <div className="w-1/3"></div>
           </section>
           <section>
-            <Carousel
-              id="NEW_RELEASES_CAROUSEL_MAIN_PAGE"
-              navigationStyle="outside"
-              title="New Releases"
-              slidesPerView={2}
-              slidesPerGroup={2}
-              spaceBetween={4}
-              grid={{
-                rows: 2,
-                fill: "row",
-              }}
-              breakpoints={{
-                640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-                768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-                1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-                1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-              }}
-            >
+            <Carousel {...SecondaryCarouselConfig}>
               {[...data].map(release => {
                 return <CarouselSlideSmall key={release._id} {...release} />;
               })}
