@@ -4,6 +4,7 @@ import Chart from "./components/Chart";
 import Carousel, { TCarousel } from "./components/Carousel";
 import CarouselSlideBig from "./components/CarouselSlideBig";
 import CarouselSlideSmall from "./components/CarouselSlideSmall";
+import CarouselSlideDJChartSlide from "./components/CarouselSlideChartBig";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -37,7 +38,7 @@ export default async function Home() {
   const data = await client.fetch<ReleaseData[]>(QUERY);
 
   const primaryCarouselConfig: Omit<TCarousel, "children"> = {
-    id: "NEW_FEATURE_CAROUSEL_MAIN_PAGE",
+    id: "PRIMARY_MAIN",
     autoplay: {
       delay: 2500,
       disableOnInteraction: true,
@@ -48,8 +49,8 @@ export default async function Home() {
     title: "New on NL",
   };
 
-  const SecondaryCarouselConfig: Omit<TCarousel, "children"> = {
-    id: "NEW_RELEASES_CAROUSEL_MAIN_PAGE",
+  const secondaryCarouselConfig: Omit<TCarousel, "children"> = {
+    id: "SECONDARY_MAIN",
     navigationStyle: "outside",
     title: "New Releases",
     slidesPerView: 2,
@@ -64,6 +65,18 @@ export default async function Home() {
       768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
       1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
       1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+    },
+  };
+  const chartCarouselConfig: Omit<TCarousel, "children"> = {
+    id: "CHART_MAIN",
+    navigationStyle: "outside",
+    title: "DJ Charts",
+    slidesPerView: 1,
+    slidesPerGroup: 1,
+    spaceBetween: 8,
+    grid: {
+      rows: 3,
+      fill: "row",
     },
   };
 
@@ -91,10 +104,16 @@ export default async function Home() {
                 })}
               </Carousel>
             </div>
-            <div className="w-1/3"></div>
+            <div className="w-1/3">
+              <Carousel {...chartCarouselConfig}>
+                {[...data].map(release => {
+                  return <CarouselSlideDJChartSlide key={release._id} {...release} author="Dj Kaki" />;
+                })}
+              </Carousel>
+            </div>
           </section>
           <section>
-            <Carousel {...SecondaryCarouselConfig}>
+            <Carousel {...secondaryCarouselConfig}>
               {[...data].map(release => {
                 return <CarouselSlideSmall key={release._id} {...release} />;
               })}

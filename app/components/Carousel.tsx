@@ -30,8 +30,6 @@ export default function Carousel({ id, className, navigationStyle, title, childr
   const [isPrevControlDisabled, setIsPrevControlDisabled] = useState(true);
   const [isNextControlDisabled, setIsNextControlDisabled] = useState(false);
 
-  console.log(children);
-
   return (
     <div className="relative shrink w-full h-full flex flex-col isolate group overflow-hidden  //aspect-video">
       <div className="pb-3 flex items-center">
