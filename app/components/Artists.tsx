@@ -14,7 +14,7 @@ export default function Artists({
   });
 
   return (
-    <ul className={cn("flex text-teal-400 font-medium //inline-flex //flex-wrap", className)}>
+    <ul className={cn("flex //text-teal-400 //font-medium //inline-flex //flex-wrap", className)}>
       {uniqueArr.map((a, i, arr) => (
         <li key={a.slug} className="group/artists shrink-0">
           <Link href={`/artists/${a.slug}`} className="group-hover/artists:underline underline-inherit">

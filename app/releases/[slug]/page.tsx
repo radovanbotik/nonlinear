@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { sanityFetch, client } from "@/sanity/client";
-import { SanityDocument, PortableText } from "next-sanity";
 
 import { formatDate } from "@/app/helpers/formatDate";
 
@@ -10,15 +9,13 @@ import { RiFacebookFill } from "react-icons/ri";
 import { RiTwitterXFill } from "react-icons/ri";
 import { RiLink } from "react-icons/ri";
 
-import { RiPlayFill } from "react-icons/ri";
-import { RiPlayListAddFill } from "react-icons/ri";
-import { RiAddLargeFill } from "react-icons/ri";
-
 import ReleaseTable from "@/app/components/ReleaseTable";
 import ButtonWithDropdown from "@/app/components/ButtonWithDropdown";
 import Artists from "@/app/components/Artists";
 import WithCarousel from "@/app/components/Carousel";
 import CarouselSlideSmall from "@/app/components/CarouselSlideSmall";
+import DefinitionList from "@/app/components/DefinitionList";
+import Controls from "@/app/components/Controls";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -83,7 +80,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
     title
   }`;
 
-  const result = await sanityFetch<SanityDocument[] & ReleaseData>({ query: RELEASE_QUERY });
+  const result = await sanityFetch<ReleaseData>({ query: RELEASE_QUERY });
 
   const ARTIST_RELEASES_QUERY = `*[_type=='single' ]['${result.artists[0].slug}' in artists[]->slug.current]
   {
@@ -128,58 +125,44 @@ export default async function Review({ params }: { params: { slug: string } }) {
             blurDataURL={result.image}
             quality={100}
           />
-          <div className="space-y-1">
-            <div className="text-3xl lg:text-3xl font-medium text-gray-50">{result.title}</div>
-            <div className="flex flex-wrap text-xl font-bold text-gray-50 tracking-tight">
-              <Artists artists={result.artists} />
-            </div>
-            <dl className="space-y-1">
-              {/* RELEASED */}
-              <div className="grid grid-cols-3 lg:gap-8 lg:px-0">
-                <dt className="text-sm  text-gray-400">Release Date:</dt>
-                <dd className="mt-1 text-sm  text-gray-100 lg:col-span-2 lg:mt-0">
-                  {formatDate(result.release_date, {
+          <div>
+            <DefinitionList
+              header={{ title: result.title, subtitle: <Artists artists={result.artists} /> }}
+              titleStyles="text-3xl lg:text-3xl font-medium text-gray-50"
+              subTitleStyles="text-xl font-bold text-gray-50 tracking-tight"
+              bodyStyle="border-0 mt-2"
+              listStyle="divide-y-0"
+              dataGroupStyle="py-0.5"
+              termStyle="text-sm text-gray-400"
+              detailStyle="text-sm text-gray-50"
+              data={[
+                {
+                  term: "Release Date:",
+                  detail: formatDate(result.release_date, {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
-                  }).replaceAll("/", "-")}
-                </dd>
-              </div>
-              {/* GENRES */}
-              <div className="grid grid-cols-3 lg:gap-8 lg:px-0">
-                <dt className="text-sm  text-gray-400">Genres:</dt>
-                <dd className="mt-1 text-sm  text-gray-100 lg:col-span-2 lg:mt-0">
-                  {result.singles.map((single, i, arr) => (
+                  }).replaceAll("/", "-"),
+                },
+                {
+                  term: "Styles:",
+                  detail: result.singles.map((single, i, arr) => (
                     <div key={single._id} className="inline-block capitalize">
                       <Link href={`/releases?style=${single.style}`}>{single.style}</Link>
                       {i < arr.length - 1 ? <span>,&nbsp;</span> : ""}
                     </div>
-                  ))}
-                </dd>
-              </div>
-              {/* LABEL */}
-              <div className="grid grid-cols-3 lg:gap-8 lg:px-0">
-                <dt className="text-sm  text-gray-400">Label:</dt>
-                <dd className="mt-1 text-sm  text-gray-100 lg:col-span-2 lg:mt-0">
-                  <Link href={`/labels/${result.label.href}`}>{result.label.name}</Link>
-                </dd>
-              </div>
-            </dl>
+                  )),
+                },
+                {
+                  term: "Label",
+                  detail: <Link href={`/labels/${result.label.href}`}>{result.label.name}</Link>,
+                },
+              ]}
+            />
+
             <div className="isolate flex gap-4 items-center py-1">
               <div className="flex items-center  gap-3 text-gray-100 hover:bg-gray-700 transition rounded-full pr-3">
-                <button className="relative flex items-center group/button p-1">
-                  <div className="group-hover/button:opacity-100 bg-transparent inset-0 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_2px_#f7fafc]"></div>
-                  <div className="bg-gray-500 inset-0 absolute rounded-full"></div>
-                  <RiPlayFill className="w-6 h-6 relative //[&>path]:stroke-transparent" />
-                </button>
-                <button className="group/button relative">
-                  <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-                  <RiPlayListAddFill className="w-4 h-4" />
-                </button>
-                <button className="group/button relative">
-                  <div className="group-hover/button:opacity-100 absolute opacity-0 transition ease-in-out top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 shadow-[0px_0px_16px_3px_#f7fafc]"></div>
-                  <RiAddLargeFill className="w-4 h-4" />
-                </button>
+                <Controls />
               </div>
               <ButtonWithDropdown
                 title="$2.49"
