@@ -1,8 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { RiPlayFill, RiPlayListAddFill } from "react-icons/ri";
-import ButtonWithDropdown from "./ButtonWithDropdown";
-import Artists from "./Artists";
 
 type TCarouselSlideDJChartSlide = {
   _id: string;
@@ -19,8 +16,7 @@ export default function CarouselSlideDJChartSlide({ author, _id, image, slug, ti
         src={image}
         alt={`Image of ${title}`}
         className="block h-full w-full object-cover"
-        width={200}
-        height={200}
+        fill
         placeholder="blur"
         blurDataURL={image}
         quality={100}

@@ -41,13 +41,14 @@ export default function ReleasesTable({ data }: { data: TReleaseData[] }) {
         title: "",
         render: (_, record) => {
           return (
-            <div className="relative">
+            <div className="relative w-10 h-10">
               <Image
                 src={record.image.src}
                 alt={`Artwork for ${record.titleArtists.title}`}
-                className="lg:px-0 block min-w-10 h-10 max-w-10 w-10 max-h-10"
-                width={40}
-                height={40}
+                // className="lg:px-0 block min-w-10 h-10 max-w-10 w-10 max-h-10"
+                fill
+                // width={40}
+                // height={40}
                 placeholder="blur"
                 blurDataURL={record.image.src}
                 quality={100}

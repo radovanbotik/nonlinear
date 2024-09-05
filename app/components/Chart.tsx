@@ -32,21 +32,22 @@ type TChart = {
 
 function ChartItem({ itemIndex, image, itemHref, itemTitle, artists, label }: TChartItem) {
   return (
-    <div className="flex relative items-center group hover:bg-gray-600 py-2 px-2 overflow-hidden h-20">
+    <div className="flex relative items-center group hover:bg-gray-600 //py-2 //px-2 overflow-hidden h-20">
       <div className="flex-shrink-0 relative flex items-center">
         {image && (
-          <div>
+          <div className="relative h-20 w-12">
             <Image
               src={image.src}
               alt={image.alt}
-              width={48}
-              height={48}
+              width={80}
+              height={80}
               placeholder="blur"
               blurDataURL={image.src}
               quality={100}
-              className="h-full w-12"
+              // fill
+              className="object-cover object-left-bottom absolute h-20 w-12"
             />
-            <Link href={`/releases/${itemHref}`} className="absolute inset-0"></Link>
+            <Link href={`/releases/${itemHref}`} className="absolute inset-0 h-20 w-full"></Link>
           </div>
         )}
         <div className="relative group">
@@ -61,7 +62,7 @@ function ChartItem({ itemIndex, image, itemHref, itemTitle, artists, label }: TC
         </div>
       </div>
       <div className="truncate text-xs/4">
-        <Link href={itemHref} className="font-bold text-gray-50  text-sm/4 ">
+        <Link href={`/releases/${itemHref}`} className="font-bold text-gray-50  text-sm/4 ">
           {itemTitle}
         </Link>
         <Artists artists={artists} />
@@ -105,7 +106,7 @@ export default function Chart({ chartItems, footer, header, style }: TChart) {
       <div className="flex items-center w-full pb-2 border-b-[1px] border-b-gray-600 text-gray-50 font-medium text-xl/7 tracking-wide">
         {header}
       </div>
-      <ul role="list" className="">
+      <ul role="list" className="space-y-1">
         {chartItems.map((item, i) => (
           <li key={item._id} className="relative first-of-type:pt-4 last-of-type:pb-4">
             <ChartItem

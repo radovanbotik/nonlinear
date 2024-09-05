@@ -16,14 +16,13 @@ type TCarouselSlideSmall = {
 export default function CarouselSlideSmall({ artists, _id, image, label, slug, title }: TCarouselSlideSmall) {
   return (
     <div key={_id} className="relative group/parent //shadow-lg bg-gray-700 max-w-64 lg:max-w-40">
-      <div className="relative overflow-hidden transition-transform duration-75 ease-in-out group/image">
+      <div className="relative overflow-hidden transition-transform duration-75 ease-in-out group/image aspect-square">
         <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
         <Image
           src={image}
           alt={`Image of ${title}`}
           className="block h-full w-full"
-          width={260}
-          height={260}
+          fill
           placeholder="blur"
           blurDataURL={image}
           quality={100}
@@ -56,15 +55,15 @@ export default function CarouselSlideSmall({ artists, _id, image, label, slug, t
       </div>
 
       <div className="bg-gray-700 p-2 space-y-0.5 isolate">
-        <div className="overflow-hidden leading-none">
-          <Link className="font-bold text-white text-sm/4" href={`/releases/${slug}`}>
+        <div className="overflow-hidden leading-none ">
+          <Link className="font-bold text-white text-sm/4 truncate" href={`/releases/${slug}`}>
             {title}
           </Link>
         </div>
-        <div className="overflow-hidden leading-none">
+        <div className="overflow-hidden leading-none truncate">
           <Artists artists={artists} className="text-xs text-neutral-400 tracking-tight" />
         </div>
-        <div className="overflow-hidden leading-none">
+        <div className="overflow-hidden leading-none truncate">
           <Link className="text-xs text-neutral-400 tracking-tight" href={`/label/${label.href}`}>
             {label.name}
           </Link>

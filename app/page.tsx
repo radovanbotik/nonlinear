@@ -126,7 +126,7 @@ export default async function Home() {
             chartItems={data}
             footer={{ title: "VIEW ALL ITEMS", href: "#" }}
             header={"Top 10 Releases"}
-            style="basic"
+            style="withImage"
           />
         </aside>
       </div>
