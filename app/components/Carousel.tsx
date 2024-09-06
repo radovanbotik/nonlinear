@@ -31,7 +31,7 @@ export default function Carousel({ id, className, navigationStyle, title, childr
   const [isNextControlDisabled, setIsNextControlDisabled] = useState(false);
 
   return (
-    <div className="relative shrink w-full h-full flex flex-col isolate group overflow-hidden  //aspect-video">
+    <div className={cn("relative shrink w-full h-full flex flex-col isolate group overflow-hidden ", className)}>
       <div className="pb-3 flex items-center">
         <div className="inline-block leading-none text-xl tracking-tight font-medium text-white">{title}</div>
         {navigationStyle === "outside" && (
@@ -102,11 +102,11 @@ export default function Carousel({ id, className, navigationStyle, title, childr
           activeBullet?.classList.remove("hue-rotate-180", "scale-[1.01]");
         }}
         ref={swiperInstance}
-        className={cn("w-full h-full max-w-full max-h-full min-h-0 min-w-0", className)}
+        className={cn("w-full h-full max-w-full max-h-full min-h-0 min-w-0")}
         {...props}
       >
         {children.map((child, i, arr) => (
-          <SwiperSlide key={child.key} className="flex justify-center items-center ">
+          <SwiperSlide key={child.key} className="flex justify-center items-center w-full h-full">
             {child}
           </SwiperSlide>
         ))}

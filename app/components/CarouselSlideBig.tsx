@@ -29,7 +29,7 @@ export default function CarouselSlideBig({
   return (
     <div
       className={cn(
-        "relative w-full h-full flex items-center justify-center overflow-hidden group transition ease-in-out aspect-[4/3]",
+        "relative w-full h-full flex items-center justify-center overflow-hidden group transition ease-in-out //aspect-[4/3]",
         className
       )}
     >
@@ -38,7 +38,7 @@ export default function CarouselSlideBig({
         <Image
           src={image}
           alt={`Image of ${title}`}
-          className="drop-shadow-xl shadow-xl "
+          className="drop-shadow-xl shadow-xl w-full h-full"
           width={300}
           height={300}
           placeholder="blur"

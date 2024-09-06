@@ -11,7 +11,7 @@ type TCarouselSlideDJChartSlide = {
 
 export default function CarouselSlideDJChartSlide({ author, _id, image, slug, title }: TCarouselSlideDJChartSlide) {
   return (
-    <div key={_id} className="relative group/parent  bg-gray-700 aspect-square xl:aspect-video">
+    <div key={_id} className="relative group/parent  bg-gray-700 w-full h-full aspect-square xl:aspect-video">
       <Image
         src={image}
         alt={`Image of ${title}`}
