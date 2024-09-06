@@ -72,11 +72,17 @@ export default async function Home() {
     navigationStyle: "outside",
     title: "DJ Charts",
     slidesPerView: 1,
-    slidesPerGroup: 1,
-    spaceBetween: 8,
+    slidesPerGroup: 2,
     grid: {
-      rows: 3,
+      rows: 2,
       fill: "row",
+    },
+    spaceBetween: 8,
+    breakpoints: {
+      640: { slidesPerGroup: 2, slidesPerView: 1, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+      768: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
+      1024: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
+      1240: { slidesPerGroup: 1, slidesPerView: 1, spaceBetween: 8, grid: { fill: "row", rows: 3 } },
     },
   };
 
@@ -96,15 +102,15 @@ export default async function Home() {
     <main className="min-h-dvh">
       <div className="gap-x-6 flex relative">
         <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0 space-y-5">
-          <section className="space-x-3 flex">
-            <div className="w-2/3">
+          <section className="gap-x-3 xl:flex">
+            <div className="mx-auto w-full xl:w-2/3">
               <Carousel {...primaryCarouselConfig}>
                 {[...data].map(release => {
                   return <CarouselSlideBig key={release._id} {...release} />;
                 })}
               </Carousel>
             </div>
-            <div className="w-1/3">
+            <div className="mx-auto w-full xl:w-1/3">
               <Carousel {...chartCarouselConfig}>
                 {[...data].map(release => {
                   return <CarouselSlideDJChartSlide key={release._id} {...release} author="Dj Kaki" />;

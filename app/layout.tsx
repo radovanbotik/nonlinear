@@ -167,7 +167,7 @@ export default async function Layout({
         <div className="bg-gray-800 py-7">
           <Container size="xl">
             <div className="flex w-full justify-between gap-x-6">
-              <aside className="block w-52  bg-gray-700">
+              <aside className="hidden xl:block w-52  bg-gray-700">
                 <VerticalNavigation navigation={navigation} />
               </aside>
               <div className="flex-1 max-w-full max-h-full min-h-0 min-w-0">
