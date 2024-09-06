@@ -100,8 +100,8 @@ export default async function Home() {
 
   return (
     <main className="min-h-dvh">
-      <div className="gap-x-6 flex relative">
-        <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0 space-y-5">
+      <div className="gap-x-6 md:flex relative">
+        <div className="max-w-full md:w-2/3 max-h-full min-h-0 min-w-0 space-y-5">
           <section className="gap-x-3 xl:flex">
             <div className="mx-auto w-full xl:w-2/3">
               <Carousel {...primaryCarouselConfig}>
@@ -126,7 +126,7 @@ export default async function Home() {
             </Carousel>
           </section>
         </div>
-        <aside className="w-1/3 flex flex-col gap-6  justify-start">
+        <aside className="md:w-1/3 flex flex-col gap-6  justify-start">
           <Chart chartItems={data} footer={{ title: "VIEW ALL ITEMS", href: "#" }} header={chartHeader} style="basic" />
           <Chart
             chartItems={data}
