@@ -2,7 +2,7 @@
 import { ReactElement } from "react";
 import { cn } from "../lib/helpers";
 
-type TDefinitionList = {
+export type TDescriptionList = {
   className?: string;
   header?: {
     title: string;
@@ -19,7 +19,7 @@ type TDefinitionList = {
   detailStyle?: string;
 };
 
-export default function DefinitionList({
+export default function DescriptionList({
   className,
   bodyStyle,
   header,
@@ -31,7 +31,7 @@ export default function DefinitionList({
   headerStyles,
   titleStyles,
   subTitleStyles,
-}: TDefinitionList) {
+}: TDescriptionList) {
   return (
     <div className={cn("", className)}>
       {header && (

@@ -1,21 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
-
-import { sanityFetch, client } from "@/sanity/client";
+import { client } from "@/sanity/client";
 
 import { formatDate } from "@/app/helpers/formatDate";
-
-import { RiFacebookFill } from "react-icons/ri";
-import { RiTwitterXFill } from "react-icons/ri";
-import { RiLink } from "react-icons/ri";
 
 import ReleaseTable from "@/app/components/ReleaseTable";
 import ButtonWithDropdown from "@/app/components/ButtonWithDropdown";
 import Artists from "@/app/components/Artists";
-import WithCarousel from "@/app/components/Carousel";
+import WithCarousel, { TCarousel } from "@/app/components/Carousel";
 import CarouselSlideSmall from "@/app/components/CarouselSlideSmall";
-import DefinitionList from "@/app/components/DefinitionList";
+import DescriptionList, { TDescriptionList } from "@/app/components/DescriptionList";
 import Controls from "@/app/components/Controls";
+import SocialMediaShareButtons from "@/app/components/SocialMediaShareButtons";
 
 type ReleaseData = {
   artists: { name: string; slug: string }[];
@@ -80,7 +76,7 @@ export default async function Review({ params }: { params: { slug: string } }) {
     title
   }`;
 
-  const result = await sanityFetch<ReleaseData>({ query: RELEASE_QUERY });
+  const result = await client.fetch<ReleaseData>(RELEASE_QUERY);
 
   const ARTIST_RELEASES_QUERY = `*[_type=='single' ]['${result.artists[0].slug}' in artists[]->slug.current]
   {
@@ -108,13 +104,37 @@ export default async function Review({ params }: { params: { slug: string } }) {
     }[0...10]
   }.releases`;
 
-  const artist_releases = await sanityFetch<TArtistData[]>({ query: ARTIST_RELEASES_QUERY });
-  const label = await sanityFetch<TLabelData[]>({ query: LABEL_QUERY });
+  const artist_releases = await client.fetch<TArtistData[]>(ARTIST_RELEASES_QUERY);
+  const label = await client.fetch<TLabelData[]>(LABEL_QUERY);
+
+  //COMPONENT CONFIGS
+  const labelCarouselConfig: Omit<TCarousel, "children"> = {
+    title: `More From This Label`,
+    id: "release-label-carousel",
+    navigationStyle: "outside",
+    slidesPerView: 2,
+    spaceBetween: 4,
+    breakpoints: {
+      640: { slidesPerView: 2, spaceBetween: 4 },
+      768: { slidesPerView: 4, spaceBetween: 4 },
+      1024: { slidesPerView: 5, spaceBetween: 8 },
+      1240: { slidesPerView: 7, spaceBetween: 8 },
+    },
+  };
+  const descriptionListConfig: Omit<TDescriptionList, "data"> = {
+    header: { title: result.title, subtitle: <Artists artists={result.artists} /> },
+    titleStyles: "text-3xl lg:text-3xl font-medium text-gray-50",
+    subTitleStyles: "text-xl font-bold text-gray-50 tracking-tight",
+    bodyStyle: "border-0 mt-2",
+    listStyle: "divide-y-0",
+    dataGroupStyle: "py-0.5",
+    termStyle: "text-sm/5 text-gray-400 font-normal",
+    detailStyle: "text-sm/5 text-gray-50 font-normal",
+  };
 
   return (
     <div className="relative isolate flex flex-col lg:flex-row lg:gap-10 ">
       <div className="mx-auto w-full">
-        {/* DESCRIPTION */}
         <div className="flex flex-col  sm:flex-row gap-3 lg:gap-4 mb-4">
           <Image
             src={result.image}
@@ -126,15 +146,8 @@ export default async function Review({ params }: { params: { slug: string } }) {
             quality={100}
           />
           <div>
-            <DefinitionList
-              header={{ title: result.title, subtitle: <Artists artists={result.artists} /> }}
-              titleStyles="text-3xl lg:text-3xl font-medium text-gray-50"
-              subTitleStyles="text-xl font-bold text-gray-50 tracking-tight"
-              bodyStyle="border-0 mt-2"
-              listStyle="divide-y-0"
-              dataGroupStyle="py-0.5"
-              termStyle="text-sm text-gray-400"
-              detailStyle="text-sm text-gray-50"
+            <DescriptionList
+              {...descriptionListConfig}
               data={[
                 {
                   term: "Release Date:",
@@ -175,50 +188,13 @@ export default async function Review({ params }: { params: { slug: string } }) {
                 dropdownPaperStyles="bg-gray-700/60 hover:bg-gray-700/70 bg-clip-padding backdrop-filter backdrop-blur-sm"
                 dropdownLinkStyles="text-gray-300"
               />
-
-              <div className="isolate inline-flex  gap-x-2">
-                <button
-                  type="button"
-                  className="relative inline-flex items-center rounded-md bg-gray-700 px-1.5 py-1.5 text-gray-50  hover:bg-gray-600 focus:z-10 shadow-sm"
-                >
-                  <span className="sr-only">Previous</span>
-                  <RiFacebookFill aria-hidden="true" className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  className="relative inline-flex items-center rounded-md bg-gray-700 px-1.5 py-1.5 text-gray-50  hover:bg-gray-600 focus:z-10 shadow-sm"
-                >
-                  <span className="sr-only">Next</span>
-                  <RiTwitterXFill aria-hidden="true" className="h-4 w-4" />
-                </button>
-                <button
-                  type="button"
-                  className="relative inline-flex items-center rounded-md bg-gray-700 px-1.5 py-1.5 text-gray-50  hover:bg-gray-600 focus:z-10 shadow-sm"
-                >
-                  <span className="sr-only">Next</span>
-                  <RiLink aria-hidden="true" className="h-4 w-4" />
-                </button>
-              </div>
+              <SocialMediaShareButtons />
             </div>
           </div>
         </div>
-        {/* TRACKLIST */}
         <ReleaseTable data={result} />
-        {/* FROM LABEL */}
         <div className="space-y-2 relative mt-12">
-          <WithCarousel
-            title={`More From This Label`}
-            id="artist-carousel"
-            navigationStyle="outside"
-            slidesPerView={2}
-            spaceBetween={4}
-            breakpoints={{
-              640: { slidesPerView: 2, spaceBetween: 4 },
-              768: { slidesPerView: 4, spaceBetween: 4 },
-              1024: { slidesPerView: 5, spaceBetween: 8 },
-              1240: { slidesPerView: 7, spaceBetween: 8 },
-            }}
-          >
+          <WithCarousel {...labelCarouselConfig}>
             {[...label].map(release => {
               return <CarouselSlideSmall key={release._id} {...release} />;
             })}

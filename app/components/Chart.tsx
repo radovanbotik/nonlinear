@@ -65,10 +65,10 @@ function ChartItem({ itemIndex, image, itemHref, itemTitle, artists, label }: TC
         <Link href={`/releases/${itemHref}`} className="font-bold text-gray-50  text-sm/4 ">
           {itemTitle}
         </Link>
-        <Artists artists={artists} />
+        <Artists artists={artists} className="text-teal-400 font-medium text-xs/4" />
         <Link
           href={`/labels/${label.href}`}
-          className="block text-xs  tracking-tight text-gray-400 hover:text-gray-300"
+          className="block text-xs/4  tracking-tight text-gray-400 hover:text-gray-300"
         >
           {label.name}
         </Link>
