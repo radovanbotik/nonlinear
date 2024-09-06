@@ -40,16 +40,32 @@ export default function Carousel({ id, className, navigationStyle, title, childr
               id={`buttonPrev-${ID}`}
               disabled={isPrevControlDisabled}
               className="bg-gray-600 disabled:bg-gray-700 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-500 active:bg-gray-600  transition duration-300 ease-in-out"
+              role="button"
+              type="button"
+              aria-label="Previous Slide"
             >
-              <RiArrowLeftSFill className="w-5 h-5 text-gray-300 group-hover/button:text-gray-50 group-active/button:text-gray-100 group-active/button:scale-90  transition  ease-in-out translate-x-0 duration-300   " />
+              <RiArrowLeftSFill
+                aria-hidden="true"
+                focusable="false"
+                className="w-5 h-5 text-gray-300 group-hover/button:text-gray-50 group-active/button:text-gray-100 group-active/button:scale-90  transition  ease-in-out translate-x-0 duration-300   "
+              />
+              <span className="sr-only">Previous Slide</span>
             </button>
 
             <button
               id={`buttonNext-${ID}`}
               disabled={isNextControlDisabled}
               className="bg-gray-600 disabled:bg-gray-700 disabled:pointer-events-none leading-none rounded-sm p-0.5 group/button hover:bg-gray-500 active:bg-gray-600  transition duration-300 ease-in-out"
+              role="button"
+              type="button"
+              aria-label="Next Slide"
             >
-              <RiArrowRightSFill className="w-5 h-5 text-gray-300  group-hover/button:text-gray-50 group-active/button:text-gray-100  group-active/button:scale-90 transition ease-in-out -translate-x-0  duration-300  " />
+              <RiArrowRightSFill
+                aria-hidden="true"
+                focusable="false"
+                className="w-5 h-5 text-gray-300  group-hover/button:text-gray-50 group-active/button:text-gray-100  group-active/button:scale-90 transition ease-in-out -translate-x-0  duration-300  "
+              />
+              <span className="sr-only">Next Slide</span>
             </button>
           </div>
         )}
@@ -101,19 +117,31 @@ export default function Carousel({ id, className, navigationStyle, title, childr
           <button
             className="group/button bg-transparent border-r-[25px] disabled:border-r-gray-200/50 disabled:pointer-events-none  border-r-gray-200/75  hover/button:border-r-gray-200/90 active:border-r-gray-200/75 w-[50px] h-[40px] rounded-full absolute top-1/2 -left-[25px] -translate-y-1/2 -translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
             id={`buttonPrev-${ID}`}
+            role="button"
+            type="button"
+            aria-label="Previous Slide"
           >
-            <div className="z-20 absolute top-1/2 -translate-y-1/2 left-[24px] ">
-              <RiArrowLeftSLine className="h-5 w-5 text-gray-600 group-disabled/button:text-gray-500 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:-translate-x-px" />
-            </div>
+            <RiArrowLeftSLine
+              aria-hidden="true"
+              focusable="false"
+              className="z-20 absolute top-1/2 -translate-y-1/2 left-[24px]  h-5 w-5 text-gray-600 group-disabled/button:text-gray-500 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:-translate-x-px"
+            />
+            <span className="sr-only">Previous Slide</span>
           </button>
 
           <button
             className="group/button bg-transparent border-l-[25px] disabled:border-l-gray-200/50 disabled:pointer-events-none  border-l-gray-200/75 hover/button:border-l-gray-200/90 active:border-l-gray-200/75  w-[50px] h-[40px] rounded-full absolute top-1/2 -right-[25px] -translate-y-1/2 translate-x-full z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in-out transition"
             id={`buttonNext-${ID}`}
+            role="button"
+            type="button"
+            aria-label="Next Slide"
           >
-            <div className="z-20 absolute top-1/2 -translate-y-1/2 right-[24px] ">
-              <RiArrowRightSLine className="h-5 w-5 text-gray-600 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:translate-x-px" />
-            </div>
+            <RiArrowRightSLine
+              aria-hidden="true"
+              focusable="false"
+              className="z-20 absolute top-1/2 -translate-y-1/2 right-[24px]  h-5 w-5 text-gray-600 group-hover/button:text-gray-700 group-active/button:text-gray-600  ease-in-out transition translate-x-0  group-active/button:translate-x-px"
+            />
+            <span className="sr-only">Next Slide</span>
           </button>
         </>
       )}
