@@ -6,10 +6,12 @@ import { RiPlayListAddFill } from "react-icons/ri";
 import ButtonWithDropdown from "./ButtonWithDropdown";
 import { ReactElement } from "react";
 import Image from "next/image";
+import { cn } from "../lib/helpers";
 
 type TChartItem = {
   artists: { name: string; slug: string }[];
   itemIndex?: number;
+  className?: string;
   image?: { alt: string; src: string };
   itemHref: string;
   itemTitle: string;
@@ -30,9 +32,14 @@ type TChart = {
   style: "basic" | "withImage";
 };
 
-function ChartItem({ itemIndex, image, itemHref, itemTitle, artists, label }: TChartItem) {
+function ChartItem({ className, itemIndex, image, itemHref, itemTitle, artists, label }: TChartItem) {
   return (
-    <div className="flex relative items-center group hover:bg-gray-600 //py-2 //px-2 overflow-hidden h-20">
+    <div
+      className={cn(
+        "flex relative items-center group hover:bg-gray-600 //py-2 //px-2 overflow-hidden h-20 bg-gray-700/50 xl:bg-transparent",
+        className
+      )}
+    >
       <div className="flex-shrink-0 relative flex items-center">
         {image && (
           <div className="relative h-20 w-12">
@@ -102,7 +109,7 @@ function ChartItem({ itemIndex, image, itemHref, itemTitle, artists, label }: TC
 
 export default function Chart({ chartItems, footer, header, style }: TChart) {
   return (
-    <div className="flex flex-col px-2 py-4  bg-gray-700/50">
+    <div className="flex flex-col px-2 py-4  xl:bg-gray-700/50">
       <div className="flex items-center w-full pb-2 border-b-[1px] border-b-gray-600 text-gray-50 font-medium text-xl/7 tracking-wide">
         {header}
       </div>

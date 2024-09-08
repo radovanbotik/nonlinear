@@ -92,10 +92,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
       fill: "row",
     },
     breakpoints: {
-      640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-      768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+      640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+      768: { slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
       1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-      1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+      1280: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
     },
   };
 
@@ -111,10 +111,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
       fill: "row",
     },
     breakpoints: {
-      640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
-      768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 4, grid: { fill: "row", rows: 2 } },
+      640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+      768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
       1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
-      1240: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
+      1280: { slidesPerGroup: 5, slidesPerView: 5, spaceBetween: 8, grid: { fill: "row", rows: 2 } },
     },
   };
 

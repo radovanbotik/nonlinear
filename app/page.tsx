@@ -64,7 +64,7 @@ export default async function Home() {
       640: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
       768: { slidesPerGroup: 3, slidesPerView: 3, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
       1024: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
-      1240: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 3 } },
+      1280: { slidesPerGroup: 4, slidesPerView: 4, spaceBetween: 8, grid: { fill: "row", rows: 3 } },
     },
   };
   const chartCarouselConfig: Omit<TCarousel, "children"> = {
@@ -82,7 +82,7 @@ export default async function Home() {
       640: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
       768: { slidesPerGroup: 2, slidesPerView: 2, spaceBetween: 8, grid: { fill: "row", rows: 1 } },
       1024: { slidesPerGroup: 1, slidesPerView: 1, spaceBetween: 8, grid: { fill: "row", rows: 3 } },
-      1240: { slidesPerGroup: 1, slidesPerView: 1, spaceBetween: 8, grid: { fill: "row", rows: 3 } },
+      1280: { slidesPerGroup: 1, slidesPerView: 1, spaceBetween: 8, grid: { fill: "row", rows: 3 } },
     },
   };
 

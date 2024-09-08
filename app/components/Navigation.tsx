@@ -99,10 +99,10 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
         </DisclosureButton>
       );
     }
-    if (!path.href && path.children) {
-      path.children.map(childPath => {
+    if (path.children) {
+      return path.children.map((childPath, i) => {
         return (
-          <Link href={childPath.href} key={childPath.href}>
+          <Link href={childPath.href} key={childPath.href} className="text-gray-50">
             {childPath.title}
           </Link>
         );
@@ -131,6 +131,8 @@ export default function Navigation({ logo, siteNavigation, profileNavigation, us
       </DisclosureButton>
     );
   });
+
+  console.log(mobileSiteNavigationLinks);
 
   return (
     <Disclosure as="nav" className="bg-gray-950 border-b-[1px] border-b-gray-600">

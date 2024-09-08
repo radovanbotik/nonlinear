@@ -16,9 +16,9 @@ function GridItem({ image, _id, title, author, slug }: TChartGridItem) {
         <Image
           alt={`Image of chart ${title}`}
           src={image}
-          className="//absolute inset-0 pointer-events-none object-cover group-hover:opacity-75"
-          width={240}
-          height={240}
+          className="//absolute //      inset-0 pointer-events-none object-cover group-hover:opacity-75"
+          width={300}
+          height={300}
           placeholder="blur"
           blurDataURL={image}
           quality={100}
@@ -37,7 +37,7 @@ function GridItem({ image, _id, title, author, slug }: TChartGridItem) {
 
 export default function ChartGrid({ data }: { data: TChartGridItem[] }) {
   return (
-    <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
+    <ul role="list" className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
       {data.map(item => (
         <li key={item._id} className="relative">
           <GridItem {...item} />

@@ -65,9 +65,9 @@ export default async function Layout({
   return (
     <>
       <SectionHeadingWithTabs responsive={false} tabs={tabs} title={slug} />
-      <div className="gap-x-6 flex relative">
-        <div className="max-w-full w-2/3 max-h-full min-h-0 min-w-0">{children}</div>
-        <aside className="w-1/3 flex flex-col gap-6  justify-start">
+      <div className="gap-x-6 space-y-6 lg:space-y-0 lg:flex relative">
+        <div className="max-w-full lg:w-2/3 max-h-full min-h-0 min-w-0">{children}</div>
+        <aside className=" lg:w-96 flex flex-col gap-6  justify-start">
           <Chart chartItems={data} footer={{ title: "VIEW ALL ITEMS", href: "#" }} header={chartHeader} style="basic" />
           <Chart
             chartItems={data}

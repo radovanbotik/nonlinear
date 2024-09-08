@@ -15,7 +15,7 @@ type TCarouselSlideSmall = {
 
 export default function CarouselSlideSmall({ artists, _id, image, label, slug, title }: TCarouselSlideSmall) {
   return (
-    <div key={_id} className="relative group/parent //shadow-lg bg-gray-700 max-w-64 aspect-square">
+    <div key={_id} className="relative group/parent //shadow-lg bg-gray-700 //max-w-64 aspect-square">
       <div className="relative overflow-hidden transition-transform duration-75 ease-in-out group/image aspect-square">
         <Link className="inset-0 absolute" href={`/releases/${slug}`}></Link>
         <Image
